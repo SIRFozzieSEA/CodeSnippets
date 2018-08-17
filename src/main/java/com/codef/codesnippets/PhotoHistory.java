@@ -10,9 +10,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Scanner;
 
+import org.apache.log4j.Logger;
 import org.h2.jdbcx.JdbcDataSource;
 
 public class PhotoHistory {
@@ -25,19 +25,40 @@ public class PhotoHistory {
 	private static String dbFilePath = "C:/_SORT/testdb";
 	private static String imageDirectoryPath = "E:/Pictures";
 
-	private static String dayOfInterest = "08-11";
+	private static String dayOfInterest;
 	private static String outputFolderPathAndFileName = "C:/_SORT/" + dayOfInterest + ".html";
 
 	public static void main(String[] args) {
 
+		Scanner scanner = new Scanner(System.in);
+
+		LOGGER.info("Re-index data (y/n)?");
+		boolean reIndex = scanner.next().equals("y") ? true : false;
+
+		LOGGER.info("Enter month (01-12)?");
+		String month = scanner.next();
+
+		LOGGER.info("Enter day (01-31)?");
+		String day = scanner.next();
+
+		dayOfInterest = month + "-" + day;
+
 		LOGGER.info("Start");
+
 		getConnection();
-		dropAndRecreateDb();
-		loadImagesIntoDb();
-		doStatisticsByDay();
+
+		if (reIndex) {
+			dropAndRecreateDb();
+			loadImagesIntoDb();
+			doStatisticsByDay();
+		}
+
 		generateHTMLPicsByDay();
-		closeConnection();
 		launchPicOfTheDay();
+
+		closeConnection();
+		scanner.close();
+
 		LOGGER.info("End");
 	}
 
@@ -48,7 +69,7 @@ public class PhotoHistory {
 			URI oURL = new URI(outputFolderPathAndFileName);
 			desktop.browse(oURL);
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 	}
 
@@ -86,7 +107,7 @@ public class PhotoHistory {
 			Files.write(Paths.get(outputFolderPathAndFileName), outBuilder.toString().getBytes());
 
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 	}
 
@@ -98,10 +119,10 @@ public class PhotoHistory {
 			PreparedStatement ps = conn.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				System.out.println(rs.getString("CREATEDAY") + " = " + rs.getInt("CREATEDAY_COUNT"));
+				LOGGER.info(rs.getString("CREATEDAY") + " = " + rs.getInt("CREATEDAY_COUNT"));
 			}
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 
 	}
@@ -114,7 +135,7 @@ public class PhotoHistory {
 			pf.setConnection(conn);
 			Files.walkFileTree(startingDir, pf);
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 
 	}
@@ -124,7 +145,7 @@ public class PhotoHistory {
 		try {
 			stmt = conn.createStatement();
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 
 		try {
@@ -156,7 +177,7 @@ public class PhotoHistory {
 			ds.setPassword("sa");
 			conn = ds.getConnection();
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 	}
 
@@ -165,7 +186,7 @@ public class PhotoHistory {
 			if (conn != null)
 				conn.close();
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 	}
 

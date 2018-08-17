@@ -14,8 +14,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Directory;
@@ -69,7 +69,7 @@ public class PhotoHistoryFileVisitor extends SimpleFileVisitor<Path> {
 			}
 
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 
 		return CONTINUE;
@@ -77,13 +77,13 @@ public class PhotoHistoryFileVisitor extends SimpleFileVisitor<Path> {
 
 	@Override
 	public FileVisitResult postVisitDirectory(Path dir, IOException exc) {
-		LOGGER.log(Level.INFO, "Directory " + dir, exc);
+		LOGGER.info("Directory " + dir, exc);
 		return CONTINUE;
 	}
 
 	@Override
 	public FileVisitResult visitFileFailed(Path file, IOException exc) {
-		LOGGER.log(Level.SEVERE, exc.toString(), exc);
+		LOGGER.error(exc.toString(), exc);
 		return CONTINUE;
 	}
 

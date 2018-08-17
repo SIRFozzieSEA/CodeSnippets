@@ -11,8 +11,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
+
+
 
 public class FolderPathsToH2Database {
 
@@ -32,7 +34,7 @@ public class FolderPathsToH2Database {
 			closeH2Connection(myH2Conn);
 
 		} catch (SQLException e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 	}
 
@@ -46,7 +48,7 @@ public class FolderPathsToH2Database {
 					String filePath = entry.toString();
 
 					String md5Hashee = getMD5Hash(filePath);
-					System.out.println(filePath + "\tMD5=" + md5Hashee);
+					LOGGER.info(filePath + "\tMD5=" + md5Hashee);
 
 					PreparedStatement updateemp = myH2Conn.prepareStatement("insert into STUFFS values(?,?)");
 					updateemp.setString(1, filePath);
@@ -56,7 +58,7 @@ public class FolderPathsToH2Database {
 				}
 			}
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 	}
 

@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.log4j.Logger;
 
 public class MemeFolderRenamer {
 
@@ -24,7 +24,7 @@ public class MemeFolderRenamer {
 			Path path = Paths.get("E:\\Pictures\\PhoneBackup\\Memes");
 			traverseDir(path);
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 
 	}
@@ -57,14 +57,14 @@ public class MemeFolderRenamer {
 
 					String padNo = String.format("%010d", fileCount);
 					String newFileNameToUse = filePrefixNew + "_" + padNo + "." + nFileExtension.toLowerCase();
-					System.out.println("rename \"" + filePath + "\" \"" + newFileNameToUse + "\"");
+					LOGGER.info("rename \"" + filePath + "\" \"" + newFileNameToUse + "\"");
 
 					fileCount++;
 
 				}
 			}
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, e.toString(), e);
+			LOGGER.error(e.toString(), e);
 		}
 	}
 
