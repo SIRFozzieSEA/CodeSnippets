@@ -11,16 +11,15 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import org.apache.log4j.Logger;
-
-
 
 public class FolderPathsToH2Database {
 
 	private static final Logger LOGGER = Logger.getLogger(FolderPathsToH2Database.class.getName());
 
-	public static Connection myH2Conn = null;
+	private static Connection myH2Conn = null;
 
 	public static void main(String[] args) {
 		try {
@@ -39,9 +38,10 @@ public class FolderPathsToH2Database {
 	}
 
 	public static void traverseDir(Path path) throws SQLException {
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(path)) {
+		try (DirectoryStream<Path> stream = Files.newDirectoryStream(path);
+				PreparedStatement updateemp = myH2Conn.prepareStatement("insert into STUFFS values(?,?)");) {
 			for (Path entry : stream) {
-				if (Files.isDirectory(entry)) {
+				if (entry.toFile().isDirectory()) {
 					traverseDir(entry);
 				} else {
 
@@ -50,7 +50,6 @@ public class FolderPathsToH2Database {
 					String md5Hashee = getMD5Hash(filePath);
 					LOGGER.info(filePath + "\tMD5=" + md5Hashee);
 
-					PreparedStatement updateemp = myH2Conn.prepareStatement("insert into STUFFS values(?,?)");
 					updateemp.setString(1, filePath);
 					updateemp.setString(2, md5Hashee);
 					updateemp.executeUpdate();
@@ -70,8 +69,12 @@ public class FolderPathsToH2Database {
 	}
 
 	public static void createTable() throws SQLException {
-		myH2Conn.createStatement()
-				.execute("CREATE TABLE " + "STUFFS(PATH VARCHAR(2000) PRIMARY KEY, MD5 VARCHAR(100))");
+
+		try (Statement stmt = myH2Conn.createStatement();) {
+			stmt.execute("CREATE TABLE " + "STUFFS(PATH VARCHAR(2000) PRIMARY KEY, MD5 VARCHAR(100))");
+		} catch (Exception e) {
+			LOGGER.error(e.toString(), e);
+		}
 	}
 
 	public static Connection getH2Connection() throws SQLException {

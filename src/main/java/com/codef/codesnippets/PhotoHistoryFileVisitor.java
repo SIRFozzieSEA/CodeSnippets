@@ -52,27 +52,35 @@ public class PhotoHistoryFileVisitor extends SimpleFileVisitor<Path> {
 				Metadata metadata = ImageMetadataReader.readMetadata(new File(filepath.toAbsolutePath().toString()));
 				for (Directory directory : metadata.getDirectories()) {
 					for (Tag tag : directory.getTags()) {
-						if (tag.getTagName().contains("Date/Time Original")) {
-							String photoTakenDate = tag.getDescription().replaceAll(":", "-");
-							if (!photoTakenDate.substring(0, 10).equals("0000-00-00")) {
-								String insert = "insert into test (path, createdate, createday) values (?, ?, ?)";
-								PreparedStatement ps = conn.prepareStatement(insert);
-								ps.setString(1, filepath.toAbsolutePath().toString());
-								ps.setString(2, photoTakenDate.substring(0, 10));
-								ps.setString(3, photoTakenDate.substring(5, 10));
-								ps.executeUpdate();
-							}
-
-						}
+						doTag(tag, filepath);
 					}
 				}
 			}
 
 		} catch (Exception e) {
-			LOGGER.error(e.toString(), e);
+			LOGGER.error(name + ":" + e.toString(), e);
 		}
 
 		return CONTINUE;
+	}
+
+	private void doTag(Tag tag, Path filepath) throws SQLException {
+		if (tag.getTagName().contains("Date/Time Original")) {
+			String photoTakenDate = tag.getDescription().replaceAll(":", "-");
+			if (!photoTakenDate.substring(0, 10).equals("0000-00-00")) {
+				String insert = "insert into test (path, createdate, createday) values (?, ?, ?)";
+				try (PreparedStatement ps = conn.prepareStatement(insert);) {
+					ps.setString(1, filepath.toAbsolutePath().toString());
+					ps.setString(2, photoTakenDate.substring(0, 10));
+					ps.setString(3, photoTakenDate.substring(5, 10));
+					ps.executeUpdate();
+				} catch (Exception e) {
+					LOGGER.error(e.toString(), e);
+				}
+			}
+
+		}
+
 	}
 
 	@Override

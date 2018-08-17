@@ -19,45 +19,43 @@ public class PhotoHistory {
 
 	private static final Logger LOGGER = Logger.getLogger(PhotoHistory.class.getName());
 
-	private static Connection conn = null;
-	private static Statement stmt = null;
-
-	private static String dbFilePath = "C:/_SORT/testdb";
-	private static String imageDirectoryPath = "E:/Pictures";
-
 	private static String dayOfInterest;
 	private static String outputFolderPathAndFileName = "C:/_SORT/" + dayOfInterest + ".html";
 
 	public static void main(String[] args) {
 
-		Scanner scanner = new Scanner(System.in);
+		Connection conn = getConnection("C:/_SORT/testdb");
 
-		LOGGER.info("Re-index data (y/n)?");
-		boolean reIndex = scanner.next().equals("y") ? true : false;
+		if (conn != null) {
 
-		LOGGER.info("Enter month (01-12)?");
-		String month = scanner.next();
+			Scanner scanner = new Scanner(System.in);
 
-		LOGGER.info("Enter day (01-31)?");
-		String day = scanner.next();
+			LOGGER.info("Re-index data (y/n)?");
+			boolean reIndex = scanner.next().equals("y");
 
-		dayOfInterest = month + "-" + day;
+			LOGGER.info("Enter month (01-12)?");
+			String month = scanner.next();
 
-		LOGGER.info("Start");
+			LOGGER.info("Enter day (01-31)?");
+			String day = scanner.next();
 
-		getConnection();
+			dayOfInterest = month + "-" + day;
 
-		if (reIndex) {
-			dropAndRecreateDb();
-			loadImagesIntoDb();
-			doStatisticsByDay();
+			LOGGER.info("Start");
+
+			if (reIndex) {
+				dropAndRecreateDb(conn);
+				loadImagesIntoDb(conn, "E:/Pictures");
+				doStatisticsByDay(conn);
+			}
+
+			generateHTMLPicsByDay(conn);
+			launchPicOfTheDay();
+
+			closeConnection(conn);
+			scanner.close();
+
 		}
-
-		generateHTMLPicsByDay();
-		launchPicOfTheDay();
-
-		closeConnection();
-		scanner.close();
 
 		LOGGER.info("End");
 	}
@@ -73,51 +71,49 @@ public class PhotoHistory {
 		}
 	}
 
-	public static void generateHTMLPicsByDay() {
+	public static void generateHTMLPicsByDay(Connection conn) {
+
+		String content = "";
 
 		try {
-
 			Path templatePath = Paths.get(ClassLoader.getSystemResource("photohistory_template.html").toURI());
+			content = new String(Files.readAllBytes(templatePath));
+		} catch (Exception e) {
+			LOGGER.error(e.toString(), e);
+		}
 
-			String content = new String(Files.readAllBytes(templatePath));
+		StringBuilder outBuilder = new StringBuilder();
+		outBuilder.append("<HTML><CENTER>");
 
-			StringBuilder outBuilder = new StringBuilder();
-			outBuilder.append("<HTML><CENTER>");
-
-			stmt = conn.createStatement();
-
-			String query = "SELECT PATH, CREATEDAY, CREATEDATE FROM TEST WHERE CREATEDAY = ? ORDER BY CREATEDATE DESC";
-			PreparedStatement ps = conn.prepareStatement(query);
+		String query = "SELECT PATH, CREATEDAY, CREATEDATE FROM TEST WHERE CREATEDAY = ? ORDER BY CREATEDATE DESC";
+		try (PreparedStatement ps = conn.prepareStatement(query);) {
 			ps.setString(1, dayOfInterest);
 
-			ResultSet rs = ps.executeQuery();
+			try (ResultSet rs = ps.executeQuery();) {
+				while (rs.next()) {
 
-			while (rs.next()) {
+					String imgContent = content;
+					String realpath = rs.getString("PATH").replaceAll("\\\\", "\\\\\\\\");
+					imgContent = imgContent.replaceAll("PATH", realpath);
+					imgContent = imgContent.replaceAll("CREATEDATE", rs.getDate("CREATEDATE").toString());
+					outBuilder.append(imgContent);
 
-				String imgContent = content;
-				String realpath = rs.getString("PATH").replaceAll("\\\\", "\\\\\\\\");
-				imgContent = imgContent.replaceAll("PATH", realpath);
-				imgContent = imgContent.replaceAll("CREATEDATE", rs.getDate("CREATEDATE").toString());
-				outBuilder.append(imgContent);
-
+				}
 			}
 
 			outBuilder.append("</CENTER></HTML>");
-
 			Files.write(Paths.get(outputFolderPathAndFileName), outBuilder.toString().getBytes());
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);
 		}
+
 	}
 
-	public static void doStatisticsByDay() {
+	public static void doStatisticsByDay(Connection conn) {
 
-		try {
-			stmt = conn.createStatement();
-			String query = "SELECT CREATEDAY, count(CREATEDAY) AS CREATEDAY_COUNT FROM TEST GROUP BY CREATEDAY ORDER BY CREATEDAY";
-			PreparedStatement ps = conn.prepareStatement(query);
-			ResultSet rs = ps.executeQuery();
+		String query = "SELECT CREATEDAY, count(CREATEDAY) AS CREATEDAY_COUNT FROM TEST GROUP BY CREATEDAY ORDER BY CREATEDAY";
+		try (PreparedStatement ps = conn.prepareStatement(query); ResultSet rs = ps.executeQuery();) {
 			while (rs.next()) {
 				LOGGER.info(rs.getString("CREATEDAY") + " = " + rs.getInt("CREATEDAY_COUNT"));
 			}
@@ -127,7 +123,7 @@ public class PhotoHistory {
 
 	}
 
-	public static void loadImagesIntoDb() {
+	public static void loadImagesIntoDb(Connection conn, String imageDirectoryPath) {
 
 		try {
 			Path startingDir = Paths.get(imageDirectoryPath);
@@ -140,48 +136,31 @@ public class PhotoHistory {
 
 	}
 
-	public static void dropAndRecreateDb() {
+	public static void dropAndRecreateDb(Connection conn) {
 
-		try {
-			stmt = conn.createStatement();
-		} catch (SQLException e) {
-			LOGGER.error(e.toString(), e);
-		}
-
-		try {
+		try (Statement stmt = conn.createStatement();) {
 			stmt.executeUpdate("DROP TABLE TEST");
-		} catch (Exception e) {
-			// do nothing
-		}
-
-		try {
 			String sql = "CREATE TABLE TEST (id bigint auto_increment, path VARCHAR(2000), createdate DATE, createday VARCHAR(5), PRIMARY KEY ( id ))";
 			stmt.executeUpdate(sql);
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (SQLException se2) {
-				// nothing we can do
-			}
+			LOGGER.error(e.toString(), e);
 		}
 	}
 
-	public static void getConnection() {
+	public static Connection getConnection(String dbFilePath) {
 		try {
 			JdbcDataSource ds = new JdbcDataSource();
 			ds.setURL("jdbc:h2:file:" + dbFilePath);
 			ds.setUser("sa");
 			ds.setPassword("sa");
-			conn = ds.getConnection();
+			return ds.getConnection();
 		} catch (SQLException e) {
 			LOGGER.error(e.toString(), e);
+			return null;
 		}
 	}
 
-	public static void closeConnection() {
+	public static void closeConnection(Connection conn) {
 		try {
 			if (conn != null)
 				conn.close();
