@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class BruteForceRar {
 
 	
-	// C:\GitRepos\CodeSnippets\target\classes>java -cp "C:\Users\sir_f\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;." com.codef.codesnippets.BruteForceRar
+	// java -cp "C:\Users\sir_f\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;." com.codef.codesnippets.BruteForceRar
 	
 	private static final Logger LOGGER = Logger.getLogger(BruteForceRar.class.getName());
 
@@ -36,7 +36,7 @@ public class BruteForceRar {
 				StringBuffer outputBuffer = new StringBuffer();
 				String sCmd = "UnRAR t -ierr -p" + criteria + " " + sourceFileDirectory + rarFileName;
 
-				LOGGER.info(criteria);
+				LOGGER.info(criteria + " -- Iteration = " + bruteIterationCount);
 
 				boolean doActualCrackingFlag = false;
 				if (doActualCrackingFlag) {
