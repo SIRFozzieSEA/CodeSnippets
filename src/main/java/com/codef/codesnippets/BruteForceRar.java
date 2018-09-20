@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class BruteForceRar {
 
 	
-	// java -cp "C:\Users\sir_f\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;." com.codef.codesnippets.BruteForceRar
+	// java -cp "C:\Users\sir_f\.m2\repository\log4j\log4j\1.2.17\log4j-1.2.17.jar;C:\GitRepos\CodeSnippets\target\classes" com.codef.codesnippets.BruteForceRar
 	
 	private static final Logger LOGGER = Logger.getLogger(BruteForceRar.class.getName());
 
