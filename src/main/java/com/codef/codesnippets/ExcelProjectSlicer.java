@@ -4,7 +4,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,15 +26,53 @@ public class ExcelProjectSlicer {
 
 	private static final Logger LOGGER = Logger.getLogger(ExcelProjectSlicer.class.getName());
 
-	public static void main(String[] args) {
-		
-		String imageFileName = "c:/_SORT/TestProject.JPG";
-		List<String> imageFileNames = doImages(imageFileName, "c:/_SORT/slices/", 18, 9);
+	public static void main(String[] args) throws URISyntaxException {
+
+		Path imageFileName = Paths.get(ClassLoader.getSystemResource("SampleEclipseProject.JPG").toURI());
+		List<String> imageFileNames = doImages(imageFileName, "c:/_SORT/slices/", 18, 2);
 		doExcelSheet("c:/_SORT/worksheet.xlsx", imageFileName, imageFileNames);
 
 	}
 
-	public static void doExcelSheet(String fileName, String originalImageFilePath, List<String> imageFileNames) {
+	public static List<String> doImages(Path imageFilePath, String imageSliceOutputFolder, int sliceSizeInPixels,
+			int firstOffset) {
+
+		List<String> imageFileNames = new ArrayList<>();
+
+		try {
+
+			MiscUtilities.cleanDirectory(imageSliceOutputFolder);
+
+			BufferedImage originalImage = ImageIO.read(new File(imageFilePath.toString()));
+
+			int runningY = firstOffset;
+			int imageWidth = originalImage.getWidth();
+			int imageHeight = originalImage.getHeight();
+			int howManyTimesToRun = (imageHeight - firstOffset) / sliceSizeInPixels;
+
+			for (int i = 0; i < howManyTimesToRun; i++) {
+
+				if (i != 0) {
+					runningY = runningY + (sliceSizeInPixels);
+				}
+
+				BufferedImage subImage = originalImage.getSubimage(0, runningY, imageWidth, sliceSizeInPixels);
+				String newFilePath = imageSliceOutputFolder + "slice_" + String.format("%05d", i + 1) + ".jpg";
+				File outputfile = new File(newFilePath);
+				imageFileNames.add(newFilePath);
+				ImageIO.write(subImage, "jpg", outputfile);
+
+			}
+
+		} catch (Exception e) {
+			LOGGER.error(e.toString(), e);
+		}
+
+		return imageFileNames;
+
+	}
+
+	public static void doExcelSheet(String fileName, Path originalImageFilePath, List<String> imageFileNames) {
 
 		try (XSSFWorkbook workbook = new XSSFWorkbook();) {
 
@@ -80,47 +121,9 @@ public class ExcelProjectSlicer {
 
 	}
 
-	public static int getImageWidth(String imageFilePath) throws IOException {
-		BufferedImage originalImage = ImageIO.read(new File(imageFilePath));
+	public static int getImageWidth(Path imageFilePath) throws IOException {
+		BufferedImage originalImage = ImageIO.read(new File(imageFilePath.toString()));
 		return originalImage.getWidth();
-	}
-
-	public static List<String> doImages(String imageFilePath, String imageSliceOutputFolder, int sliceSizeInPixels,
-			int firstOffset) {
-
-		List<String> imageFileNames = new ArrayList<>();
-
-		try {
-
-			MiscUtilities.cleanDirectory(imageSliceOutputFolder);
-
-			BufferedImage originalImage = ImageIO.read(new File(imageFilePath));
-
-			int runningY = firstOffset;
-			int imageWidth = originalImage.getWidth();
-			int imageHeight = originalImage.getHeight();
-			int howManyTimesToRun = (imageHeight - firstOffset) / sliceSizeInPixels;
-
-			for (int i = 0; i < howManyTimesToRun; i++) {
-
-				if (i != 0) {
-					runningY = runningY + (sliceSizeInPixels);
-				}
-
-				BufferedImage subImage = originalImage.getSubimage(0, runningY, imageWidth, sliceSizeInPixels);
-				String newFilePath = imageSliceOutputFolder + "slice_" + String.format("%05d", i + 1) + ".jpg";
-				File outputfile = new File(newFilePath);
-				imageFileNames.add(newFilePath);
-				ImageIO.write(subImage, "jpg", outputfile);
-
-			}
-
-		} catch (Exception e) {
-			LOGGER.error(e.toString(), e);
-		}
-
-		return imageFileNames;
-
 	}
 
 }
