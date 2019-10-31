@@ -17,6 +17,8 @@ import org.h2.jdbcx.JdbcDataSource;
 
 public class PhotoHistory {
 
+	private static final boolean enableMainMethod = false;
+
 	private static final Logger LOGGER = Logger.getLogger(PhotoHistory.class.getName());
 
 	private static String dayOfInterest;
@@ -24,40 +26,44 @@ public class PhotoHistory {
 
 	public static void main(String[] args) {
 
-		Connection conn = getConnection("C:/_SORT/testdb");
+		if (enableMainMethod) {
 
-		if (conn != null) {
+			Connection conn = getConnection("C:/_SORT/testdb");
 
-			Scanner scanner = new Scanner(System.in);
+			if (conn != null) {
 
-			LOGGER.info("Re-index data (y/n)?");
-			boolean reIndex = scanner.next().equals("y");
+				Scanner scanner = new Scanner(System.in);
 
-			LOGGER.info("Enter month (01-12)?");
-			String month = scanner.next();
+				LOGGER.info("Re-index data (y/n)?");
+				boolean reIndex = scanner.next().equals("y");
 
-			LOGGER.info("Enter day (01-31)?");
-			String day = scanner.next();
+				LOGGER.info("Enter month (01-12)?");
+				String month = scanner.next();
 
-			dayOfInterest = month + "-" + day;
+				LOGGER.info("Enter day (01-31)?");
+				String day = scanner.next();
 
-			LOGGER.info("Start");
+				dayOfInterest = month + "-" + day;
 
-			if (reIndex) {
-				dropAndRecreateDb(conn);
-				loadImagesIntoDb(conn, "E:/Pictures");
-				doStatisticsByDay(conn);
+				LOGGER.info("Start");
+
+				if (reIndex) {
+					dropAndRecreateDb(conn);
+					loadImagesIntoDb(conn, "E:/Pictures");
+					doStatisticsByDay(conn);
+				}
+
+				generateHTMLPicsByDay(conn);
+				launchPicOfTheDay();
+
+				closeConnection(conn);
+				scanner.close();
+
 			}
 
-			generateHTMLPicsByDay(conn);
-			launchPicOfTheDay();
-
-			closeConnection(conn);
-			scanner.close();
+			LOGGER.info("End");
 
 		}
-
-		LOGGER.info("End");
 	}
 
 	public static void launchPicOfTheDay() {

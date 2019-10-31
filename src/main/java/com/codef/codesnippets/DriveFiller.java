@@ -11,26 +11,28 @@ import org.apache.log4j.Logger;
 
 public class DriveFiller {
 
+	private static final boolean enableMainMethod = false;
+
 	private static final Logger LOGGER = Logger.getLogger(DriveFiller.class.getName());
 	private static final int FILE_CHUNK_SIZE_IN_MB = 100;
 
-	private static String driveLetterToFill = "D";
+	private static String driveLetterToFill = "K";
 	private static double spaceToFillInGB = 0.0;
 
 	public static void main(String[] args) {
 
-		Scanner keyboard = new Scanner(System.in);
-		LOGGER.info("Enter a drive letter: ");
-		driveLetterToFill = keyboard.nextLine();
-
-		LOGGER.info("Enter space (in GB) to fill, '0' for auto: ");
-		int userSpaceToFillInGB = keyboard.nextInt();
-		if (userSpaceToFillInGB > spaceToFillInGB) {
-			spaceToFillInGB = userSpaceToFillInGB;
+		if (enableMainMethod) {
+			Scanner keyboard = new Scanner(System.in);
+			LOGGER.info("Enter a drive letter: ");
+			driveLetterToFill = keyboard.nextLine();
+			LOGGER.info("Enter space (in GB) to fill, '0' for auto: ");
+			int userSpaceToFillInGB = keyboard.nextInt();
+			if (userSpaceToFillInGB > spaceToFillInGB) {
+				spaceToFillInGB = userSpaceToFillInGB;
+			}
+			keyboard.close();
+			fillErUp();
 		}
-		keyboard.close();
-
-		fillErUp();
 
 	}
 
@@ -48,8 +50,7 @@ public class DriveFiller {
 			Double iterationsDbl = (spaceToFillInGB * 1000) / FILE_CHUNK_SIZE_IN_MB;
 
 			LOGGER.info("  Writing: " + iterationsDbl.longValue() + " files, on drive " + driveLetterToFill
-							+ " with chunks of " + FILE_CHUNK_SIZE_IN_MB + " MB to fill " + spaceToFillInGB
-							+ " GB (+Extra)");
+					+ " with chunks of " + FILE_CHUNK_SIZE_IN_MB + " MB to fill " + spaceToFillInGB + " GB (+Extra)");
 
 			StringBuilder contentBuilder = new StringBuilder();
 			for (int i = 0; i < (10 * 1024 * FILE_CHUNK_SIZE_IN_MB); i++) {

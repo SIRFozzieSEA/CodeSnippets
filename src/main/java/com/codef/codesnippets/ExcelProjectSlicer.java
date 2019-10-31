@@ -24,13 +24,17 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelProjectSlicer {
 
+	private static final boolean enableMainMethod = false;
+
 	private static final Logger LOGGER = Logger.getLogger(ExcelProjectSlicer.class.getName());
 
 	public static void main(String[] args) throws URISyntaxException {
 
-		Path imageFileName = Paths.get(ClassLoader.getSystemResource("SampleEclipseProject.JPG").toURI());
-		List<String> imageFileNames = doImages(imageFileName, "c:/_SORT/slices/", 18, 2);
-		doExcelSheet("c:/_SORT/worksheet.xlsx", imageFileName, imageFileNames);
+		if (enableMainMethod) {
+			Path imageFileName = Paths.get(ClassLoader.getSystemResource("SampleEclipseProject.JPG").toURI());
+			List<String> imageFileNames = doImages(imageFileName, "c:/_SORT/slices/", 18, 2);
+			doExcelSheet("c:/_SORT/worksheet.xlsx", imageFileName, imageFileNames);
+		}
 
 	}
 

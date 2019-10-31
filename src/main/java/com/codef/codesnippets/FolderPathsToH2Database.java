@@ -17,23 +17,27 @@ import org.apache.log4j.Logger;
 
 public class FolderPathsToH2Database {
 
+	private static final boolean enableMainMethod = false;
+
 	private static final Logger LOGGER = Logger.getLogger(FolderPathsToH2Database.class.getName());
 
 	private static Connection myH2Conn = null;
 
 	public static void main(String[] args) {
-		try {
+		if (enableMainMethod) {
+			try {
 
-			myH2Conn = getH2Connection();
-			createTable();
+				myH2Conn = getH2Connection();
+				createTable();
 
-			Path path = Paths.get("C:\\_SORT\\Memes");
-			traverseDir(path);
+				Path path = Paths.get("C:\\_SORT\\Memes");
+				traverseDir(path);
 
-			closeH2Connection(myH2Conn);
+				closeH2Connection(myH2Conn);
 
-		} catch (SQLException e) {
-			LOGGER.error(e.toString(), e);
+			} catch (SQLException e) {
+				LOGGER.error(e.toString(), e);
+			}
 		}
 	}
 

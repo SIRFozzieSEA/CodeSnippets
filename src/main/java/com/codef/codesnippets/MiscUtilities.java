@@ -51,6 +51,7 @@ public class MiscUtilities {
 	}
 
 	public static String readFile(String pathToFile) throws IOException {
+		// Path path = Paths.get(LavaballUtils.class.getResource(resourcePath).toURI());
 		return new String(Files.readAllBytes(new File(pathToFile).toPath()));
 	}
 

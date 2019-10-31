@@ -1,0 +1,288 @@
+{
+	"created_at": "MonJul1514:15:53+00002019",
+	"id": 1150770967901343744,
+	"id_str": "1150770967901343744",
+	"full_text": "RT@Raspberry_Pi:HackyourexistingRaspberryPicasetofitthelayoutofyournewRaspberryPi4.Or,y'know,buythebrand-newRaspberr\u2026",
+	"truncated": false,
+	"display_text_range": [
+		0,
+		140
+	],
+	"entities": {
+		"symbols": [],
+		"user_mentions": [
+			{
+				"screen_name": "Raspberry_Pi",
+				"name": "RaspberryPi",
+				"id": 302666251,
+				"id_str": "302666251",
+				"indices": [
+					3,
+					16
+				]
+			}
+		],
+		"urls": []
+	},
+	"source": "\u003cahref=\"http:\/\/twitter.com\/download\/iphone\"rel=\"nofollow\"\u003eTwitterforiPhone\u003c\/a\u003e",
+	"in_reply_to_status_id": null,
+	"in_reply_to_status_id_str": null,
+	"in_reply_to_user_id": null,
+	"in_reply_to_user_id_str": null,"in_reply_to_screen_name":null,
+	"user": {
+		"id": 1137944988850053120,
+		"id_str": "1137944988850053120","name
+		":"dansstuff32","screen_name":"dansstuff32",
+		"location": "NewYork,USA",
+		"description": "gamerandstudent",
+		"url": null,
+		"entities": {
+			"description": {
+				"urls": []
+			}
+		},
+		"protected": false,"followers_count":2,
+		"friends_count": 64,
+		"listed_count": 0,
+		"created_at": "MonJun1004:50:02+00002019",
+		"favourites_count": 20,
+		"utc_offset": null,
+		"time_zone": null,
+		"geo_enabled": false,
+		"verified": false,
+		"statuses_count": 109,
+		"lang": null,
+		"contributors_enabled": false,
+		"is_translator": false,
+		"is_translation_enabled": false,"profile_background_color
+		":"F5F8FA","profile_background_image_url":null,"profile_background_image_url_https":null,
+		"profile_background_tile": false,
+		"profile_image_url": "http:\/\/pbs.twimg.com\/profile_images\/1137945869486104576\/0sFbIr3c_normal.jpg","profile_image_url_https
+		":"https:\/\/pbs.twimg.com\/profile_images\/1137945869486104576\/0sFbIr3c_normal.jpg",
+		"profile_link_color": "1DA1F2",
+		"profile_sidebar_border_color": "C0DEED",
+		"profile_sidebar_fill_color": "DDEEF6",
+		"profile_text_color": "333333","profile_use_background_image":true,
+		"has_extended_profile": true,
+		"default_profile": true,"default_profile_image":false,
+		"following": null,
+		"follow_request_sent": null,"notifications":null,
+		"translator_type": "none"
+	},
+	"geo": null,
+	"coordinates": null,
+	"place": null,
+	"contributors": null,
+	"retweeted_status": {
+		"created_at": "MonJul1511:05:05+00002019",
+		"id": 1150722951962079232,
+		"id_str": "1150722951962079232",
+		"full_text": "HackyourexistingRaspberryPicasetofitthelayoutofyournewRaspberryPi4.Or,y'know,buythebrand-newRaspberryPi4case.Thedecisionisyours:https:\/\/t.co\/nNVSbpneY2https:\/\/t.co\/jopnfdcYZ3",
+		"truncated": false,
+		"display_text_range": [
+			0,
+			180
+		],"entities":{
+		"hashtags": [],
+		"symbols": [],
+		"user_mentions": [],
+		"urls": [
+			{
+				"url": "https:\/\/t.co\/nNVSbpneY2",
+				"expanded_url": "https:\/\/www.raspberrypi.org\/products\/raspberry-pi-4-case\/",
+				"display_url": "raspberrypi.org\/products\/raspb\u2026",
+				"indices": [
+					157,
+					18
+					0
+				]
+			}
+		],
+		"media": [
+			{
+				"id": 1150721844867153923,
+				"id_str": "1150721844867153923",
+				"indices": [
+					181,
+					204
+				],
+				"media_url": "http:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1150721844867153923\/pu\/img\/-bCuarAG-e803hUE.jpg",
+				"media_url_https": "https:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1150721844867153923\/pu\/img\/-bCuarAG-e803hUE.jpg",
+				"url": "https:\/\/t.co\/jopnfdcYZ3",
+				"display_url": "pic.twitter.com\/jopnfdcYZ3",
+				"expanded_url": "https:\/\/twitter.com\/Raspberry_Pi\/status\/1150722951962079232\/video\/1",
+				"type": "photo",
+				"sizes": {
+					"thumb": {
+						"w": 150,
+						"h": 150,"resize
+						":"crop"
+					},
+					"medium": {
+						"w": 1200,
+						"h": 675,
+						"resize": "fit"
+					},
+					"small": {
+						"w": 680,
+						"h": 383,"resize
+						":"fit"
+					},
+					"large": {
+						"w": 1280,
+						"h": 720,
+						"resize": "fit"
+					}
+				}
+			}
+		]
+	},
+	"extended_entities": {
+		"media": [
+			{
+				"id": 1150721844867153923,
+				"id_str": "1150721844867153923",
+				"indices": [
+					18
+					1,
+					204
+				],
+				"media_url": "http:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1150721844867153923\/pu\/img\/-bCuarAG-e803hUE.jpg",
+				"media_url_https": "https:\/\/pbs.twimg.com\/ext_tw_video_thumb\/1150721844867153923\/pu\/img\/-bCuarAG-e803hUE.jpg",
+				"url": "https:\/\/t.co\/jopnfdcYZ3",
+				"display_url": "pic.twitter.com\/jopnfdcYZ3",
+				"expanded_url": "https:\/\/twitter.com\/Raspberry_Pi\/status\/1150722951962079232\/video\/1",
+				"type": "video",
+				"sizes": {
+					"thumb": {
+						"w": 150,
+						"h": 150,"resize
+						":"crop"
+					},
+					"medium": {
+						"w": 1200,
+						"h": 675,
+						"resize": "fit"
+					},
+					"small": {
+						"w": 680,
+						"h": 383,"resize
+						":"fit"
+					},
+					"large": {
+						"w": 1280,
+						"h": 720,
+						"resize": "fit"
+					}
+				},
+				"video_info": {
+					"duration_millis": 46000,
+					"variants": [
+						{
+							"bitrate": 2176000,"content_type
+							":"video\/mp4","url":"https:\/\/video.twimg.com\/ext_tw_video\/1150721844867153923\/pu\/vid\/1280x720\/cywWp83Dyp1aAPvP.mp4?tag=10"
+						},
+						{
+							"bitrate": 832000,"content_type
+							":"video\/mp4","url":"https:\/\/video.twimg.com\/ext_tw_video\/1150721844867153923\/pu\/vid\/640x360\/sczPb-PxrcAPR-dm.mp4?tag=10"
+						},
+						{
+							"content_type": "application\/x-mpegURL",
+							"url": "https:\/\/video.twimg.com\/ext_tw_video\/1150721844867153923\/pu\/pl\/yVMX0AbHLDzzOj7p.m3u8?tag=10"
+						},
+						{
+							"bitrate": 256000,
+							"content_type": "video\/mp4",
+							"url": "https:\/\/video.twimg.com\/ext_tw_video\/1150721844867153923\/pu\/vid\/480x270\/XShTPuSNa2EmJagL.mp4?tag=10"
+						}
+					]
+				},
+				"additional_media_info": {
+					"monetizable": false
+				}
+			}
+		]
+	},
+	"source": "\u003ca href=\"http:\/\/twitter.com\"rel=\"nofollow\"\u003eTwitterWebClient\u003c\/a\u003e",
+	"in_reply_to_status_id": null,
+	"in_reply_to_status_id_str": null,
+	"in_reply_to_user_id": null,
+	"in_reply_to_user_id_str": null,"in_reply_to_screen_name":null,
+	"user": {
+		"id": 302666251,
+		"id_str": "302666251",
+		"name": "RaspberryPi",
+		"screen_name": "Raspberry_Pi",
+		"location": "Cambridge, UK",
+		"description": "TheofficialTwitteraccountfortheRaspberryPiFoundation.Newsandinfoaboutourlow-costminiPC.",
+		"url": "http:\/\/t.co\/1Ol8uNLO82",
+		"entities": {
+			"url": {
+				"urls": [
+					{
+						"url": "http:\/\/t.co\/1Ol8uNLO82",
+						"expanded_url": "http:\/\/www.raspberrypi.org",
+						"display_url": "raspberrypi.org",
+						"indices": [
+							0,
+							22
+						]
+					}
+				]
+			},
+			"description": {
+				"urls": []
+			}
+		},
+		"protected": false,
+		"followers_count": 426056,
+		"friends_count": 944,
+		"listed_count": 7370,"created_at
+		":"SatMay2115:20:40+00002011",
+		"favourites_count": 6156,
+		"utc_offset": null,
+		"time_zone": null,
+		"geo_enabled": true,
+		"verified": true,
+		"statuses_count": 34411,
+		"lang": null,
+		"contributors_enabled": false,
+		"is_translator": false,
+		"is_translation_enabled": false,"profile_background_color
+		":"C0DEED","profile_background_image_url":"http:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+		"profile_background_image_url_https": "https:\/\/abs.twimg.com\/images\/themes\/theme1\/bg.png",
+		"profile_background_tile": false,"profile_image_url
+		":"http:\/\/pbs.twimg.com\/profile_images\/1135505658114183169\/Hgp9HhYV_normal.png",
+		"profile_image_url_https": "https:\/\/pbs.twimg.com\/profile_images\/1135505658114183169\/Hgp9HhYV_normal.png",
+		"profile_banner_url": "https:\/\/pbs.twimg.com\/profile_banners\/302666251\/1561356611",
+		"profile_link_color": "1DA1F2","profile_sidebar_border_color
+		":"C0DEED","profile_sidebar_fill_color":"DDEEF6","profile_text_color
+		":"333333","profile_use_background_image":true,"has_extended_profile":false,
+		"default_profile": true,
+		"default_profile_image": false,
+		"following": null,
+		"follow_request_sent": null,
+		"notifications": null,
+		"translator_type": "none"
+	},
+	"geo": null,
+	"coordinates": null,
+	"place": null,
+	"contributors": null,
+	"is_quote_status": false,
+	"retweet_count": 59,
+	"favorite_count": 291,
+	"favorited": false,
+	"retweeted": false,"possibly_sensitive":false,
+	"possibly_sensitive_appealable": false,
+	"lang": "en"
+},
+   "is_ 
+quote_status":false,
+   "retweet_count":59,
+   "favorite_count":0,
+   "favorited":false,
+   "ret 
+weeted":false,
+   "lang":"en"
+}
