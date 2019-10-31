@@ -66,6 +66,12 @@ public class CodefRobot {
 			robot.keyPress(KeyEvent.VK_PERIOD);
 			robot.keyRelease(KeyEvent.VK_PERIOD);
 			break;
+		case '\"':
+			robot.keyPress(KeyEvent.VK_SHIFT);
+			robot.keyPress(KeyEvent.VK_QUOTE);
+			robot.keyRelease(KeyEvent.VK_QUOTE);
+			robot.keyRelease(KeyEvent.VK_SHIFT);
+			break;
 		case '!':
 			robot.keyPress(KeyEvent.VK_SHIFT);
 			robot.keyPress(KeyEvent.VK_1);
@@ -123,10 +129,8 @@ public class CodefRobot {
 			robot.keyRelease(KeyEvent.VK_MINUS);
 			break;
 		case '\'':
-			robot.keyPress(KeyEvent.VK_SHIFT);
 			robot.keyPress(KeyEvent.VK_QUOTE);
 			robot.keyRelease(KeyEvent.VK_QUOTE);
-			robot.keyRelease(KeyEvent.VK_SHIFT);
 			break;
 		case '_':
 			robot.keyPress(KeyEvent.VK_SHIFT);
