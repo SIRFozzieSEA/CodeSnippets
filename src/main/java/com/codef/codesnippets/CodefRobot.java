@@ -134,6 +134,10 @@ public class CodefRobot {
 			robot.keyRelease(KeyEvent.VK_MINUS);
 			robot.keyRelease(KeyEvent.VK_SHIFT);
 			break;
+		case '=':
+			robot.keyPress(KeyEvent.VK_EQUALS);
+			robot.keyRelease(KeyEvent.VK_EQUALS);
+			break;
 		default:
 			// do nothing
 		}
