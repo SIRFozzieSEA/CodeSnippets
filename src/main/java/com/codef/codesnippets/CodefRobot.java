@@ -16,12 +16,25 @@ public class CodefRobot {
 
 	}
 
+	public static void getKeyPressKeysForString(Robot robot, int initialDelay, String stringForKeypress,
+			int nKeyPressDelay) {
+		robot.delay(initialDelay);
+		for (int i = 0; i < stringForKeypress.length(); i++) {
+			char chary = stringForKeypress.charAt(i);
+			typeCharacter(robot, chary, nKeyPressDelay);
+		}
+
+	}
+
 	public static void typeCharacter(Robot robot, char letter, int delay) {
 
-		if (Character.isLetter(letter) || Character.isDigit(letter)) {
-			try {
+//		System.out.println(" --> " + letter);
+
+		try {
+			if (Character.isLetter(letter) || Character.isDigit(letter)) {
+
 				boolean upperCase = Character.isUpperCase(letter);
-				String variableName = "VK_" + letter;
+				String variableName = "VK_" + String.valueOf(letter).toUpperCase();
 
 				Field field = KeyEvent.class.getField(variableName);
 				int keyCode = field.getInt(KeyEvent.class);
@@ -37,11 +50,12 @@ public class CodefRobot {
 				if (upperCase)
 					robot.keyRelease(KeyEvent.VK_SHIFT);
 
-			} catch (Exception e) {
-				e.printStackTrace();
+			} else {
+				typeSpecialCharacter(robot, letter);
 			}
-		} else {
-			typeSpecialCharacter(robot, letter);
+
+		} catch (Exception e) {
+			System.out.println("Cant get letter: '" + letter + "'");
 		}
 	}
 
