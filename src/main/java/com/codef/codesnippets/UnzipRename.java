@@ -9,12 +9,16 @@ import java.util.zip.ZipInputStream;
 
 public class UnzipRename {
 
+	private static final boolean enableMainMethod = false;
+
 	public static void main(String[] args) {
-		String zipFilePath = "C:\\Users\\sir_f\\Downloads\\hangouts.zip";
 
-		String destDir = "C:\\Users\\sir_f\\Downloads\\output";
-
-		unzip(zipFilePath, destDir);
+		if (enableMainMethod) {
+			String zipFilePath = "C:\\Users\\sir_f\\Downloads\\hangouts.zip";
+			String destDir = "C:\\Users\\sir_f\\Downloads\\output";
+			unzip(zipFilePath, destDir);
+		}
+		
 	}
 
 	private static void unzip(String zipFilePath, String destDir) {
@@ -29,17 +33,14 @@ public class UnzipRename {
 			fis = new FileInputStream(zipFilePath);
 			ZipInputStream zis = new ZipInputStream(fis);
 			ZipEntry ze = zis.getNextEntry();
-			
-			
+
 			int fileNo = 0;
-			
-			
+
 			while (ze != null) {
 				String fileName = ze.getName();
-				
-				
+
 				fileName = fileName.replaceAll("[^a-zA-Z0-9\\-]", "");
-				
+
 				File newFile = new File(destDir + File.separator + fileName);
 				System.out.println("Unzipping to " + newFile.getAbsolutePath());
 				// create directories for sub directories in zip
@@ -53,9 +54,9 @@ public class UnzipRename {
 				// close this ZipEntry
 				zis.closeEntry();
 				ze = zis.getNextEntry();
-				
+
 				fileNo = fileNo + 1;
-				
+
 			}
 			// close last ZipEntry
 			zis.closeEntry();

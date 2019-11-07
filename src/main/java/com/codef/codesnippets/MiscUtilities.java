@@ -2,6 +2,7 @@ package com.codef.codesnippets;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -51,8 +52,12 @@ public class MiscUtilities {
 	}
 
 	public static String readFile(String pathToFile) throws IOException {
-		// Path path = Paths.get(LavaballUtils.class.getResource(resourcePath).toURI());
 		return new String(Files.readAllBytes(new File(pathToFile).toPath()));
+	}
+
+	public static String readResourceFile(String pathToFile) throws URISyntaxException, IOException {
+		Path path = Paths.get(MiscUtilities.class.getResource(pathToFile).toURI());
+		return new String(Files.readAllBytes(path));
 	}
 
 }
