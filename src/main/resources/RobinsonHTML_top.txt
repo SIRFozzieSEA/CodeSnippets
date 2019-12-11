@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="en-us" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>R22 Checklist</title>
+<style type="text/css">
+
+input[type=checkbox]
+{
+  /* Double-sized Checkboxes */
+  -ms-transform: scale(2); /* IE */
+  -moz-transform: scale(2); /* FF */
+  -webkit-transform: scale(2); /* Safari and Chrome */
+  -o-transform: scale(2); /* Opera */
+  transform: scale(2);
+  padding: 10px;
+}
+
+.auto-style2 {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.auto-style3 {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: large;
+	background-color: #008000;
+	color: #FFFFFF;
+}
+.auto-style4 {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: small;
+}
+
+.auto-style5 {
+	text-align: left;
+}
+
+</style>
+</head>
+
+<body>
+
+<table cellpadding="3" cellspacing="3" style="width: 100%">
+	<tbody>
