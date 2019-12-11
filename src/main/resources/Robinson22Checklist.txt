@@ -117,7 +117,7 @@ Loose Articles	Removed Or Stowed
 Seat Belt	Check Condition
 Instruments, Switches, And Controls	Check Condition
 Clock	Functioning 
-BEFORE STARTING ENGINE 
+Before Starting Engine 
 Seat Belts	Fastened
 Fuel Shut-Off Valve	ON
 Cyclic/Collective Friction	OFF
@@ -137,7 +137,7 @@ Avionics Switch (If Installed)	OFF
 Clutch	Disengaged
 Altimeter	Set
 Governor Switch	ON
-STARTING ENGINE AND RUN-UP
+Starting Engine and Run Up
 Throttle Twists For Priming	As Required
 Throttle	Closed
 Battery, Strobe Switches	ON

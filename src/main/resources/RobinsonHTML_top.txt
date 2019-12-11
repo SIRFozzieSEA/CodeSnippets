@@ -18,23 +18,29 @@ input[type=checkbox]
   padding: 10px;
 }
 
-.auto-style2 {
+.titlearea {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 18pt;
+	color: #000000;
 }
 
-.auto-style3 {
+.generalarea {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
-	font-size: large;
+	font-size: 16pt;
 	background-color: #008000;
 	color: #FFFFFF;
 }
-.auto-style4 {
+
+.areaitem {
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 14pt;
 	font-size: small;
 }
 
-.auto-style5 {
-	text-align: left;
+.areadescription {
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 14pt;
+	font-size: small;
 }
 
 </style>
@@ -42,5 +48,7 @@ input[type=checkbox]
 
 <body>
 
-<table cellpadding="3" cellspacing="3" style="width: 100%">
+<table cellpadding="3" cellspacing="4">
 	<tbody>
+	
+	<tr><td class="titlearea" colspan="2" align="center"><strong>R22 Checklist</strong></strong></td></tr>

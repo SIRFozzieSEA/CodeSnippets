@@ -17,7 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ParseChecklist {
 
-	private static final boolean enableMainMethod = false;
+	private static final boolean enableMainMethod = true;
 
 	public static String startXml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><checklist>";
 	public static String endXml = "</checklist>";
@@ -35,10 +35,11 @@ public class ParseChecklist {
 	public static String beginFileNameForHTML = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\RobinsonHTML_top.txt";
 	public static String endFileNameForHTML = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\RobinsonHTML_bottom.txt";
 	
-	public static String outFileHtmlName = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\Robinson22Checklist.html";
+	public static String outFileHtmlName = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\R22.html";
 
-	public static String entryAreaHTML = "<tr><td class=\"auto-style3\" colspan=\"2\"><strong>XXX1</strong></td></tr>";
-	public static String entryHTML = "<tr><td class=\"auto-style5\" style=\"width: 30px\">&nbsp;<input class=\"auto-style2\" name=\"Checkbox1\" type=\"checkbox\" /></td><td class=\"auto-style5\"><span class=\"auto-style4\"><strong>XXX2</strong></span><br class=\"auto-style4\" /><span class=\"auto-style4\">XXX3</span></td></tr>";
+	public static String entryBlankHTML = "<tr><td class=\"areaitem\" colspan=\"2\">&nbsp;</strong></td></tr>";
+	public static String entryAreaHTML = "<tr><td class=\"generalarea\" colspan=\"2\"><strong>&nbsp;XXX1&nbsp;</strong></td></tr>";
+	public static String entryHTML = "<tr><td style=\"width: 30px\">&nbsp;<input name=\"Checkbox1\" type=\"checkbox\" /></td><td class=\"areaitem\"><span class=\"areaitem\"><strong>XXX2</strong></span><br /><span class=\"areadescription\">XXX3</span></td></tr>";
 
 	public static void main(String[] args) throws IOException {
 
@@ -111,6 +112,7 @@ public class ParseChecklist {
 					} else {
 						sbXml.append(endArea);
 						sbXml.append(startArea.replaceAll("XXX1", entry));
+						sbHtml.append(entryBlankHTML);
 						sbHtml.append(entryAreaHTML.replaceAll("XXX1", entry));
 					}
 
