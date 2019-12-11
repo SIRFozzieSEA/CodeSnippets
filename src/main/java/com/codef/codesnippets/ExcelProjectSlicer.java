@@ -31,7 +31,7 @@ public class ExcelProjectSlicer {
 	public static void main(String[] args) throws URISyntaxException {
 
 		if (enableMainMethod) {
-			Path imageFileName = Paths.get(ClassLoader.getSystemResource("SampleEclipseProject.JPG").toURI());
+			Path imageFileName = Paths.get(ClassLoader.getSystemResource("excelprojectslicer/SampleEclipseProject.JPG").toURI());
 			List<String> imageFileNames = doImages(imageFileName, "c:/_SORT/slices/", 18, 2);
 			doExcelSheet("c:/_SORT/worksheet.xlsx", imageFileName, imageFileNames);
 		}

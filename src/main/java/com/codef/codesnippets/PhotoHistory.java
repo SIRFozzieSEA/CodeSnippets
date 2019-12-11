@@ -82,7 +82,7 @@ public class PhotoHistory {
 		String content = "";
 
 		try {
-			Path templatePath = Paths.get(ClassLoader.getSystemResource("photohistory_template.html").toURI());
+			Path templatePath = Paths.get(ClassLoader.getSystemResource("photohistory/photohistory_template.html").toURI());
 			content = new String(Files.readAllBytes(templatePath));
 		} catch (Exception e) {
 			LOGGER.error(e.toString(), e);

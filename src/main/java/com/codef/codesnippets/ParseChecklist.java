@@ -27,15 +27,15 @@ public class ParseChecklist {
 
 	public static String entryArea = "<area><name>XXX2</name><condition>XXX3</condition><reference/><cautions/></area>";
 
-	public static String inFileName = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\Robinson22Checklist.txt";
-	public static String outFileName = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\Robinson22Checklist.xml";
+	public static String inFileName = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\helicopter\\Robinson22Checklist.txt";
+	public static String outFileName = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\helicopter\\Robinson22Checklist.xml";
 
-	public static String workbookFilePath = "C:\\\\GitRepos\\\\CodeSnippets\\\\src\\\\main\\\\resources\\\\Robinson22Checklist.xlsx";
+	public static String workbookFilePath = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\helicopter\\Robinson22Checklist.xlsx";
 	
-	public static String beginFileNameForHTML = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\RobinsonHTML_top.txt";
-	public static String endFileNameForHTML = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\RobinsonHTML_bottom.txt";
+	public static String beginFileNameForHTML = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\helicopter\\RobinsonHTML_top.txt";
+	public static String endFileNameForHTML = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\helicopter\\RobinsonHTML_bottom.txt";
 	
-	public static String outFileHtmlName = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\R22.html";
+	public static String outFileHtmlName = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\helicopter\\R22.html";
 
 	public static String entryBlankHTML = "<tr><td class=\"areaitem\" colspan=\"2\">&nbsp;</strong></td></tr>";
 	public static String entryAreaHTML = "<tr><td class=\"generalarea\" colspan=\"2\"><strong>&nbsp;XXX1&nbsp;</strong></td></tr>";
