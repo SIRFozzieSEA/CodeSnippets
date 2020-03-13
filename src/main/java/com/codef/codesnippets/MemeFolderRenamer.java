@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 
 public class MemeFolderRenamer {
 
-	private static final boolean enableMainMethod = false;
+	private static final boolean enableMainMethod = true;
 
 	private static final Logger LOGGER = Logger.getLogger(MemeFolderRenamer.class.getName());
 
@@ -25,7 +25,7 @@ public class MemeFolderRenamer {
 		if (enableMainMethod) {
 
 			try {
-				Path path = Paths.get("E:\\Pictures\\PhoneBackup\\Memes");
+				Path path = Paths.get("E:\\PhoneBackup\\Memes");
 				traverseDir(path);
 			} catch (Exception e) {
 				LOGGER.error(e.toString(), e);
@@ -62,7 +62,7 @@ public class MemeFolderRenamer {
 					}
 
 					String padNo = String.format("%010d", fileCount);
-					String newFileNameToUse = filePrefixNew + "_x1_" + padNo + "." + nFileExtension.toLowerCase();
+					String newFileNameToUse = filePrefixNew + "_b_" + padNo + "." + nFileExtension.toLowerCase();
 
 					String renameFile = "rename \"" + filePath + "\" \"" + newFileNameToUse + "\"";
 
