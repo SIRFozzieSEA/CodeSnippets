@@ -1,19 +1,18 @@
 package com.codef.codesnippets;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import javax.swing.Action;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class AddAndTrim {
+public class AddAndTrimUI {
 
 	private JFrame frame;
 	private final Action action = new SwingAction();
@@ -27,7 +26,7 @@ public class AddAndTrim {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddAndTrim window = new AddAndTrim();
+					AddAndTrimUI window = new AddAndTrimUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -39,7 +38,7 @@ public class AddAndTrim {
 	/**
 	 * Create the application.
 	 */
-	public AddAndTrim() {
+	public AddAndTrimUI() {
 		initialize();
 	}
 
@@ -96,10 +95,14 @@ public class AddAndTrim {
 	
 	
 	private class SwingAction extends AbstractAction {
+
+		private static final long serialVersionUID = 7294366990678839454L;
+		
 		public SwingAction() {
 			putValue(NAME, "SwingAction");
 			putValue(SHORT_DESCRIPTION, "Some short description");
 		}
+		
 		public void actionPerformed(ActionEvent e) {
 		}
 	}

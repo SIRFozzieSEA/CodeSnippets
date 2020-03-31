@@ -22,6 +22,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.codef.xsalt.utils.XSaLTFileSystemUtils;
+
 public class ExcelProjectSlicer {
 
 	private static final boolean enableMainMethod = false;
@@ -45,7 +47,7 @@ public class ExcelProjectSlicer {
 
 		try {
 
-			MiscUtilities.cleanDirectory(imageSliceOutputFolder);
+			XSaLTFileSystemUtils.cleanDirectory(imageSliceOutputFolder);
 
 			BufferedImage originalImage = ImageIO.read(new File(imageFilePath.toString()));
 
