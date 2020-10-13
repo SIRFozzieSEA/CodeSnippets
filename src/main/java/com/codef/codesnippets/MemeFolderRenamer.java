@@ -25,7 +25,7 @@ public class MemeFolderRenamer {
 		if (enableMainMethod) {
 
 			try {
-				Path path = Paths.get("E:\\PhoneBackup\\Memes");
+				Path path = Paths.get("E:\\PRIMARY_SORT\\");
 				traverseDir(path);
 			} catch (Exception e) {
 				LOGGER.error(e.toString(), e);
@@ -46,6 +46,9 @@ public class MemeFolderRenamer {
 
 					String filePath = entry.toString();
 
+					
+//						System.out.println(filePath);
+					
 					// entry.
 
 					String[] fileParts = filePath.split("\\\\");
@@ -62,10 +65,12 @@ public class MemeFolderRenamer {
 					}
 
 					String padNo = String.format("%010d", fileCount);
-					String newFileNameToUse = filePrefixNew + "_b_" + padNo + "." + nFileExtension.toLowerCase();
+					String newFileNameToUse = filePrefixNew + " index t" + padNo + "." + nFileExtension.toLowerCase();
 
 					String renameFile = "rename \"" + filePath + "\" \"" + newFileNameToUse + "\"";
 
+					
+					
 					System.out.println(renameFile);
 					// LOGGER.info(renameFile);
 
