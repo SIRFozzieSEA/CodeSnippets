@@ -65,7 +65,7 @@ public class MemeFolderRenamer {
 					}
 
 					String padNo = String.format("%010d", fileCount);
-					String newFileNameToUse = filePrefixNew + " index t" + padNo + "." + nFileExtension.toLowerCase();
+					String newFileNameToUse = filePrefixNew + " index q" + padNo + "." + nFileExtension.toLowerCase();
 
 					String renameFile = "rename \"" + filePath + "\" \"" + newFileNameToUse + "\"";
 
