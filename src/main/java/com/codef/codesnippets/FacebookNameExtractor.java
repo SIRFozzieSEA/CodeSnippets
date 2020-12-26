@@ -25,7 +25,8 @@ public class FacebookNameExtractor {
 					&& singleName.indexOf("Hampshire") == -1 && singleName.indexOf("Research") == -1
 					&& singleName.indexOf("College") == -1 && singleName.indexOf("Make Up Forever") == -1
 					&& singleName.indexOf("School") == -1 && singleName.indexOf("University") == -1
-					&& singleName.indexOf("Self-Employed") == -1 && singleName.indexOf("Consulting Firm") == -1) {
+					&& singleName.indexOf("Self-Employed") == -1 && singleName.indexOf("Seattle") == -1
+					&& singleName.indexOf("Consulting Firm") == -1) {
 				facebookNamesFinal.add(singleName);
 			}
 		}
