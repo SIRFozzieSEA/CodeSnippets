@@ -12,6 +12,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import com.codef.xsalt.utils.XSaLTDataUtils;
+import com.codef.xsalt.utils.XSaLTStringUtils;
 
 public class GunStuff {
 
@@ -118,8 +119,13 @@ public class GunStuff {
 		sql = "SELECT r.NICKNAME, r.CALIBER, SUM(p.NO_OF_ROUNDS) as TOTAL_ROUNDS, MAX(p.DATE_FIRED) AS LAST_DATE_FIRED "
 				+ "FROM gun_cleaning_reporting p LEFT JOIN gun_registry r on p.GUN_PK = r.GUN_PK "
 				+ "group by r.NICKNAME order by r.NICKNAME ;";
+		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql, "E:\\CleaningReport_" + XSaLTStringUtils.getDateString() + ".tab");
 		
-		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql, "E:\\bobo.tab");
+		sql = "SELECT r.NICKNAME, r.CALIBER, MAX(p.DATE_FIRED) AS LAST_DATE_FIRED "
+				+ "FROM gun_shooting_sessions p LEFT JOIN gun_registry r on p.GUN_PK = r.GUN_PK "
+				+ "group by r.NICKNAME order by r.NICKNAME ;";
+		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql, "E:\\LastShotReport_" + XSaLTStringUtils.getDateString() + ".tab");
+		
 
 	}
 
