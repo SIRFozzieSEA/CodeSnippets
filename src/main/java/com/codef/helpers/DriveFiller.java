@@ -1,4 +1,4 @@
-package com.codef.codesnippets;
+package com.codef.helpers;
 
 import java.io.File;
 import java.nio.file.Files;

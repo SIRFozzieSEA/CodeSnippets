@@ -1,4 +1,4 @@
-package com.codef.codesnippets;
+package com.codef.helpers;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -17,22 +17,21 @@ public class ImageCropper {
 
 	private static final boolean enableMainMethod = false;
 
+	private static final String imageDirectory = "E:\\fly2";
+
 	public static void main(String[] args) throws IOException {
 
 		if (enableMainMethod) {
 
-			try (Stream<Path> walk = Files.walk(Paths.get("E:\\fly2"))) {
+			try (Stream<Path> walk = Files.walk(Paths.get(imageDirectory))) {
 
 				List<String> myList = walk.map(x -> x.toString()).filter(f -> f.endsWith(".JPG"))
 						.collect(Collectors.toList());
 
 				for (Iterator<String> iterator = myList.iterator(); iterator.hasNext();) {
-
 					String imageFileName = (String) iterator.next();
-
 					File imageFile = new File(imageFileName);
 					BufferedImage bufferedImage = ImageIO.read(imageFile);
-
 					File pathFile = new File(imageFileName);
 
 					if (imageFileName.contains("land")) {
@@ -42,7 +41,6 @@ public class ImageCropper {
 						// portrait
 						ImageIO.write(cropImage(bufferedImage, 179, 466, 400, 600), "jpg", pathFile);
 					}
-
 				}
 
 			} catch (IOException e) {

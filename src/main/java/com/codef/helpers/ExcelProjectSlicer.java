@@ -1,4 +1,4 @@
-package com.codef.codesnippets;
+package com.codef.helpers;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -26,16 +26,29 @@ import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 
 public class ExcelProjectSlicer {
 
+	/*
+	 * This project will take a screen capture split it into individual files and
+	 * then insert it into an Excel spreadsheet. This was used to annotate some code
+	 * that was generated easily in a worksheet format.
+	 * 
+	 * See sample results in:
+	 * C:\GitRepos\CodeSnippets\src\main\resources\excelprojectslicer\ExcelProjectSlicer_Sample_Worksheet.xlsx
+	 */
+
 	private static final boolean enableMainMethod = false;
+
+	private static final String outputFolder = "E:/_SORT/";
+	private static final String outputExcelFileName = "E:/_SORT/worksheet.xlsx";
 
 	private static final Logger LOGGER = Logger.getLogger(ExcelProjectSlicer.class.getName());
 
 	public static void main(String[] args) throws URISyntaxException {
 
 		if (enableMainMethod) {
-			Path imageFileName = Paths.get(ClassLoader.getSystemResource("excelprojectslicer/SampleEclipseProject.JPG").toURI());
-			List<String> imageFileNames = doImages(imageFileName, "c:/_SORT/slices/", 18, 2);
-			doExcelSheet("c:/_SORT/worksheet.xlsx", imageFileName, imageFileNames);
+			Path imageFileName = Paths
+					.get(ClassLoader.getSystemResource("excelprojectslicer/SampleEclipseProject.JPG").toURI());
+			List<String> imageFileNames = doImages(imageFileName, outputFolder, 18, 2);
+			doExcelSheet(outputExcelFileName, imageFileName, imageFileNames);
 		}
 
 	}
