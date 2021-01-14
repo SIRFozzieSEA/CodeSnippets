@@ -49,7 +49,7 @@ public class GunStuff {
 
 		while (result.next()) {
 			PreparedStatement ps = XSaLTDataUtils.createPreparedStatementForReturnKeys(connMySQL,
-					"insert into gun_registry (SERIAL, NICKNAME, MAKE, MODEL, CALIBER, BOUGHT_DATE, ORIGINAL_COST) values (?,?,?,?,?,?,?)");
+					"insert into gun_registry (SERIAL, NICKNAME, MAKE, MODEL, CALIBER, BOUGHT_DATE, ORIGINAL_COST, SIGHTED_DATE) values (?,?,?,?,?,?,?,?)");
 			ps.setString(1, result.getString("SerialNo"));
 			ps.setString(2, result.getString("GunName"));
 			ps.setString(3, result.getString("GunMake"));
@@ -57,6 +57,7 @@ public class GunStuff {
 			ps.setString(5, result.getString("Caliber"));
 			ps.setString(6, result.getString("BoughtDate"));
 			ps.setString(7, result.getString("Cost"));
+			ps.setString(8, result.getString("SightedDate"));
 
 			String keyForNewGun = XSaLTDataUtils.executePreparedStatementGetKey(connMySQL, ps);
 			generatedKeysForGunNames.put(result.getString("GunName"), Long.parseLong(keyForNewGun));
@@ -176,6 +177,7 @@ public class GunStuff {
 		sCreateTableSQL.append("  `MAKE` varchar(30)  default '',");
 		sCreateTableSQL.append("  `MODEL` varchar(50)  default '',");
 		sCreateTableSQL.append("  `CALIBER` varchar(10)  default '',");
+		sCreateTableSQL.append("  `SIGHTED_DATE` varchar(20)  default '',");
 		sCreateTableSQL.append("  `BOUGHT_DATE` DATETIME,");
 		sCreateTableSQL.append("  `ORIGINAL_COST` DOUBLE (15,2) default '0',");
 		sCreateTableSQL.append("  PRIMARY KEY  (`GUN_PK`)");
