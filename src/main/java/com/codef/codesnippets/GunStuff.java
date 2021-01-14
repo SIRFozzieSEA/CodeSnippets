@@ -20,14 +20,18 @@ public class GunStuff {
 			throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, IOException {
 
 		Connection connAccess = XSaLTDataUtils.getAccessConnection("E:\\Documents\\Personal\\Gun Stuff\\GunData.accdb");
-		Connection connMySQL = XSaLTDataUtils.getMySQLConnection("localhost", "gun_app", "root", "boboshan69!");
+//		Connection connMySQL = XSaLTDataUtils.getMySQLConnection("localhost", "gun_app", "root", "boboshan69!");
+		Connection connH2 = XSaLTDataUtils.getLocalH2Connection("~/GunData", "sa", "");
 
-		makeTables(connMySQL);
-		loadTablesFromAccess(connAccess, connMySQL);
-		buildCleaningReport(connMySQL);
+//		makeTablesMySQL(connMySQL);
+		makeTablesH2(connH2);
+
+		loadTablesFromAccess(connAccess, connH2);
+		buildCleaningReport(connH2);
 
 		connAccess.close();
-		connMySQL.close();
+//		connMySQL.close();
+		connH2.close();
 
 		System.out.println("DONE!");
 
@@ -120,17 +124,18 @@ public class GunStuff {
 		sql = "SELECT r.NICKNAME, r.CALIBER, SUM(p.NO_OF_ROUNDS) as TOTAL_ROUNDS, MAX(p.DATE_FIRED) AS LAST_DATE_FIRED "
 				+ "FROM gun_cleaning_reporting p LEFT JOIN gun_registry r on p.GUN_PK = r.GUN_PK "
 				+ "group by r.NICKNAME order by r.NICKNAME ;";
-		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql, "E:\\CleaningReport_" + XSaLTStringUtils.getDateString() + ".tab");
-		
+		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql,
+				"E:\\CleaningReport_" + XSaLTStringUtils.getDateString() + ".tab");
+
 		sql = "SELECT r.NICKNAME, r.CALIBER, MAX(p.DATE_FIRED) AS LAST_DATE_FIRED "
 				+ "FROM gun_shooting_sessions p LEFT JOIN gun_registry r on p.GUN_PK = r.GUN_PK "
 				+ "group by r.NICKNAME order by r.NICKNAME ;";
-		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql, "E:\\LastShotReport_" + XSaLTStringUtils.getDateString() + ".tab");
-		
+		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql,
+				"E:\\LastShotReport_" + XSaLTStringUtils.getDateString() + ".tab");
 
 	}
 
-	public static void makeTables(Connection connMySQL) throws SQLException {
+	public static void makeTablesMySQL(Connection connMySQL) throws SQLException {
 
 		Set<String> tableNames = new LinkedHashSet<String>();
 		tableNames.add("gun_registry");
@@ -183,6 +188,58 @@ public class GunStuff {
 		sCreateTableSQL.append("  PRIMARY KEY  (`GUN_PK`)");
 		sCreateTableSQL.append(") ENGINE=InnoDB");
 		XSaLTDataUtils.executeSQL(connMySQL, sCreateTableSQL.toString());
+
+	}
+
+	public static void makeTablesH2(Connection connH2) throws SQLException {
+
+		Set<String> tableNames = new LinkedHashSet<String>();
+		tableNames.add("gun_registry");
+		tableNames.add("gun_shooting_sessions");
+		tableNames.add("gun_cleaning_sessions");
+		tableNames.add("gun_cleaning_reporting");
+		dropTables(connH2, tableNames);
+
+		StringBuffer sCreateTableSQL = new StringBuffer();
+		sCreateTableSQL.append("CREATE TABLE `gun_cleaning_sessions` (");
+		sCreateTableSQL.append("  `CLEAN_PK` INT AUTO_INCREMENT PRIMARY KEY,");
+		sCreateTableSQL.append("  `GUN_PK` INT UNSIGNED,");
+		sCreateTableSQL.append("  `DATE_CLEANED` TIMESTAMP");
+		sCreateTableSQL.append(")");
+		XSaLTDataUtils.executeSQL(connH2, sCreateTableSQL.toString());
+
+		sCreateTableSQL = new StringBuffer();
+		sCreateTableSQL.append("CREATE TABLE `gun_shooting_sessions` (");
+		sCreateTableSQL.append("  `SHOOT_PK` INT AUTO_INCREMENT PRIMARY KEY,");
+		sCreateTableSQL.append("  `GUN_PK` INT UNSIGNED,");
+		sCreateTableSQL.append("  `CALIBER` varchar(10)  default '',");
+		sCreateTableSQL.append("  `NO_OF_ROUNDS` INT UNSIGNED default '0',");
+		sCreateTableSQL.append("  `DATE_FIRED` TIMESTAMP");
+		sCreateTableSQL.append(")");
+		XSaLTDataUtils.executeSQL(connH2, sCreateTableSQL.toString());
+
+		sCreateTableSQL = new StringBuffer();
+		sCreateTableSQL.append("CREATE TABLE `gun_cleaning_reporting` (");
+		sCreateTableSQL.append("  `CLEAN_PK` INT AUTO_INCREMENT PRIMARY KEY,");
+		sCreateTableSQL.append("  `GUN_PK` INT UNSIGNED,");
+		sCreateTableSQL.append("  `NO_OF_ROUNDS` INT UNSIGNED default '0',");
+		sCreateTableSQL.append("  `DATE_FIRED` TIMESTAMP");
+		sCreateTableSQL.append(")");
+		XSaLTDataUtils.executeSQL(connH2, sCreateTableSQL.toString());
+
+		sCreateTableSQL = new StringBuffer();
+		sCreateTableSQL.append("CREATE TABLE `gun_registry` (");
+		sCreateTableSQL.append("  `GUN_PK` INT AUTO_INCREMENT PRIMARY KEY,");
+		sCreateTableSQL.append("  `SERIAL` varchar(20)  default '',");
+		sCreateTableSQL.append("  `NICKNAME` varchar(20)  default '',");
+		sCreateTableSQL.append("  `MAKE` varchar(30)  default '',");
+		sCreateTableSQL.append("  `MODEL` varchar(50)  default '',");
+		sCreateTableSQL.append("  `CALIBER` varchar(10)  default '',");
+		sCreateTableSQL.append("  `SIGHTED_DATE` varchar(20)  default '',");
+		sCreateTableSQL.append("  `BOUGHT_DATE` TIMESTAMP,");
+		sCreateTableSQL.append("  `ORIGINAL_COST` DECIMAL(15,2) default '0'");
+		sCreateTableSQL.append(")");
+		XSaLTDataUtils.executeSQL(connH2, sCreateTableSQL.toString());
 
 	}
 
