@@ -20,18 +20,20 @@ public class GunStuff {
 			throws ClassNotFoundException, SQLException, InstantiationException, IllegalAccessException, IOException {
 
 		Connection connAccess = XSaLTDataUtils.getAccessConnection("E:\\Documents\\Personal\\Gun Stuff\\GunData.accdb");
-//		Connection connMySQL = XSaLTDataUtils.getMySQLConnection("localhost", "gun_app", "root", "boboshan69!");
-		Connection connH2 = XSaLTDataUtils.getLocalH2Connection("~/GunData", "sa", "");
+		Connection connMySQL = XSaLTDataUtils.getMySQLConnection("localhost", "gun_app", "root", "boboshan69!");
+		makeTablesMySQL(connMySQL);
+		loadTablesFromAccess(connAccess, connMySQL);
+		buildCleaningReport(connMySQL);
+		buildShotReport(connMySQL);
+		connMySQL.close();
 
-//		makeTablesMySQL(connMySQL);
-		makeTablesH2(connH2);
-
-		loadTablesFromAccess(connAccess, connH2);
-		buildCleaningReport(connH2);
+//		Connection connH2 = XSaLTDataUtils.getLocalH2Connection("~/GunData", "sa", "");
+//		makeTablesH2(connH2);
+//		loadTablesFromAccess(connAccess, connH2);
+//		buildCleaningReport(connH2);
+//		connH2.close();
 
 		connAccess.close();
-//		connMySQL.close();
-		connH2.close();
 
 		System.out.println("DONE!");
 
@@ -127,13 +129,18 @@ public class GunStuff {
 		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql,
 				"E:\\CleaningReport_" + XSaLTStringUtils.getDateString() + ".tab");
 
-		sql = "SELECT r.NICKNAME, r.CALIBER, MAX(p.DATE_FIRED) AS LAST_DATE_FIRED "
+	}
+	
+	public static void buildShotReport(Connection connMySQL) throws SQLException, IOException {
+
+		String sql = "SELECT r.NICKNAME, r.CALIBER, MAX(p.DATE_FIRED) AS LAST_DATE_FIRED, sum(NO_OF_ROUNDS) AS TOTAL_ROUNDS_FIRE "
 				+ "FROM gun_shooting_sessions p LEFT JOIN gun_registry r on p.GUN_PK = r.GUN_PK "
 				+ "group by r.NICKNAME order by r.NICKNAME ;";
 		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql,
 				"E:\\LastShotReport_" + XSaLTStringUtils.getDateString() + ".tab");
 
 	}
+	
 
 	public static void makeTablesMySQL(Connection connMySQL) throws SQLException {
 
