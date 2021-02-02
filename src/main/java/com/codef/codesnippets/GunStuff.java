@@ -25,6 +25,7 @@ public class GunStuff {
 		loadTablesFromAccess(connAccess, connMySQL);
 		buildCleaningReport(connMySQL);
 		buildShotReport(connMySQL);
+		buildShotReportByCaliber(connMySQL);
 		connMySQL.close();
 
 //		Connection connH2 = XSaLTDataUtils.getLocalH2Connection("~/GunData", "sa", "");
@@ -123,7 +124,7 @@ public class GunStuff {
 
 		}
 
-		sql = "SELECT r.NICKNAME, r.CALIBER, SUM(p.NO_OF_ROUNDS) as TOTAL_ROUNDS, MAX(p.DATE_FIRED) AS LAST_DATE_FIRED "
+		sql = "SELECT r.NICKNAME, r.CALIBER, SUM(p.NO_OF_ROUNDS) as TOTAL_ROUNDS_FIRED, MAX(p.DATE_FIRED) AS LAST_DATE_FIRED "
 				+ "FROM gun_cleaning_reporting p LEFT JOIN gun_registry r on p.GUN_PK = r.GUN_PK "
 				+ "group by r.NICKNAME order by r.NICKNAME ;";
 		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql,
@@ -133,11 +134,20 @@ public class GunStuff {
 	
 	public static void buildShotReport(Connection connMySQL) throws SQLException, IOException {
 
-		String sql = "SELECT r.NICKNAME, r.CALIBER, MAX(p.DATE_FIRED) AS LAST_DATE_FIRED, sum(NO_OF_ROUNDS) AS TOTAL_ROUNDS_FIRE "
+		String sql = "SELECT r.NICKNAME, r.CALIBER, MAX(p.DATE_FIRED) AS LAST_DATE_FIRED, sum(NO_OF_ROUNDS) AS TOTAL_ROUNDS_FIRED "
 				+ "FROM gun_shooting_sessions p LEFT JOIN gun_registry r on p.GUN_PK = r.GUN_PK "
 				+ "group by r.NICKNAME order by r.NICKNAME ;";
 		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql,
 				"E:\\LastShotReport_" + XSaLTStringUtils.getDateString() + ".tab");
+
+	}
+	
+	public static void buildShotReportByCaliber(Connection connMySQL) throws SQLException, IOException {
+
+		String sql = "SELECT CALIBER, SUM(NO_OF_ROUNDS) AS TOTAL_ROUNDS_FIRED FROM gun_app.gun_shooting_sessions "
+				+ "GROUP BY CALIBER ORDER BY CALIBER;";
+		XSaLTDataUtils.exportSQLAsTabDelimitedDataFile(connMySQL, sql,
+				"E:\\LastShotReportByCaliber_" + XSaLTStringUtils.getDateString() + ".tab");
 
 	}
 	
