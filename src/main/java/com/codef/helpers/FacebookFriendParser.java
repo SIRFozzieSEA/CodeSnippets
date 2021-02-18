@@ -98,7 +98,7 @@ public class FacebookFriendParser {
 
 		Set<String> facebookNamesFinal = new TreeSet<String>();
 		String[] facebookNames = copyPasteArea.getText().split("\\n");
-
+		
 		for (String singleName : facebookNames) {
 			if (singleName.indexOf("mutual") == -1 && singleName.indexOf("Works at") == -1
 					&& singleName.indexOf("University of") == -1 && singleName.indexOf("Manager") == -1
@@ -108,7 +108,7 @@ public class FacebookFriendParser {
 					&& singleName.indexOf("College") == -1 && singleName.indexOf("Make Up Forever") == -1
 					&& singleName.indexOf("School") == -1 && singleName.indexOf("University") == -1
 					&& singleName.indexOf("Self-Employed") == -1 && singleName.indexOf("Seattle") == -1
-					&& singleName.indexOf("Consulting Firm") == -1) {
+					&& singleName.indexOf("Consulting Firm") == -1 && singleName.indexOf("Community Director") == -1) {
 				facebookNamesFinal.add(singleName);
 			}
 		}

@@ -26,6 +26,7 @@ public class GunStuff {
 		buildCleaningReport(connMySQL);
 		buildShotReport(connMySQL);
 		buildShotReportByCaliber(connMySQL);
+		showDatabaseRowSummary(connMySQL);
 		connMySQL.close();
 
 //		Connection connH2 = XSaLTDataUtils.getLocalH2Connection("~/GunData", "sa", "");
@@ -151,7 +152,15 @@ public class GunStuff {
 
 	}
 	
-
+	public static void showDatabaseRowSummary(Connection connMySQL) throws SQLException {
+		String tableName = "gun_registry";
+		System.out.println("Table " + tableName + ": " + XSaLTDataUtils.getRowsCountInDataTable(connMySQL, tableName));
+		tableName = "gun_shooting_sessions";
+		System.out.println("Table " + tableName + ": " + XSaLTDataUtils.getRowsCountInDataTable(connMySQL, tableName));
+		tableName = "gun_cleaning_sessions";
+		System.out.println("Table " + tableName + ": " + XSaLTDataUtils.getRowsCountInDataTable(connMySQL, tableName));
+	}
+	
 	public static void makeTablesMySQL(Connection connMySQL) throws SQLException {
 
 		Set<String> tableNames = new LinkedHashSet<String>();
