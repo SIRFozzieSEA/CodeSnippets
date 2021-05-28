@@ -31,8 +31,6 @@ public class MemeRenamerFileVisitor extends XSaLTFileVisitor {
 	@Override
 	public void visitFileCode(String filePath) {
 
-		int finalFiles = 0;
-		
 		String[] fileParts = filePath.split("\\\\");
 
 		String folderName = fileParts[fileParts.length - 2];
@@ -52,16 +50,14 @@ public class MemeRenamerFileVisitor extends XSaLTFileVisitor {
 
 		if (!nFileExtension.toLowerCase().equals("ini") && !nFileExtension.toLowerCase().equals("db")) {
 			
-			finalFiles = finalFiles + 1;
-			
 			String targetFile = filePath.replace(sourceFolder, targetFolder).replace(fileName, newFileNameToUse);
-			System.out.println(finalFiles + " --> from: " + filePath + " to: " + targetFile);
+			System.out.println(" --> from: " + filePath + " to: " + targetFile);
 
 			try {
 				XSaLTFileSystemUtils.copyFile(filePath, targetFile);
 				XSaLTFileSystemUtils.deleteFile(filePath, false);
 			} catch (IOException e) {
-				// e.printStackTrace();
+				e.printStackTrace();
 			}
 
 		
