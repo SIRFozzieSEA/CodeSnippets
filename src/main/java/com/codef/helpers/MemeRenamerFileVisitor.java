@@ -5,10 +5,14 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.apache.log4j.Logger;
+
 import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 import com.codef.xsalt.utils.XSaLTFileVisitor;
 
 public class MemeRenamerFileVisitor extends XSaLTFileVisitor {
+
+	private static final Logger LOGGER = Logger.getLogger(MemeRenamerFileVisitor.class.getName());
 
 	private static final String sourceFolder = "C:\\_PRIMARY_SORT\\Memes";
 	private static final String targetFolder = "E:\\Memes";
@@ -54,19 +58,19 @@ public class MemeRenamerFileVisitor extends XSaLTFileVisitor {
 
 			try {
 				XSaLTFileSystemUtils.copyFile(filePath, targetFile);
-				System.out.println("  Copied from: " + filePath + " to: " + targetFile);
+				LOGGER.info("  Copied from: " + filePath + " to: " + targetFile);
 			} catch (IOException e) {
-				System.out.println(" Duplicate in: " + filePath + " to: " + targetFile);
+				LOGGER.info(" Duplicate in: " + filePath + " to: " + targetFile);
 			}
 
 			try {
 				XSaLTFileSystemUtils.deleteFile(filePath, false);
-				System.out.println("      Deleted: " + filePath + " to: " + targetFile);
+				LOGGER.info("      Deleted: " + filePath + " to: " + targetFile);
 			} catch (Exception e) {
-				System.out.println("Cannot Delete: " + filePath + " to: " + targetFile);
+				LOGGER.info("Cannot Delete: " + filePath + " to: " + targetFile);
 			}
-			
-			System.out.println("");
+
+			LOGGER.info("");
 
 		}
 
