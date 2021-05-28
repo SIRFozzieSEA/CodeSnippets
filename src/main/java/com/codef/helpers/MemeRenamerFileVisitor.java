@@ -49,18 +49,24 @@ public class MemeRenamerFileVisitor extends XSaLTFileVisitor {
 				+ nFileExtension.toLowerCase();
 
 		if (!nFileExtension.toLowerCase().equals("ini") && !nFileExtension.toLowerCase().equals("db")) {
-			
+
 			String targetFile = filePath.replace(sourceFolder, targetFolder).replace(fileName, newFileNameToUse);
-			System.out.println(" --> from: " + filePath + " to: " + targetFile);
 
 			try {
 				XSaLTFileSystemUtils.copyFile(filePath, targetFile);
-				XSaLTFileSystemUtils.deleteFile(filePath, false);
+				System.out.println("  Copied from: " + filePath + " to: " + targetFile);
 			} catch (IOException e) {
-				e.printStackTrace();
+				System.out.println(" Duplicate in: " + filePath + " to: " + targetFile);
 			}
 
-		
+			try {
+				XSaLTFileSystemUtils.deleteFile(filePath, false);
+				System.out.println("      Deleted: " + filePath + " to: " + targetFile);
+			} catch (Exception e) {
+				System.out.println("Cannot Delete: " + filePath + " to: " + targetFile);
+			}
+			
+			System.out.println("");
 
 		}
 
