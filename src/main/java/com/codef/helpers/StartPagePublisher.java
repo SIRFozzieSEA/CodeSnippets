@@ -38,6 +38,8 @@ public class StartPagePublisher {
 	public static String BASE_PRICING_QUERY = "$500 - $749";
 	public static String BASE_CALIBER = "product.specs.Caliber=";
 	public static String BASE_MANUFACTURERS = "product.manufacturer=";
+	public static String BASE_SUBCATEGORY = "product.subCategory=";
+	public static String BASE_SUBCATEGORY_QUERY = "SEMI AUTO,REVOLVER";
 
 	private String BASE_FTP_HOSTNAME = "";
 	private String BASE_FTP_USERNAME = "";
@@ -182,6 +184,7 @@ public class StartPagePublisher {
 
 			notInterestedManufacturerList.add(Pattern.compile(".*heizer.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile(".*seecamp.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("arex.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("altor.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("american tactical.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("canik.*", Pattern.CASE_INSENSITIVE));
@@ -189,10 +192,12 @@ public class StartPagePublisher {
 			notInterestedManufacturerList.add(Pattern.compile("cz.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("eaa.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("feg.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("fima.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("fn.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("girsan.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("glock.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("high-point.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("ifg.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("kahr.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("kimber.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("luger.*", Pattern.CASE_INSENSITIVE));
@@ -209,6 +214,8 @@ public class StartPagePublisher {
 			notInterestedManufacturerList.add(Pattern.compile("tanfoglio.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("tara.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("taurus.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("tisas.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("zastava.*", Pattern.CASE_INSENSITIVE));
 			notInterestedManufacturerList.add(Pattern.compile("zev.*", Pattern.CASE_INSENSITIVE));
 
 			if (mode.equals("PREF")) {
@@ -307,7 +314,11 @@ public class StartPagePublisher {
 		sb.append(
 				URLEncoder.encode(filteredManufacturer.toString().replace(", ", ","), StandardCharsets.UTF_8.toString())
 						.replace("+", "%20"));
-
+		sb.append("&");
+		sb.append(BASE_SUBCATEGORY);
+		sb.append(URLEncoder
+				.encode(BASE_SUBCATEGORY_QUERY.toString().replace(", ", ","), StandardCharsets.UTF_8.toString())
+				.replace("+", "%20"));
 		return BASE_QUERY + sb.toString();
 
 	}
