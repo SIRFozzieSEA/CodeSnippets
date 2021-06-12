@@ -1,10 +1,7 @@
 package com.codef.codesnippets;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -14,8 +11,13 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+import org.w3c.dom.Document;
+
+import com.codef.xsalt.utils.XSaLTFTPClient;
 import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 import com.codef.xsalt.utils.XSaLTNetUtils;
+import com.codef.xsalt.utils.XSaLTXMLUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,9 +26,12 @@ public class JsonParsingGunsCom {
 
 	/// https://attacomsian.com/blog/jackson-json-node-tree-model
 	/// https://mkyong.com/tutorials/java-json-tutorials/
+	
+	// TODO:  Get URL and credentials from password file
+
+	private static final Logger LOGGER = Logger.getLogger(JsonParsingGunsCom.class.getName());
 
 	public static String BASE_FACET_QUERY = "https://www.guns.com/catalog/search/listing?facets=%7B%22outlet%22:null,%22condition%22:null,%22compliance%22:%22%22,%22outletOnly%22:null%7D&facetGroup=%7B%22dealer%22:%22%22,%22product.upc%22:%22%22,%22product.rebates%22:%22%22,%22product.category%22:%22HANDGUNS%22,%22product.collections%22:%22%22,%22product.subCategory%22:%22%22,%22product.manufacturer%22:%22%22%7D&filters=[]&sortBy=listing_weight";
-
 	public static String BASE_QUERY = "https://www.guns.com/firearms/handguns/all?";
 	public static String BASE_STOCK = "availability=";
 	public static String BASE_STOCK_QUERY = "In stock";
@@ -35,23 +40,98 @@ public class JsonParsingGunsCom {
 	public static String BASE_CALIBER = "product.specs.Caliber=";
 	public static String BASE_MANUFACTURERS = "product.manufacturer=";
 
+	public static String BASE_FTP_HOSTNAME = "216.239.139.15";
+	public static String BASE_TEMPLATE_PATH = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\";
+	public static String BASE_CREDENTIALS_FILE = "E:\\Documents\\Personal\\Site Passwords.xml";
+	public static String BASE_TEMPLATE_FILENAME = "StartPage_TEMPLATE.html";
+	public static String TEMPLATE_REPLACE_TAG = "GUNS_PREFERRED_URL";
+
 	public static String facetsContent = "";
+	public static String templateContent = "";
 	public static List<Pattern> notInterestedManufacturerList = new ArrayList<Pattern>();
 	public static List<Pattern> notInterestedCaliberList = new ArrayList<Pattern>();
+	public static String preferredUrl = "";
 
 	public static void main(String[] args) {
+
 		JsonParsingGunsCom jpgc = new JsonParsingGunsCom();
-		jpgc.populateGunsDotComFacets();
-		jpgc.populateNotInterestedMaps();
-		jpgc.doStuff();
+
+//		jpgc.populateFacetsContent();
+//		if (!facetsContent.equals("")) {
+//			jpgc.populateNotInterestedMaps();
+//			jpgc.makePreferredUrl();
+//			jpgc.populateTemplateContent(preferredUrl);
+//		} else {
+//			LOGGER.error("Could not download facets data from Guns.com");
+//		}
+//
+//		jpgc.transferFileToFtp();
+		
+		jpgc.populateCreds();
+		
+
+
+		LOGGER.info("JsonParsingGunsCom COMPLETED!");
+
 	}
 
-	private void populateGunsDotComFacets() {
+	private void populateFacetsContent() {
 		try {
 			facetsContent = XSaLTNetUtils.readStringFromURL(BASE_FACET_QUERY);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void populateTemplateContent(String newUrl) {
+		try {
+			templateContent = XSaLTFileSystemUtils.readFile(BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME)
+					.replaceAll(TEMPLATE_REPLACE_TAG, newUrl);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void populateCreds() {
+		
+		try {
+			Document credsDoc = XSaLTXMLUtils.loadXMLDocumentFromFile(BASE_CREDENTIALS_FILE);
+			
+			System.out.println(XSaLTXMLUtils.xmlDocumentToString(credsDoc, true));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	private void transferFileToFtp() {
+
+		try {
+			XSaLTFileSystemUtils.writeStringToFile(templateContent,
+					BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME + ".tmp");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			XSaLTFTPClient ftp = new XSaLTFTPClient(BASE_FTP_HOSTNAME, "pupfu001", "k4N#m7Sc42SS");
+			ftp.connectFTP();
+			ftp.login();
+			ftp.setPassiveTranferMode(false);
+			ftp.storeFile(BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME + ".tmp",
+					"/fozden.com/www/" + BASE_TEMPLATE_FILENAME.replace("_TEMPLATE", ""));
+			ftp.disconnectFTP();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+
+		try {
+			XSaLTFileSystemUtils.deleteFileNew(BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME + ".tmp");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	private void populateNotInterestedMaps() {
@@ -94,7 +174,7 @@ public class JsonParsingGunsCom {
 
 	}
 
-	private void doStuff() {
+	private void makePreferredUrl() {
 
 		try {
 
@@ -120,7 +200,7 @@ public class JsonParsingGunsCom {
 					mapper.convertValue(caliberNodes, new TypeReference<Map<String, Integer>>() {
 					}), notInterestedCaliberList);
 
-			System.out.println(getFinalUrl(filteredManufacturer, filteredCaliber));
+			preferredUrl = getFinalUrl(filteredManufacturer, filteredCaliber);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -185,19 +265,6 @@ public class JsonParsingGunsCom {
 			}
 		}
 		return filteredSet;
-	}
-	
-	
-	private String readResourceFile(String pathToFile) throws URISyntaxException, IOException {
-
-		ClassLoader classLoader = getClass().getClassLoader();
-		URL resource = classLoader.getResource(pathToFile);
-		if (resource == null) {
-			throw new IllegalArgumentException("file not found! " + pathToFile);
-		} else {
-			return XSaLTFileSystemUtils.readFile(new File(resource.toURI()));
-		}
-
 	}
 
 }
