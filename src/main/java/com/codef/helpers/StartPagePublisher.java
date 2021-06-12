@@ -39,49 +39,61 @@ public class StartPagePublisher {
 	public static String BASE_CALIBER = "product.specs.Caliber=";
 	public static String BASE_MANUFACTURERS = "product.manufacturer=";
 
-	public static String BASE_FTP_HOSTNAME = "";
-	public static String BASE_FTP_USERNAME = "";
-	public static String BASE_FTP_PASSWORD = "";
+	private String BASE_FTP_HOSTNAME = "";
+	private String BASE_FTP_USERNAME = "";
+	private String BASE_FTP_PASSWORD = "";
 
+	public static List<String> urlMode;
 	public static String BASE_TEMPLATE_PATH = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\";
 	public static String BASE_CREDENTIALS_FILE = "E:\\Documents\\Personal\\Site Passwords.xml";
 	public static String BASE_TEMPLATE_FILENAME = "StartPage_TEMPLATE.html";
-	public static String TEMPLATE_REPLACE_TAG = "GUNS_PREFERRED_URL";
+	public static String TEMPLATE_REPLACE_TAG_PREF = "GUNS_PREFERRED_URL";
+	public static String TEMPLATE_REPLACE_TAG_FULL = "GUNS_FULL_URL";
 
-	public static String facetsContent = "";
-	public static String templateContent = "";
-	public static List<Pattern> notInterestedManufacturerList = new ArrayList<Pattern>();
-	public static List<Pattern> notInterestedCaliberList = new ArrayList<Pattern>();
-	public static String preferredUrl = "";
+	private String facetsContent = "";
+	private String templateContent = "";
+	private List<Pattern> notInterestedManufacturerList;
+	private List<Pattern> notInterestedCaliberList;
+	private String preferredUrl = "";
+	private String fullUrl = "";
 
-	public static String TEST_TEMPLATE_AND_PUBLISH = "";
+	private String TEST_TEMPLATE_AND_PUBLISH = "";
 
 	public static void main(String[] args) {
 
 		StartPagePublisher spp = new StartPagePublisher();
-
+		spp.setUpModes();
 		spp.populateFacetsContent();
-		if (!facetsContent.equals("")) {
-			if (TEST_TEMPLATE_AND_PUBLISH.equals("")) {
-				spp.populateNotInterestedMaps();
-				spp.makePreferredUrl();
-			} else {
-				preferredUrl = TEST_TEMPLATE_AND_PUBLISH;
-			}
-			spp.populateTemplateContent(preferredUrl);
-		} else {
-			LOGGER.error("Could not download facets data from Guns.com");
-		}
 
-		spp.populateCreds();
-		if (BASE_FTP_HOSTNAME.equals("") && BASE_FTP_USERNAME.equals("") && BASE_FTP_PASSWORD.equals("")) {
-			LOGGER.error("Could not fully populate FTP creds for transfer");
-		} else {
+		if (spp.isFacetsPopulated()) {
+
+			spp.populateTemplateContent();
+
+			for (String mode : urlMode) {
+				spp.populateInterestMaps(mode);
+				spp.makeUrl(mode);
+				spp.substituteTags(mode);
+			}
+
+			spp.populateCreds();
 			spp.transferFileToFtp();
+
+		} else {
+			LOGGER.error("Could not download facets data from Guns.com - STOPPING!");
 		}
 
 		LOGGER.info("JsonParsingGunsCom COMPLETED!");
 
+	}
+
+	private boolean isFacetsPopulated() {
+		return !facetsContent.equals("");
+	}
+
+	private void setUpModes() {
+		urlMode = new ArrayList<String>();
+		urlMode.add("PREF");
+		urlMode.add("FULL");
 	}
 
 	private void populateFacetsContent() {
@@ -96,12 +108,19 @@ public class StartPagePublisher {
 		}
 	}
 
-	private void populateTemplateContent(String newUrl) {
+	private void populateTemplateContent() {
 		try {
-			templateContent = XSaLTFileSystemUtils.readFile(BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME)
-					.replaceAll(TEMPLATE_REPLACE_TAG, newUrl);
+			templateContent = XSaLTFileSystemUtils.readFile(BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME);
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void substituteTags(String mode) {
+		if (mode.equals("PREF")) {
+			templateContent = templateContent.replaceAll(TEMPLATE_REPLACE_TAG_PREF, preferredUrl);
+		} else {
+			templateContent = templateContent.replaceAll(TEMPLATE_REPLACE_TAG_FULL, fullUrl);
 		}
 	}
 
@@ -121,103 +140,151 @@ public class StartPagePublisher {
 
 	private void transferFileToFtp() {
 
-		try {
-			XSaLTFileSystemUtils.writeStringToFile(templateContent,
-					BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME + ".tmp");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		if (BASE_FTP_HOSTNAME.equals("") && BASE_FTP_USERNAME.equals("") && BASE_FTP_PASSWORD.equals("")) {
+			LOGGER.error("Could not fully populate FTP creds for transfer");
+		} else {
 
-		try {
-			XSaLTFTPClient ftp = new XSaLTFTPClient(BASE_FTP_HOSTNAME, BASE_FTP_USERNAME, BASE_FTP_PASSWORD);
-			ftp.connectFTP();
-			ftp.login();
-			ftp.setPassiveTranferMode(false);
-			ftp.storeFile(BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME + ".tmp",
-					"/fozden.com/www/" + BASE_TEMPLATE_FILENAME.replace("_TEMPLATE", ""));
-			ftp.disconnectFTP();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-
-		try {
-			XSaLTFileSystemUtils.deleteFileNew(BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME + ".tmp");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	private void populateNotInterestedMaps() {
-
-		notInterestedManufacturerList.add(Pattern.compile("altor.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("century.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("colt.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("glock.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("high-point.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("kimber.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("luger.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("remington.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("rock.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("ruger.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("sar.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("sccy.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("smith.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("sig.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("springfield.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("tanfoglio.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("taurus.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("tara.*", Pattern.CASE_INSENSITIVE));
-		notInterestedManufacturerList.add(Pattern.compile("zev.*", Pattern.CASE_INSENSITIVE));
-
-		notInterestedCaliberList.add(Pattern.compile(".*380.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile(".*357.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile("9mm.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile("9 mm.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile(".*9x19.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile(".*9 x 19.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile("45 ACP", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile("45 ACP.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile(".*40 S.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile(".*40S.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile("\\.40 S.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile(".*45 AUTO.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile(".*45 ACP.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile(".*45 CAL.*", Pattern.CASE_INSENSITIVE));
-		notInterestedCaliberList.add(Pattern.compile(".*45ACP.*", Pattern.CASE_INSENSITIVE));
-
-	}
-
-	private void makePreferredUrl() {
-
-		try {
-
-			ObjectMapper mapper = new ObjectMapper();
-			JsonNode node = mapper.readTree(facetsContent);
-			JsonNode facetsNode = node.path("facets");
-
-			JsonNode manufacturerNodes = null;
-			JsonNode caliberNodes = null;
-
-			for (JsonNode facet : facetsNode) {
-				if (facet.path("filter").path("label").asText().equalsIgnoreCase("manufacturer")) {
-					manufacturerNodes = facet.path("properties");
-				} else if (facet.path("filter").path("label").asText().equalsIgnoreCase("caliber")) {
-					caliberNodes = facet.path("properties");
-				}
+			try {
+				XSaLTFileSystemUtils.writeStringToFile(templateContent,
+						BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME + ".tmp");
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 
-			Set<String> filteredManufacturer = getFilteredSetByRemoveFiltering(
-					mapper.convertValue(manufacturerNodes, new TypeReference<Map<String, Integer>>() {
-					}), notInterestedManufacturerList);
-			Set<String> filteredCaliber = getFilteredSetByAddFiltering(
-					mapper.convertValue(caliberNodes, new TypeReference<Map<String, Integer>>() {
-					}), notInterestedCaliberList);
+			try {
+				XSaLTFTPClient ftp = new XSaLTFTPClient(BASE_FTP_HOSTNAME, BASE_FTP_USERNAME, BASE_FTP_PASSWORD);
+				ftp.connectFTP();
+				ftp.login();
+				ftp.setPassiveTranferMode(false);
+				ftp.storeFile(BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME + ".tmp",
+						"/fozden.com/www/" + BASE_TEMPLATE_FILENAME.replace("_TEMPLATE", ""));
+				ftp.disconnectFTP();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 
-			preferredUrl = getFinalUrl(filteredManufacturer, filteredCaliber);
+			try {
+				XSaLTFileSystemUtils.deleteFileNew(BASE_TEMPLATE_PATH + BASE_TEMPLATE_FILENAME + ".tmp");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 
-		} catch (Exception e) {
-			e.printStackTrace();
+		}
+
+	}
+
+	private void populateInterestMaps(String mode) {
+
+		notInterestedManufacturerList = new ArrayList<Pattern>();
+		notInterestedCaliberList = new ArrayList<Pattern>();
+
+		if (TEST_TEMPLATE_AND_PUBLISH.equals("")) {
+
+			notInterestedManufacturerList.add(Pattern.compile(".*heizer.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile(".*seecamp.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("altor.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("american tactical.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("canik.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("century.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("cz.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("eaa.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("feg.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("fn.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("girsan.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("glock.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("high-point.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("kahr.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("kimber.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("luger.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("mossberg.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("norinco.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("north american.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("polymer.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("rock.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("sar.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("sccy.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("sds.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("springfield.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("star.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("tanfoglio.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("tara.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("taurus.*", Pattern.CASE_INSENSITIVE));
+			notInterestedManufacturerList.add(Pattern.compile("zev.*", Pattern.CASE_INSENSITIVE));
+
+			if (mode.equals("PREF")) {
+				notInterestedManufacturerList.add(Pattern.compile("colt.*", Pattern.CASE_INSENSITIVE));
+				notInterestedManufacturerList.add(Pattern.compile("remington.*", Pattern.CASE_INSENSITIVE));
+				notInterestedManufacturerList.add(Pattern.compile("ruger.*", Pattern.CASE_INSENSITIVE));
+				notInterestedManufacturerList.add(Pattern.compile("sig.*", Pattern.CASE_INSENSITIVE));
+				notInterestedManufacturerList.add(Pattern.compile("smith.*", Pattern.CASE_INSENSITIVE));
+			}
+
+			notInterestedCaliberList.add(Pattern.compile(".*380.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile(".*357.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile("9mm.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile("9 mm.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile(".*9x19.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile(".*9 x 19.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile("45 ACP", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile("45 ACP.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile(".*40 S.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile(".*40S.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile("\\.40 S.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile(".*45 AUTO.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile(".*45 ACP.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile(".*45 CAL.*", Pattern.CASE_INSENSITIVE));
+			notInterestedCaliberList.add(Pattern.compile(".*45ACP.*", Pattern.CASE_INSENSITIVE));
+
+		}
+
+	}
+
+	private void makeUrl(String mode) {
+
+		if (TEST_TEMPLATE_AND_PUBLISH.equals("")) {
+
+			try {
+
+				ObjectMapper mapper = new ObjectMapper();
+				JsonNode node = mapper.readTree(facetsContent);
+				JsonNode facetsNode = node.path("facets");
+
+				JsonNode manufacturerNodes = null;
+				JsonNode caliberNodes = null;
+
+				for (JsonNode facet : facetsNode) {
+					if (facet.path("filter").path("label").asText().equalsIgnoreCase("manufacturer")) {
+						manufacturerNodes = facet.path("properties");
+					} else if (facet.path("filter").path("label").asText().equalsIgnoreCase("caliber")) {
+						caliberNodes = facet.path("properties");
+					}
+				}
+
+				Set<String> filteredManufacturer = getFilteredSetByRemoveFiltering(
+						mapper.convertValue(manufacturerNodes, new TypeReference<Map<String, Integer>>() {
+						}), notInterestedManufacturerList);
+				Set<String> filteredCaliber = getFilteredSetByAddFiltering(
+						mapper.convertValue(caliberNodes, new TypeReference<Map<String, Integer>>() {
+						}), notInterestedCaliberList);
+
+				if (mode.equals("PREF")) {
+					preferredUrl = getFinalUrl(filteredManufacturer, filteredCaliber);
+				} else {
+					fullUrl = getFinalUrl(filteredManufacturer, filteredCaliber);
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else {
+
+			if (mode.equals("PREF")) {
+				preferredUrl = TEST_TEMPLATE_AND_PUBLISH;
+			} else {
+				fullUrl = TEST_TEMPLATE_AND_PUBLISH;
+			}
+
 		}
 
 	}
