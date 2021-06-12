@@ -1,7 +1,10 @@
 package com.codef.codesnippets;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -11,6 +14,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 import com.codef.xsalt.utils.XSaLTNetUtils;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -181,6 +185,19 @@ public class JsonParsingGunsCom {
 			}
 		}
 		return filteredSet;
+	}
+	
+	
+	private String readResourceFile(String pathToFile) throws URISyntaxException, IOException {
+
+		ClassLoader classLoader = getClass().getClassLoader();
+		URL resource = classLoader.getResource(pathToFile);
+		if (resource == null) {
+			throw new IllegalArgumentException("file not found! " + pathToFile);
+		} else {
+			return XSaLTFileSystemUtils.readFile(new File(resource.toURI()));
+		}
+
 	}
 
 }
