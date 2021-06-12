@@ -1,4 +1,4 @@
-package com.codef.codesnippets;
+package com.codef.helpers;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 
 import com.codef.xsalt.utils.XSaLTFTPClient;
 import com.codef.xsalt.utils.XSaLTFileSystemUtils;
@@ -22,14 +23,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class JsonParsingGunsCom {
+public class StartPagePublisher {
 
 	/// https://attacomsian.com/blog/jackson-json-node-tree-model
 	/// https://mkyong.com/tutorials/java-json-tutorials/
-	
-	// TODO:  Get URL and credentials from password file
 
-	private static final Logger LOGGER = Logger.getLogger(JsonParsingGunsCom.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(StartPagePublisher.class.getName());
 
 	public static String BASE_FACET_QUERY = "https://www.guns.com/catalog/search/listing?facets=%7B%22outlet%22:null,%22condition%22:null,%22compliance%22:%22%22,%22outletOnly%22:null%7D&facetGroup=%7B%22dealer%22:%22%22,%22product.upc%22:%22%22,%22product.rebates%22:%22%22,%22product.category%22:%22HANDGUNS%22,%22product.collections%22:%22%22,%22product.subCategory%22:%22%22,%22product.manufacturer%22:%22%22%7D&filters=[]&sortBy=listing_weight";
 	public static String BASE_QUERY = "https://www.guns.com/firearms/handguns/all?";
@@ -40,7 +39,10 @@ public class JsonParsingGunsCom {
 	public static String BASE_CALIBER = "product.specs.Caliber=";
 	public static String BASE_MANUFACTURERS = "product.manufacturer=";
 
-	public static String BASE_FTP_HOSTNAME = "216.239.139.15";
+	public static String BASE_FTP_HOSTNAME = "";
+	public static String BASE_FTP_USERNAME = "";
+	public static String BASE_FTP_PASSWORD = "";
+
 	public static String BASE_TEMPLATE_PATH = "C:\\GitRepos\\CodeSnippets\\src\\main\\resources\\";
 	public static String BASE_CREDENTIALS_FILE = "E:\\Documents\\Personal\\Site Passwords.xml";
 	public static String BASE_TEMPLATE_FILENAME = "StartPage_TEMPLATE.html";
@@ -52,24 +54,31 @@ public class JsonParsingGunsCom {
 	public static List<Pattern> notInterestedCaliberList = new ArrayList<Pattern>();
 	public static String preferredUrl = "";
 
+	public static String TEST_TEMPLATE_AND_PUBLISH = "";
+
 	public static void main(String[] args) {
 
-		JsonParsingGunsCom jpgc = new JsonParsingGunsCom();
+		StartPagePublisher spp = new StartPagePublisher();
 
-//		jpgc.populateFacetsContent();
-//		if (!facetsContent.equals("")) {
-//			jpgc.populateNotInterestedMaps();
-//			jpgc.makePreferredUrl();
-//			jpgc.populateTemplateContent(preferredUrl);
-//		} else {
-//			LOGGER.error("Could not download facets data from Guns.com");
-//		}
-//
-//		jpgc.transferFileToFtp();
-		
-		jpgc.populateCreds();
-		
+		spp.populateFacetsContent();
+		if (!facetsContent.equals("")) {
+			if (TEST_TEMPLATE_AND_PUBLISH.equals("")) {
+				spp.populateNotInterestedMaps();
+				spp.makePreferredUrl();
+			} else {
+				preferredUrl = TEST_TEMPLATE_AND_PUBLISH;
+			}
+			spp.populateTemplateContent(preferredUrl);
+		} else {
+			LOGGER.error("Could not download facets data from Guns.com");
+		}
 
+		spp.populateCreds();
+		if (BASE_FTP_HOSTNAME.equals("") && BASE_FTP_USERNAME.equals("") && BASE_FTP_PASSWORD.equals("")) {
+			LOGGER.error("Could not fully populate FTP creds for transfer");
+		} else {
+			spp.transferFileToFtp();
+		}
 
 		LOGGER.info("JsonParsingGunsCom COMPLETED!");
 
@@ -77,7 +86,11 @@ public class JsonParsingGunsCom {
 
 	private void populateFacetsContent() {
 		try {
-			facetsContent = XSaLTNetUtils.readStringFromURL(BASE_FACET_QUERY);
+			if (TEST_TEMPLATE_AND_PUBLISH.equals("")) {
+				facetsContent = XSaLTNetUtils.readStringFromURL(BASE_FACET_QUERY);
+			} else {
+				facetsContent = "{ }";
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -91,18 +104,19 @@ public class JsonParsingGunsCom {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private void populateCreds() {
-		
+
 		try {
 			Document credsDoc = XSaLTXMLUtils.loadXMLDocumentFromFile(BASE_CREDENTIALS_FILE);
-			
-			System.out.println(XSaLTXMLUtils.xmlDocumentToString(credsDoc, true));
-			
+			Node blueGravityNode = XSaLTXMLUtils.getXPathResult(credsDoc, "//SitePasswords//BlueGravity_FTP").item(0);
+			BASE_FTP_HOSTNAME = XSaLTXMLUtils.getLabelEntry(blueGravityNode, "URL");
+			BASE_FTP_USERNAME = XSaLTXMLUtils.getLabelEntry(blueGravityNode, "Username");
+			BASE_FTP_PASSWORD = XSaLTXMLUtils.getLabelEntry(blueGravityNode, "Password");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	private void transferFileToFtp() {
@@ -115,7 +129,7 @@ public class JsonParsingGunsCom {
 		}
 
 		try {
-			XSaLTFTPClient ftp = new XSaLTFTPClient(BASE_FTP_HOSTNAME, "pupfu001", "k4N#m7Sc42SS");
+			XSaLTFTPClient ftp = new XSaLTFTPClient(BASE_FTP_HOSTNAME, BASE_FTP_USERNAME, BASE_FTP_PASSWORD);
 			ftp.connectFTP();
 			ftp.login();
 			ftp.setPassiveTranferMode(false);
