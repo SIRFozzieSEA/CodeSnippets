@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.codef.xsalt.utils.XSaLTFileVisitor;
 
 public class WhichExtensionsFileVisitor extends XSaLTFileVisitor {
 
-	private static final Logger LOGGER = Logger.getLogger(WhichExtensionsFileVisitor.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(WhichExtensionsFileVisitor.class.getName());
 
 	private Set<String> extensionsFound = new HashSet<String>();
 

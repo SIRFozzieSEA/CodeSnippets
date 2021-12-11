@@ -5,14 +5,15 @@ import java.util.HashMap;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 import com.codef.xsalt.utils.XSaLTFileVisitor;
 
 public class MemeRenamerFileVisitor extends XSaLTFileVisitor {
 
-	private static final Logger LOGGER = Logger.getLogger(MemeRenamerFileVisitor.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(MemeRenamerFileVisitor.class.getName());
 
 	private static final String sourceFolder = "C:\\_PRIMARY_SORT\\Memes";
 	private static final String targetFolder = "E:\\Memes";

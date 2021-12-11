@@ -15,14 +15,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 import com.codef.xsalt.utils.XSaLTStringUtils;
 
 public class FacebookFriendParser {
 
-	private static final Logger LOGGER = Logger.getLogger(FacebookFriendParser.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(FacebookFriendParser.class.getName());
 
 	private static String friendsFolder = "E:/Documents/Personal/Old Social Profiles/";
 

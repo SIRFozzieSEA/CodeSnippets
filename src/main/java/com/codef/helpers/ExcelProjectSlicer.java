@@ -13,7 +13,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Drawing;
@@ -32,7 +34,8 @@ public class ExcelProjectSlicer {
 	 * that was generated easily in a worksheet format.
 	 * 
 	 * See sample results in:
-	 * C:\GitRepos\CodeSnippets\src\main\resources\excelprojectslicer\ExcelProjectSlicer_Sample_Worksheet.xlsx
+	 * C:\GitRepos\CodeSnippets\src\main\resources\excelprojectslicer\
+	 * ExcelProjectSlicer_Sample_Worksheet.xlsx
 	 */
 
 	private static final boolean enableMainMethod = false;
@@ -40,7 +43,7 @@ public class ExcelProjectSlicer {
 	private static final String outputFolder = "E:/_SORT/";
 	private static final String outputExcelFileName = "E:/_SORT/worksheet.xlsx";
 
-	private static final Logger LOGGER = Logger.getLogger(ExcelProjectSlicer.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(ExcelProjectSlicer.class.getName());
 
 	public static void main(String[] args) throws URISyntaxException {
 

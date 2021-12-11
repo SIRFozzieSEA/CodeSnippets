@@ -3,7 +3,8 @@ package com.codef.helpers;
 import java.io.File;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.codef.xsalt.utils.XSaLTFileVisitor;
 import com.drew.imaging.ImageMetadataReader;
@@ -13,7 +14,7 @@ import com.drew.metadata.Tag;
 
 public class GeoTagReaderFileVisitor extends XSaLTFileVisitor {
 
-	private static final Logger LOGGER = Logger.getLogger(GeoTagReaderFileVisitor.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(GeoTagReaderFileVisitor.class.getName());
 
 	private static final String sourceFolder = "E:\\Pictures\\Events\\Hiking with Tenzin\\20200404";
 
