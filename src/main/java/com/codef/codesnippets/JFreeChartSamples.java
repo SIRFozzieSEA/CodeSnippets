@@ -16,11 +16,11 @@ public class JFreeChartSamples {
 
 	public static void doPieChart() throws IOException {
 
-		DefaultPieDataset dataset = new DefaultPieDataset();
-		dataset.setValue("IPhone 5s", new Double(20));
-		dataset.setValue("SamSung Grand", new Double(20));
-		dataset.setValue("MotoG", new Double(40));
-		dataset.setValue("Nokia Lumia", new Double(10));
+		DefaultPieDataset<String> dataset = new DefaultPieDataset<String>();
+		dataset.setValue("IPhone 5s", Double.valueOf(20));
+		dataset.setValue("SamSung Grand", Double.valueOf(20));
+		dataset.setValue("MotoG", Double.valueOf(20));
+		dataset.setValue("Nokia Lumia", Double.valueOf(20));
 
 		JFreeChart chart = ChartFactory.createPieChart("Mobile Sales", // chart title
 				dataset, // data
