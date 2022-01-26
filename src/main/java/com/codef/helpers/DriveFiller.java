@@ -12,7 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 public class DriveFiller {
 
-	private static final boolean enableMainMethod = false;
+	private static final boolean enableMainMethod = true;
 
 	private static final Logger LOGGER = LogManager.getLogger(DriveFiller.class.getName());
 	private static final int FILE_CHUNK_SIZE_IN_MB = 100;
