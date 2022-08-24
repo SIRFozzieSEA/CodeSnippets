@@ -15,17 +15,21 @@ public class MemeRenamerFileVisitor extends XSaLTFileVisitor {
 
 	private static final Logger LOGGER = LogManager.getLogger(MemeRenamerFileVisitor.class.getName());
 
-	private static final String sourceFolder = "C:\\_PRIMARY_SORT\\Memes";
+	private static final String sourceFolder = "C:\\_PRIMARY_SORT\\_MEMES";
 	private static final String targetFolder = "E:\\Memes";
 
 	private static Set<String> folderSet = new TreeSet<>();
 
+	private static int totalCount = 0;
+
 	public static void main(String[] args) {
 
 		HashMap<String, String> myArgumentsMap = new HashMap<String, String>();
-		myArgumentsMap.put("PREFIX", "lll");
+		myArgumentsMap.put("PREFIX", " ccc ");
 		MemeRenamerFileVisitor myMfr = new MemeRenamerFileVisitor(myArgumentsMap);
 		myMfr.startVisit(sourceFolder);
+
+		LOGGER.info("total count: " + totalCount);
 
 	}
 
@@ -50,7 +54,7 @@ public class MemeRenamerFileVisitor extends XSaLTFileVisitor {
 		}
 
 		String padNo = String.format("%010d", fileCount);
-		String newFileNameToUse = filePrefixNew + " index " + argumentsMap.get("PREFIX") + padNo + "."
+		String newFileNameToUse = filePrefixNew + " index" + argumentsMap.get("PREFIX") + padNo + "."
 				+ nFileExtension.toLowerCase();
 
 		if (!nFileExtension.toLowerCase().equals("ini") && !nFileExtension.toLowerCase().equals("db")) {
@@ -59,19 +63,21 @@ public class MemeRenamerFileVisitor extends XSaLTFileVisitor {
 
 			try {
 				XSaLTFileSystemUtils.copyFile(filePath, targetFile);
-				LOGGER.info("  Copied from: " + filePath + " to: " + targetFile);
+				// LOGGER.info("   Copied from: " + filePath + " to: " + targetFile);
+				totalCount = totalCount + 1;
+
+				try {
+					XSaLTFileSystemUtils.deleteFile(filePath, false);
+					// LOGGER.info("       Deleted: " + filePath + " to: " + targetFile);
+				} catch (Exception e) {
+					LOGGER.info(" Cannot Delete: " + filePath + " to: " + targetFile);
+				}
+
 			} catch (IOException e) {
-				LOGGER.info(" Duplicate in: " + filePath + " to: " + targetFile);
+				LOGGER.info(" Error copying: " + filePath + " to: " + targetFile);
 			}
 
-			try {
-				XSaLTFileSystemUtils.deleteFile(filePath, false);
-				LOGGER.info("      Deleted: " + filePath + " to: " + targetFile);
-			} catch (Exception e) {
-				LOGGER.info("Cannot Delete: " + filePath + " to: " + targetFile);
-			}
-
-			LOGGER.info("");
+//			LOGGER.info("");
 
 		}
 
