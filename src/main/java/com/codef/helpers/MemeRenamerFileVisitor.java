@@ -25,7 +25,7 @@ public class MemeRenamerFileVisitor extends XSaLTFileVisitor {
 	public static void main(String[] args) {
 
 		HashMap<String, String> myArgumentsMap = new HashMap<String, String>();
-		myArgumentsMap.put("PREFIX", " ccc ");
+		myArgumentsMap.put("PREFIX", " aaaa ");
 		MemeRenamerFileVisitor myMfr = new MemeRenamerFileVisitor(myArgumentsMap);
 		myMfr.startVisit(sourceFolder);
 
