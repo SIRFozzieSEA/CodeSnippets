@@ -1,5 +1,7 @@
 package com.codef.helpers;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -8,9 +10,12 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.imageio.ImageIO;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,7 +24,7 @@ import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 
 public class MemeRenamerFileVisitor {
 
-	private static boolean enableMainMethod = false;
+	private static boolean enableMainMethod = true;
 
 	private static final Logger LOGGER = LogManager.getLogger(MemeRenamerFileVisitor.class.getName());
 
@@ -28,11 +33,13 @@ public class MemeRenamerFileVisitor {
 
 	private static Set<String> folderSet = new TreeSet<>();
 	public static TreeSet<String> filetypes = new TreeSet<String>();
-	public static HashMap<String, String> finalRename = new HashMap<String, String>();
+	public static LinkedHashMap<String, String> finalRename = new LinkedHashMap<String, String>();
 
 	private static int fileCount = 0;
 	private static int folderCount = 0;
 	private static int handledCount = 0;
+	private static int jpegsRenamed = 0;
+	private static int jfifsConverted = 0;
 
 	public static void main(String[] args) {
 
@@ -43,6 +50,8 @@ public class MemeRenamerFileVisitor {
 			renameFiles();
 			LOGGER.info("Total files visited = " + fileCount);
 			LOGGER.info("Total files handled = " + handledCount);
+			LOGGER.info("JPEGs renamed = " + jpegsRenamed);
+			LOGGER.info("JFIFs converted = " + jfifsConverted);
 			LOGGER.info("File Types = " + filetypes);
 
 		}
@@ -79,6 +88,7 @@ public class MemeRenamerFileVisitor {
 
 		if (nFileExtension.equals("jpeg")) {
 			nFileExtension = "jpg";
+			jpegsRenamed++;
 		}
 
 		filetypes.add(nFileExtension);
@@ -102,12 +112,14 @@ public class MemeRenamerFileVisitor {
 
 	private static void renameFiles() {
 
-		for (HashMap.Entry<String, String> set : finalRename.entrySet()) {
+		for (Map.Entry<String, String> set : finalRename.entrySet()) {
 
 			String filePath = set.getKey();
 			String targetFile = set.getValue();
 
 			LOGGER.info(" Copied from: " + filePath + " to: " + targetFile);
+
+			// TODO: Implement inline code to convert JFIFs -- jfifsConverted
 
 			try {
 				XSaLTFileSystemUtils.copyFile(filePath, targetFile);
@@ -146,6 +158,39 @@ public class MemeRenamerFileVisitor {
 		sb.append(inputString);
 
 		return sb.toString();
+	}
+	
+	// ------------------------------------------------------
+	
+	
+	public static void convertImage(String imageFileName) {
+
+		try {
+			File imageFile = new File(imageFileName);
+			BufferedImage bufferedImage = ImageIO.read(imageFile);
+			File pathFile = new File(imageFileName + ".jpg");
+			ImageIO.write(bufferedImage, "jpg", pathFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	// THIS IS TO CROP IMAGES
+
+	public static void cropImage(String imageFileName, File pathFile, BufferedImage bufferedImage) throws IOException {
+		if (imageFileName.contains("land")) {
+			// landscape
+			ImageIO.write(cropImage(bufferedImage, 87, 468, 600, 400), "jpg", pathFile);
+		} else {
+			// portrait
+			ImageIO.write(cropImage(bufferedImage, 179, 466, 400, 600), "jpg", pathFile);
+		}
+	}
+
+	private static BufferedImage cropImage(BufferedImage bufferedImage, int x, int y, int width, int height) {
+		BufferedImage croppedImage = bufferedImage.getSubimage(x, y, width, height);
+		return croppedImage;
 	}
 
 }
