@@ -45,8 +45,7 @@ public class MemeRenamerFileVisitor {
 
 		if (enableMainMethod) {
 
-			String startFolder = "E:/Memes";
-			startVisit(startFolder);
+			startVisit(targetFolder);
 			renameFiles();
 			LOGGER.info("Total files visited = " + fileCount);
 			LOGGER.info("Total files handled = " + handledCount);
