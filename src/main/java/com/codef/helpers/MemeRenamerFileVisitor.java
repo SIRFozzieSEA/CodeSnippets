@@ -24,7 +24,7 @@ public class MemeRenamerFileVisitor {
 
 	private static final Logger LOGGER = LogManager.getLogger(MemeRenamerFileVisitor.class.getName());
 
-	private static final String renameFolder = "E:\\Memes";
+	private static final String renameFolder = "E:\\Zemez";
 
 	private static Set<String> folderSet = new TreeSet<>();
 	public static TreeSet<String> filetypes = new TreeSet<String>();
