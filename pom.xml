@@ -70,6 +70,13 @@
 			<version>1.5.3</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.codef</groupId>
+			<artifactId>xsaltframework</artifactId>
+			<version>1.0</version>
+			<scope>system</scope>
+			<systemPath>C:/GitRepos/XSaLTFramework/target/xsaltframework-0.0.1-SNAPSHOT-jar-with-dependencies.jar</systemPath>
+		</dependency>
 
 	</dependencies>
 
