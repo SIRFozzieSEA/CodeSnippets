@@ -9,6 +9,8 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
+
 import java.awt.Color;
 
 public class HalfBoldWordsUI {
@@ -19,16 +21,14 @@ public class HalfBoldWordsUI {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					HalfBoldWordsUI window = new HalfBoldWordsUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	    EventQueue.invokeLater(() -> {
+	        try {
+	        	HalfBoldWordsUI window = new HalfBoldWordsUI();
+	            window.frame.setVisible(true);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    });
 	}
 
 	/**
@@ -45,7 +45,7 @@ public class HalfBoldWordsUI {
 		frame = new JFrame();
 		frame.setTitle("Bold It!");
 		frame.setBounds(100, 100, 951, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JTextArea inputBox = new JTextArea();
@@ -83,7 +83,7 @@ public class HalfBoldWordsUI {
 			String word = words[i];
 
 			if (word.length() > 2) {
-				int cutoffChar = (int) Math.ceil(word.length() / 2);
+				int cutoffChar = (int) Math.ceil(Double.valueOf(i) / 2);
 				returnSentence.append("<B>" + word.substring(0, cutoffChar + 1) + "</B>"
 						+ word.substring(cutoffChar + 1, word.length()) + " ");
 			} else {

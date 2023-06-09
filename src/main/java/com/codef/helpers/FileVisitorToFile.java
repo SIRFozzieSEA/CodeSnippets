@@ -13,22 +13,22 @@ import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 
 public class FileVisitorToFile {
 
-	private static boolean enableMainMethod = true;
+	private static final boolean ENABLE_MAIN_METHOD = true;
 
 	private static final Logger LOGGER = LogManager.getLogger(FileVisitorToFile.class.getName());
 
-	private static final String targetFolder = "K:\\Backup_09052022\\E\\Pictures";
-	private static final String saveFile = "d:\\kdrive.txt";
+	private static final String SCAN_FOLDER = "K:\\Backup_09052022\\E\\Pictures";
+	private static final String SAVE_FILE_NAME = "d:\\kdrive.txt";
 
-	private static StringBuffer saveBuffer = new StringBuffer();
+	private static StringBuilder saveBuffer = new StringBuilder();
 
 	public static void main(String[] args) throws IOException {
 
-		if (enableMainMethod) {
+		if (ENABLE_MAIN_METHOD) {
 
-			String startFolder = targetFolder;
+			String startFolder = SCAN_FOLDER;
 			startVisit(startFolder);
-			XSaLTFileSystemUtils.writeStringBufferToFile(saveBuffer, saveFile);
+			XSaLTFileSystemUtils.writeStringBuilderToFile(saveBuffer, SAVE_FILE_NAME);
 		}
 
 	}

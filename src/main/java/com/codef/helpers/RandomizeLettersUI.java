@@ -12,6 +12,8 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
+
 import java.awt.Color;
 
 public class RandomizeLettersUI {
@@ -22,17 +24,16 @@ public class RandomizeLettersUI {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					RandomizeLettersUI window = new RandomizeLettersUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	    EventQueue.invokeLater(() -> {
+	        try {
+	        	RandomizeLettersUI window = new RandomizeLettersUI();
+	            window.frame.setVisible(true);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    });
 	}
+	
 
 	/**
 	 * Create the application.
@@ -48,7 +49,7 @@ public class RandomizeLettersUI {
 		frame = new JFrame();
 		frame.setTitle("Randomize Letters!");
 		frame.setBounds(100, 100, 951, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JTextArea inputBox = new JTextArea();

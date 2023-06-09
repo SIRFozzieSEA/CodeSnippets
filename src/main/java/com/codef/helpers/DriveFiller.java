@@ -1,6 +1,7 @@
 package com.codef.helpers;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 public class DriveFiller {
 
-	private static final boolean enableMainMethod = true;
+	private static final boolean ENABLE_MAIN_METHOD = true;
 
 	private static final Logger LOGGER = LogManager.getLogger(DriveFiller.class.getName());
 	private static final int FILE_CHUNK_SIZE_IN_MB = 100;
@@ -22,7 +23,7 @@ public class DriveFiller {
 
 	public static void main(String[] args) {
 
-		if (enableMainMethod) {
+		if (ENABLE_MAIN_METHOD) {
 			Scanner keyboard = new Scanner(System.in);
 			LOGGER.info("Enter a drive letter: ");
 			driveLetterToFill = keyboard.nextLine();
@@ -50,7 +51,7 @@ public class DriveFiller {
 			spaceToFillInGB = getUseableSpace(spaceToFillInGB, driveLetterToFill);
 			Double iterationsDbl = (spaceToFillInGB * 1000) / FILE_CHUNK_SIZE_IN_MB;
 
-			LOGGER.info("  Writing: " + iterationsDbl.longValue() + " files, on drive " + driveLetterToFill
+			LOGGER.info("Writing: " + iterationsDbl.longValue() + " files, on drive " + driveLetterToFill
 					+ " with chunks of " + FILE_CHUNK_SIZE_IN_MB + " MB to fill " + spaceToFillInGB + " GB (+Extra)");
 
 			StringBuilder contentBuilder = new StringBuilder();
@@ -62,7 +63,7 @@ public class DriveFiller {
 			for (int j = 1; j < (iterationsDbl.longValue() + 1); j++) {
 				String filePath = directoryPath + "CHUNK_" + String.format("%07d", j) + ".txt";
 				Path fileP = Paths.get(filePath);
-				Files.write(fileP, contentBuilder.toString().getBytes("utf-8"));
+				Files.write(fileP, contentBuilder.toString().getBytes(StandardCharsets.UTF_8));
 				if (j % 100 == 0) {
 					LOGGER.info("     Wrote: " + filePath);
 				}

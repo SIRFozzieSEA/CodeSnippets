@@ -13,12 +13,12 @@ public class WhichExtensionsFileVisitor extends XSaLTFileVisitor {
 
 	private static final Logger LOGGER = LogManager.getLogger(WhichExtensionsFileVisitor.class.getName());
 
-	private Set<String> extensionsFound = new HashSet<String>();
+	private Set<String> extensionsFound = new HashSet<>();
 
 	public static void main(String[] args) {
 
 		WhichExtensionsFileVisitor myMfr = new WhichExtensionsFileVisitor(null);
-		myMfr.startVisit("E:\\Music");
+		myMfr.startVisit("c:\\GitRepos");
 		LOGGER.info(myMfr.extensionsFound);
 
 	}
@@ -32,10 +32,8 @@ public class WhichExtensionsFileVisitor extends XSaLTFileVisitor {
 
 		String nFileExtension = filePath.substring(filePath.length() - 4, filePath.length());
 
-		if (nFileExtension.startsWith(".")) {
-			if (!extensionsFound.contains(nFileExtension.toLowerCase())) {
+		if (nFileExtension.startsWith(".") && !extensionsFound.contains(nFileExtension.toLowerCase())) {
 				extensionsFound.add(nFileExtension.toLowerCase());
-			}
 		}
 
 	}

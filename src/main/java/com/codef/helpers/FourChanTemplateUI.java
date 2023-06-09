@@ -9,6 +9,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 
 public class FourChanTemplateUI {
 
@@ -18,17 +19,16 @@ public class FourChanTemplateUI {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FourChanTemplateUI window = new FourChanTemplateUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	    EventQueue.invokeLater(() -> {
+	        try {
+	        	FourChanTemplateUI window = new FourChanTemplateUI();
+	            window.frame.setVisible(true);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    });
 	}
+	
 
 	/**
 	 * Create the application.
@@ -44,7 +44,7 @@ public class FourChanTemplateUI {
 		frame = new JFrame();
 		frame.setTitle("Chan it!");
 		frame.setBounds(100, 100, 951, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
 		JTextArea inputBox = new JTextArea();
@@ -77,7 +77,7 @@ public class FourChanTemplateUI {
 		StringBuilder returnSentence = new StringBuilder();
 
 		if (words[0].equalsIgnoreCase("haha")) {
-			int numOfHas = Integer.valueOf(words[1]).intValue();
+			int numOfHas = Integer.parseInt(words[1]);
 			returnSentence.append("Ah");
 			for (int i = 0; i < numOfHas; i++) {
 				returnSentence.append(" ha");

@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,16 +35,14 @@ public class FacebookFriendParser {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FacebookFriendParser window = new FacebookFriendParser();
-					window.frmFacebookFriendParser.setVisible(true);
-				} catch (Exception e) {
-					LOGGER.error(e.toString(), e);
-				}
-			}
-		});
+	    EventQueue.invokeLater(() -> {
+	        try {
+	        	FacebookFriendParser window = new FacebookFriendParser();
+	            window.frmFacebookFriendParser.setVisible(true);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    });
 	}
 
 	/**
@@ -60,7 +59,7 @@ public class FacebookFriendParser {
 		frmFacebookFriendParser = new JFrame();
 		frmFacebookFriendParser.setTitle("Facebook Friend Parser");
 		frmFacebookFriendParser.setBounds(100, 100, 636, 533);
-		frmFacebookFriendParser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmFacebookFriendParser.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frmFacebookFriendParser.getContentPane().setLayout(null);
 
 		JTextArea textArea = new JTextArea();
@@ -97,7 +96,7 @@ public class FacebookFriendParser {
 
 	private void writeFriendsFile(JTextArea copyPasteArea, JTextField friendsFolderTextField) throws IOException {
 
-		Set<String> facebookNamesFinal = new TreeSet<String>();
+		Set<String> facebookNamesFinal = new TreeSet<>();
 		String[] facebookNames = copyPasteArea.getText().split("\\n");
 		
 		for (String singleName : facebookNames) {
@@ -114,13 +113,13 @@ public class FacebookFriendParser {
 			}
 		}
 
-		StringBuffer outBuffer = new StringBuffer();
+		StringBuilder outBuffer = new StringBuilder();
 		for (String newName : facebookNamesFinal) {
 			outBuffer.append(newName);
 			outBuffer.append("\n");
 		}
 
-		XSaLTFileSystemUtils.writeStringBufferToFile(outBuffer,
+		XSaLTFileSystemUtils.writeStringBuilderToFile(outBuffer,
 				friendsFolderTextField.getText() + "Friends_" + XSaLTStringUtils.getDateString() + ".txt");
 
 		LOGGER.info(

@@ -22,7 +22,7 @@ public class JFreeChartSamples {
 		
 		LOGGER.info("Start");
 
-		DefaultPieDataset<String> dataset = new DefaultPieDataset<String>();
+		DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
 		dataset.setValue("IPhone 5s", Double.valueOf(20));
 		dataset.setValue("SamSung Grand", Double.valueOf(20));
 		dataset.setValue("MotoG", Double.valueOf(20));

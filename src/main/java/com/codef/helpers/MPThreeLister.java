@@ -12,13 +12,13 @@ public class MPThreeLister extends XSaLTFileVisitor {
 
 	private static final Logger LOGGER = LogManager.getLogger(MPThreeLister.class.getName());
 
-	private static final String sourceFolder = "E:\\Music";
+	private static final String SOURCE_FOLDER = "E:\\Music";
 
 	public static void main(String[] args) {
 
-		HashMap<String, String> myArgumentsMap = new HashMap<String, String>();
+		HashMap<String, String> myArgumentsMap = new HashMap<>();
 		MPThreeLister myMfr = new MPThreeLister(myArgumentsMap);
-		myMfr.startVisit(sourceFolder);
+		myMfr.startVisit(SOURCE_FOLDER);
 
 	}
 
@@ -26,6 +26,7 @@ public class MPThreeLister extends XSaLTFileVisitor {
 		super(argumentsMap);
 	}
 
+	@Override
 	public void visitFileCode(String filePath) {
 
 		if (filePath.toLowerCase().endsWith("ini") || filePath.toLowerCase().endsWith("jpg")
@@ -33,7 +34,7 @@ public class MPThreeLister extends XSaLTFileVisitor {
 
 			try {
 				XSaLTFileSystemUtils.deleteFile(filePath, false);
-				LOGGER.info("      Deleted: " + filePath + " to: " + filePath);
+				LOGGER.info("Deleted: " + filePath + " to: " + filePath);
 			} catch (Exception e) {
 				LOGGER.info("Cannot Delete: " + filePath + " to: " + filePath);
 			}

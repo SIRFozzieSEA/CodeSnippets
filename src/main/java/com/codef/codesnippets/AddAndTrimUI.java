@@ -10,9 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 
 public class AddAndTrimUI {
 
+	private static final String COURIER_NEW = "Courier New";
+	
 	private JFrame frmAddandtrim;
 	private JTextField startEachLine;
 	private JTextField discardAfterThisVal;
@@ -22,17 +25,16 @@ public class AddAndTrimUI {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AddAndTrimUI window = new AddAndTrimUI();
-					window.frmAddandtrim.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+	    EventQueue.invokeLater(() -> {
+	        try {
+	            AddAndTrimUI window = new AddAndTrimUI();
+	            window.frmAddandtrim.setVisible(true);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	    });
 	}
+	
 
 	/**
 	 * Create the application.
@@ -48,22 +50,22 @@ public class AddAndTrimUI {
 		frmAddandtrim = new JFrame();
 		frmAddandtrim.setTitle("Add-and-Trim");
 		frmAddandtrim.setBounds(100, 100, 668, 533);
-		frmAddandtrim.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmAddandtrim.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frmAddandtrim.getContentPane().setLayout(null);
 
 		JTextArea inputText = new JTextArea();
-		inputText.setFont(new Font("Courier New", Font.PLAIN, 12));
+		inputText.setFont(new Font(COURIER_NEW, Font.PLAIN, 12));
 		inputText.setBounds(10, 82, 632, 163);
 		frmAddandtrim.getContentPane().add(inputText);
 
 		startEachLine = new JTextField();
-		startEachLine.setFont(new Font("Courier New", Font.PLAIN, 12));
+		startEachLine.setFont(new Font(COURIER_NEW, Font.PLAIN, 12));
 		startEachLine.setBounds(10, 30, 204, 20);
 		frmAddandtrim.getContentPane().add(startEachLine);
 		startEachLine.setColumns(10);
 
 		discardAfterThisVal = new JTextField();
-		discardAfterThisVal.setFont(new Font("Courier New", Font.PLAIN, 12));
+		discardAfterThisVal.setFont(new Font(COURIER_NEW, Font.PLAIN, 12));
 		discardAfterThisVal.setBounds(224, 30, 204, 20);
 		frmAddandtrim.getContentPane().add(discardAfterThisVal);
 		discardAfterThisVal.setColumns(10);
@@ -72,25 +74,25 @@ public class AddAndTrimUI {
 		lblNewLabel.setBounds(10, 11, 115, 14);
 		frmAddandtrim.getContentPane().add(lblNewLabel);
 
-		JLabel lblNewLabel_1 = new JLabel("Clip line when this is found:");
-		lblNewLabel_1.setBounds(224, 11, 174, 14);
-		frmAddandtrim.getContentPane().add(lblNewLabel_1);
+		JLabel lblNewLabelOne = new JLabel("Clip line when this is found:");
+		lblNewLabelOne.setBounds(224, 11, 174, 14);
+		frmAddandtrim.getContentPane().add(lblNewLabelOne);
 
 		JTextArea outputText = new JTextArea();
-		outputText.setFont(new Font("Courier New", Font.PLAIN, 12));
+		outputText.setFont(new Font(COURIER_NEW, Font.PLAIN, 12));
 		outputText.setBounds(8, 286, 634, 163);
 		frmAddandtrim.getContentPane().add(outputText);
 
-		JLabel lblNewLabel_2 = new JLabel("Input:");
-		lblNewLabel_2.setBounds(10, 61, 46, 14);
-		frmAddandtrim.getContentPane().add(lblNewLabel_2);
+		JLabel lblNewLabelTwo = new JLabel("Input:");
+		lblNewLabelTwo.setBounds(10, 61, 46, 14);
+		frmAddandtrim.getContentPane().add(lblNewLabelTwo);
 
-		JLabel lblNewLabel_3 = new JLabel("Output:");
-		lblNewLabel_3.setBounds(10, 265, 46, 14);
-		frmAddandtrim.getContentPane().add(lblNewLabel_3);
+		JLabel lblNewLabelThree = new JLabel("Output:");
+		lblNewLabelThree.setBounds(10, 265, 46, 14);
+		frmAddandtrim.getContentPane().add(lblNewLabelThree);
 
 		endEachLine = new JTextField();
-		endEachLine.setFont(new Font("Courier New", Font.PLAIN, 12));
+		endEachLine.setFont(new Font(COURIER_NEW, Font.PLAIN, 12));
 		endEachLine.setColumns(10);
 		endEachLine.setBounds(438, 30, 204, 20);
 		frmAddandtrim.getContentPane().add(endEachLine);
@@ -115,7 +117,7 @@ public class AddAndTrimUI {
 	private String processText(String startEachLine, String discardAfterThisVal, String endEachLine, String fromThis) {
 
 		StringBuilder sb = new StringBuilder();
-		String lines[] = fromThis.split("\\r?\\n");
+		String[] lines = fromThis.split("\\r?\\n");
 
 		for (int i = 0; i < lines.length; i++) {
 			String[] indLine = lines[i].split(discardAfterThisVal);
