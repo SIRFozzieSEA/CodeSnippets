@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 
@@ -41,17 +42,21 @@ public class ExcelProjectSlicer {
 	private static final boolean ENABLE_MAIN_METHOD = false;
 
 	private static final String OUTPUT_FOLDER = "E:/_SORT/";
-	private static final String OUTPUT_EXCEL_FILENAME = "E:/_SORT/worksheet.xlsx";
 
 	private static final Logger LOGGER = LogManager.getLogger(ExcelProjectSlicer.class.getName());
 
 	public static void main(String[] args) throws URISyntaxException {
+		
+		Scanner scanner = new Scanner(System.in);
+		LOGGER.info("Enter Excel Save Path");
+		String excelSavePath = scanner.nextLine();
+		scanner.close();
 
 		if (ENABLE_MAIN_METHOD) {
 			Path imageFileName = Paths
 					.get(ClassLoader.getSystemResource("excelprojectslicer/SampleEclipseProject.JPG").toURI());
 			List<String> imageFileNames = doImages(imageFileName, OUTPUT_FOLDER, 18, 2);
-			doExcelSheet(OUTPUT_EXCEL_FILENAME, imageFileName, imageFileNames);
+			doExcelSheet(excelSavePath, imageFileName, imageFileNames);
 		}
 
 	}

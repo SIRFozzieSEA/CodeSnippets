@@ -2,6 +2,7 @@ package com.codef.codesnippets;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Scanner;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,7 +21,10 @@ public class JFreeChartSamples {
 
 	public static void doPieChart() throws IOException {
 		
-		LOGGER.info("Start");
+		Scanner scanner = new Scanner(System.in);
+		LOGGER.info("Enter Pie Chart Path");
+		String pieChartPath = scanner.nextLine();
+		scanner.close();
 
 		DefaultPieDataset<String> dataset = new DefaultPieDataset<>();
 		dataset.setValue("IPhone 5s", Double.valueOf(20));
@@ -36,7 +40,7 @@ public class JFreeChartSamples {
 
 		int width = 640; /* Width of the image */
 		int height = 480; /* Height of the image */
-		File pieChart = new File("E:\\PieChart.jpeg");
+		File pieChart = new File(pieChartPath);
 
 		ChartUtils.saveChartAsJPEG(pieChart, chart, width, height);
 		

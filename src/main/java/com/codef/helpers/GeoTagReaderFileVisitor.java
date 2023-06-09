@@ -78,7 +78,7 @@ public class GeoTagReaderFileVisitor extends XSaLTFileVisitor {
 
 			String latitude = String.format("%.4f", lastLat);
 			String longitude = String.format("%.4f", lastLong);
-			LOGGER.info(latitude + " " + longitude);
+			LOGGER.info("{} {}", latitude, longitude);
 
 		} catch (Exception e) {
 			LOGGER.error(e.toString());

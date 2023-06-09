@@ -18,8 +18,8 @@ public class RotateVideos {
 	
 	private static final String FFMPEG_BIN_FOLDER = "C:\\Program Files\\FFMPEG\\bin\\";
 
-	private static final String SOURCE_FOLDER = "D:\\\\_REVIEW_AND_FILE\\BoyButtXXL\\";
-	private static final String TARGET_FOLDER = "D:\\\\_REVIEW_AND_FILE\\FINAL\\BoyButtXXL\\";
+	private static final String SOURCE_FOLDER = "D:\\_REVIEW_AND_FILE\\";
+	private static final String TARGET_FOLDER = "D:\\_REVIEW_AND_FILE\\FINAL\\";
 
 	public static void main(String[] args) {
 
@@ -50,7 +50,9 @@ public class RotateVideos {
 		// “2” = 90 degrees Counterclockwise,
 		// “3” = 90 Clockwise and Vertical Flip
 		// Values van be chained together  (e.g. "transpose=2,transpose=2")
-		LOGGER.info("\"" + FFMPEG_BIN_FOLDER + "ffmpeg.exe\" -y -i \"" + SOURCE_FOLDER + fileName + "\" -vf \"transpose=1,transpose=1\" \"" + TARGET_FOLDER + fileName + "\"");
+		
+		String output = String.format("\"%sffmpeg.exe\" -y -i \"%s%s\" -vf \"transpose=1,transpose=1\" \"%s%s\"", FFMPEG_BIN_FOLDER, SOURCE_FOLDER, fileName, TARGET_FOLDER, fileName);
+		LOGGER.info(output);
 	}
 
 }

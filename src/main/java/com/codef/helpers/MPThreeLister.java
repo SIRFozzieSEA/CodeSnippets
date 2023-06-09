@@ -34,9 +34,9 @@ public class MPThreeLister extends XSaLTFileVisitor {
 
 			try {
 				XSaLTFileSystemUtils.deleteFile(filePath, false);
-				LOGGER.info("Deleted: " + filePath + " to: " + filePath);
+				LOGGER.info("      Deleted: {}", filePath);
 			} catch (Exception e) {
-				LOGGER.info("Cannot Delete: " + filePath + " to: " + filePath);
+				LOGGER.info("Cannot Delete: {}", filePath);
 			}
 
 		}

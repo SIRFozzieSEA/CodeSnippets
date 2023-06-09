@@ -50,9 +50,10 @@ public class DriveFiller {
 
 			spaceToFillInGB = getUseableSpace(spaceToFillInGB, driveLetterToFill);
 			Double iterationsDbl = (spaceToFillInGB * 1000) / FILE_CHUNK_SIZE_IN_MB;
-
-			LOGGER.info("Writing: " + iterationsDbl.longValue() + " files, on drive " + driveLetterToFill
-					+ " with chunks of " + FILE_CHUNK_SIZE_IN_MB + " MB to fill " + spaceToFillInGB + " GB (+Extra)");
+			
+			String message = String.format("Writing: %x files, on drive %s with chunks of %x MB to fill %d GB (+Extra)", 
+					iterationsDbl.longValue(), driveLetterToFill, FILE_CHUNK_SIZE_IN_MB, spaceToFillInGB);
+			LOGGER.info(message);
 
 			StringBuilder contentBuilder = new StringBuilder();
 			for (int i = 0; i < (10 * 1024 * FILE_CHUNK_SIZE_IN_MB); i++) {
@@ -65,7 +66,7 @@ public class DriveFiller {
 				Path fileP = Paths.get(filePath);
 				Files.write(fileP, contentBuilder.toString().getBytes(StandardCharsets.UTF_8));
 				if (j % 100 == 0) {
-					LOGGER.info("     Wrote: " + filePath);
+					LOGGER.info("     Wrote: {}", filePath);
 				}
 			}
 

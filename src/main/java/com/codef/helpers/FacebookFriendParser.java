@@ -122,8 +122,7 @@ public class FacebookFriendParser {
 		XSaLTFileSystemUtils.writeStringBuilderToFile(outBuffer,
 				friendsFolderTextField.getText() + "Friends_" + XSaLTStringUtils.getDateString() + ".txt");
 
-		LOGGER.info(
-				"Wrote " + friendsFolderTextField.getText() + "Friends_" + XSaLTStringUtils.getDateString() + ".txt");
+		LOGGER.info("Wrote {}Friends_{}.txt", friendsFolderTextField.getText(), XSaLTStringUtils.getDateString());
 
 		copyPasteArea.setText("");
 

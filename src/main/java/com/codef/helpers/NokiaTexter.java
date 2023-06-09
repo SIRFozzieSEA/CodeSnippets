@@ -6,7 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class NokiaTexter {
-	
+
 	private static final Logger LOGGER = LogManager.getLogger(NokiaTexter.class.getName());
 
 	protected static HashMap<String, String> letterToKeys = new HashMap<>();
@@ -15,11 +15,13 @@ public class NokiaTexter {
 	public static void main(String[] args) {
 
 		initializeMaps();
-		LOGGER.info(translateLetterToKeys("Thats a pretty big word for a retard"));
-		LOGGER.info(translateKeysToLetter(
-				"66 666 55 444 2 0 7 44 666 66 33 0 88 7777 33 777 7777 0 9 444 555 555 0 4 33 8 0 8 44 444 7777"));
+		String returnValue = translateLetterToKeys("Thats a pretty big word for a retard");
+		LOGGER.info(returnValue);
 
-		
+		returnValue = translateKeysToLetter(
+				"66 666 55 444 2 0 7 44 666 66 33 0 88 7777 33 777 7777 0 9 444 555 555 0 4 33 8 0 8 44 444 7777");
+		LOGGER.info(returnValue);
+
 	}
 
 	public static String translateLetterToKeys(String translateString) {
