@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="en" xml:lang="en">
+
+<head>
+	<title>log-parser</title>
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<style type="text/css">
+		
+		body {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+		}
+		.auto-style1 {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			font-size: small;
+		}
+
+		.auto-style2 {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			text-align: right;
+			font-size: small;
+		}
+
+		.auto-style3 {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			font-size: small;
+			text-align: center;
+		}
+
+		.auto-style4 {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			text-align: left;
+			font-size: small;
+		}
+
+		.auto-style5 {
+			font-family: Verdana, Geneva, Tahoma, sans-serif;
+			text-align: left;
+			font-size: medium;
+		}
+	</style>
+
+</head>
+
+
+
+<body style="margin: 30px">
+
+	<script th:inline="javascript">
+		function goClicked(button) {
+			var rowValue = button.getAttribute("name");
+			var windowLocation = "/" + rowValue;
+			var skips = [];
+			if (form['skipImport_' + rowValue].checked) {
+				skips.push('skipImport=true');
+			}
+			if (form['skipExport_' + rowValue].checked) {
+				skips.push('skipExport=true');
+			}
+			if (form['skipOther_' + rowValue].checked) {
+				skips.push('skipOther=true');
+			}
+			var finalSkips = skips.toString().replaceAll(',', '&');
+			if (finalSkips.length > 0) {
+				windowLocation = windowLocation + "?" + finalSkips;
+			}
+			window.open(windowLocation, "_blank");
+		}
+	</script>
+
+	<form name="form">
+		<BR class="auto-style1" />
+		<table border="0" cellpadding="3" cellspacing="3">
+			<tr>
+				<td class="auto-style5" colspan="5"><strong>Jira Processes:</strong></td>
+			</tr>
+			<tr>
+				<td class="auto-style4" colspan="5">&nbsp;</td>
+			</tr>
+			<tr>
+				<td class="auto-style2">&nbsp;</td>
+				<td class="auto-style2">&nbsp;</td>
+				<td class="auto-style3">Skip<br>
+					Import</td>
+				<td class="auto-style3">Skip<br>
+					Export</td>
+				<td class="auto-style3">Skip<br>
+					Other</td>
+			</tr>
+
+			<tr th:each="row : ${jiraControllers}">
+				<td class="auto-style2" th:text="${row}"></td>
+				<td class="auto-style2">&nbsp;</td>
+				<td class="auto-style3">
+					<input th:name="${'skipImport_' + row}" type="checkbox">
+				</td>
+				<td class="auto-style3">
+					<input th:name="${'skipExport_' + row}" type="checkbox">
+				</td>
+				<td class="auto-style3">
+					<input th:name="${'skipOther_' + row}" type="checkbox">
+				</td>
+				<td class="auto-style1">
+					<input th:name="${row}" type="button" onClick="goClicked(this);" value="Go!">
+				</td>
+			</tr>
+
+			<tr>
+				<td class="auto-style2" colspan="5">&nbsp;</td>
+			</tr>
+		</table>
+		
+		<P><B><a href="/decode">To Decoder</a></B></P>
+
+	</form>
+</body>
+
+
+</html>
