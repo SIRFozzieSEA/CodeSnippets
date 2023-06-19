@@ -1,10 +1,12 @@
 package com.codef.codesnippets;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -42,7 +44,7 @@ import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 public class ParsePasswordXML {
 
 	public static final String DATA_OUT_FOLDER = "E:\\SECURE_PASSWORDS\\";
-	
+
 //	public static final String DATA_FOLDER_OUT = "E:\\ENC_DATA_FOLDER\\";
 
 	private static final String ALGORITHM = "AES";
@@ -183,12 +185,17 @@ public class ParsePasswordXML {
 					XSaLTFileSystemUtils.writeStringToFile(sb.toString(), encFolder + nodeName + ".txt");
 					encryptFile(encFolder + nodeName + ".txt", encFolder + nodeName + ".enc", secretKey);
 //					decryptFile(encFolder + nodeName + ".enc", encFolder + nodeName + ".dec", secretKey);
+//					String decodedStuff = decryptFileToString(encFolder + nodeName + ".enc", secretKey);
+//					System.out.println(decodedStuff);
+//					System.out.println("");
+
 					XSaLTFileSystemUtils.deleteFileNew(encFolder + nodeName + ".txt");
 
 				}
 			}
 
 			saveXMLDocument(document, fileName);
+			XSaLTFileSystemUtils.writeStringToFile(secretKey, DATA_OUT_FOLDER + "secret.key");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -241,6 +248,31 @@ public class ParsePasswordXML {
 			}
 
 			cipherInputStream.close();
+		}
+	}
+
+	public static String decryptFileToString(String inputFile, String key) throws NoSuchAlgorithmException,
+			NoSuchPaddingException, InvalidKeyException, IOException, IllegalBlockSizeException, BadPaddingException {
+
+//		Cipher cipher = Cipher.getInstance(ALGORITHM);
+//		cipher.init(Cipher.DECRYPT_MODE, key);
+		SecretKey secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
+		Cipher cipher = Cipher.getInstance(ALGORITHM);
+		cipher.init(Cipher.DECRYPT_MODE, secretKey);
+
+		try (InputStream inputStream = new FileInputStream(inputFile)) {
+			CipherInputStream cipherInputStream = new CipherInputStream(inputStream, cipher);
+			ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+			byte[] buffer = new byte[8192];
+			int bytesRead;
+			while ((bytesRead = cipherInputStream.read(buffer)) != -1) {
+				outputStream.write(buffer, 0, bytesRead);
+			}
+
+			cipherInputStream.close();
+
+			return new String(outputStream.toByteArray(), StandardCharsets.UTF_8);
 		}
 	}
 
