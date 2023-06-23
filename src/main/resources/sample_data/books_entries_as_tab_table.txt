@@ -1,0 +1,101 @@
+AUTHOR	BOOKYEAR	COUNTRY	IMAGELINK	LANGUAGE	LINK	PAGES	TITLE
+Chinua Achebe		Nigeria	images/things-fall-apart.jpg	English	https://en.wikipedia.org/wiki/Things_Fall_Apart		Things Fall Apart
+Hans Christian Andersen		Denmark	images/fairy-tales.jpg	Danish	https://en.wikipedia.org/wiki/Fairy_Tales_Told_for_Children._First_Collection.		Fairy tales
+Dante Alighieri		Italy	images/the-divine-comedy.jpg	Italian	https://en.wikipedia.org/wiki/Divine_Comedy		The Divine Comedy
+Unknown		Sumer and Akkadian Empire	images/the-epic-of-gilgamesh.jpg	Akkadian	https://en.wikipedia.org/wiki/Epic_of_Gilgamesh		The Epic Of Gilgamesh
+Unknown		Achaemenid Empire	images/the-book-of-job.jpg	Hebrew	https://en.wikipedia.org/wiki/Book_of_Job		The Book Of Job
+Unknown		India/Iran/Iraq/Egypt/Tajikistan	images/one-thousand-and-one-nights.jpg	Arabic	https://en.wikipedia.org/wiki/One_Thousand_and_One_Nights		One Thousand and One Nights
+Unknown		Iceland	images/njals-saga.jpg	Old Norse	https://en.wikipedia.org/wiki/Nj%C3%A1ls_saga		Njáls Saga
+Jane Austen		United Kingdom	images/pride-and-prejudice.jpg	English	https://en.wikipedia.org/wiki/Pride_and_Prejudice		Pride and Prejudice
+Honoré de Balzac		France	images/le-pere-goriot.jpg	French	https://en.wikipedia.org/wiki/Le_P%C3%A8re_Goriot		Le Père Goriot
+Samuel Beckett		Republic of Ireland	images/molloy-malone-dies-the-unnamable.jpg	"French, English"	https://en.wikipedia.org/wiki/Molloy_(novel)		"Molloy, Malone Dies, The Unnamable, the trilogy"
+Giovanni Boccaccio		Italy	images/the-decameron.jpg	Italian	https://en.wikipedia.org/wiki/The_Decameron		The Decameron
+Jorge Luis Borges		Argentina	images/ficciones.jpg	Spanish	https://en.wikipedia.org/wiki/Ficciones		Ficciones
+Emily Brontë		United Kingdom	images/wuthering-heights.jpg	English	https://en.wikipedia.org/wiki/Wuthering_Heights		Wuthering Heights
+Albert Camus		"Algeria, French Empire"	images/l-etranger.jpg	French	https://en.wikipedia.org/wiki/The_Stranger_(novel)		The Stranger
+Paul Celan		"Romania, France"	images/poems-paul-celan.jpg	German			Poems
+Louis-Ferdinand Céline		France	images/voyage-au-bout-de-la-nuit.jpg	French	https://en.wikipedia.org/wiki/Journey_to_the_End_of_the_Night		Journey to the End of the Night
+Miguel de Cervantes		Spain	images/don-quijote-de-la-mancha.jpg	Spanish	https://en.wikipedia.org/wiki/Don_Quixote		Don Quijote De La Mancha
+Geoffrey Chaucer		England	images/the-canterbury-tales.jpg	English	https://en.wikipedia.org/wiki/The_Canterbury_Tales		The Canterbury Tales
+Anton Chekhov		Russia	images/stories-of-anton-chekhov.jpg	Russian	https://en.wikipedia.org/wiki/List_of_short_stories_by_Anton_Chekhov		Stories
+Joseph Conrad		United Kingdom	images/nostromo.jpg	English	https://en.wikipedia.org/wiki/Nostromo		Nostromo
+Charles Dickens		United Kingdom	images/great-expectations.jpg	English	https://en.wikipedia.org/wiki/Great_Expectations		Great Expectations
+Denis Diderot		France	images/jacques-the-fatalist.jpg	French	https://en.wikipedia.org/wiki/Jacques_the_Fatalist		Jacques the Fatalist
+Alfred Döblin		Germany	images/berlin-alexanderplatz.jpg	German	https://en.wikipedia.org/wiki/Berlin_Alexanderplatz		Berlin Alexanderplatz
+Fyodor Dostoevsky		Russia	images/crime-and-punishment.jpg	Russian	https://en.wikipedia.org/wiki/Crime_and_Punishment		Crime and Punishment
+Fyodor Dostoevsky		Russia	images/the-idiot.jpg	Russian	https://en.wikipedia.org/wiki/The_Idiot		The Idiot
+Fyodor Dostoevsky		Russia	images/the-possessed.jpg	Russian	https://en.wikipedia.org/wiki/Demons_(Dostoyevsky_novel)		The Possessed
+Fyodor Dostoevsky		Russia	images/the-brothers-karamazov.jpg	Russian	https://en.wikipedia.org/wiki/The_Brothers_Karamazov		The Brothers Karamazov
+George Eliot		United Kingdom	images/middlemarch.jpg	English	https://en.wikipedia.org/wiki/Middlemarch		Middlemarch
+Ralph Ellison		United States	images/invisible-man.jpg	English	https://en.wikipedia.org/wiki/Invisible_Man		Invisible Man
+Euripides		Greece	images/medea.jpg	Greek	https://en.wikipedia.org/wiki/Medea_(play)		Medea
+William Faulkner		United States	images/absalom-absalom.jpg	English	"https://en.wikipedia.org/wiki/Absalom,_Absalom!"		"Absalom, Absalom!"
+William Faulkner		United States	images/the-sound-and-the-fury.jpg	English	https://en.wikipedia.org/wiki/The_Sound_and_the_Fury		The Sound and the Fury
+Gustave Flaubert		France	images/madame-bovary.jpg	French	https://en.wikipedia.org/wiki/Madame_Bovary		Madame Bovary
+Gustave Flaubert		France	images/l-education-sentimentale.jpg	French	https://en.wikipedia.org/wiki/Sentimental_Education		Sentimental Education
+Federico García Lorca		Spain	images/gypsy-ballads.jpg	Spanish	https://en.wikipedia.org/wiki/Gypsy_Ballads		Gypsy Ballads
+Gabriel García Márquez		Colombia	images/one-hundred-years-of-solitude.jpg	Spanish	https://en.wikipedia.org/wiki/One_Hundred_Years_of_Solitude		One Hundred Years of Solitude
+Gabriel García Márquez		Colombia	images/love-in-the-time-of-cholera.jpg	Spanish	https://en.wikipedia.org/wiki/Love_in_the_Time_of_Cholera		Love in the Time of Cholera
+Johann Wolfgang von Goethe		Saxe-Weimar	images/faust.jpg	German	https://en.wikipedia.org/wiki/Goethe%27s_Faust		Faust
+Nikolai Gogol		Russia	images/dead-souls.jpg	Russian	https://en.wikipedia.org/wiki/Dead_Souls		Dead Souls
+Günter Grass		Germany	images/the-tin-drum.jpg	German	https://en.wikipedia.org/wiki/The_Tin_Drum		The Tin Drum
+João Guimarães Rosa		Brazil	images/the-devil-to-pay-in-the-backlands.jpg	Portuguese	https://en.wikipedia.org/wiki/The_Devil_to_Pay_in_the_Backlands		The Devil to Pay in the Backlands
+Knut Hamsun		Norway	images/hunger.jpg	Norwegian	https://en.wikipedia.org/wiki/Hunger_(Hamsun_novel)		Hunger
+Ernest Hemingway		United States	images/the-old-man-and-the-sea.jpg	English	https://en.wikipedia.org/wiki/The_Old_Man_and_the_Sea		The Old Man and the Sea
+Homer		Greece	images/the-iliad-of-homer.jpg	Greek	https://en.wikipedia.org/wiki/Iliad		Iliad
+Homer		Greece	images/the-odyssey-of-homer.jpg	Greek	https://en.wikipedia.org/wiki/Odyssey		Odyssey
+Henrik Ibsen		Norway	images/a-Dolls-house.jpg	Norwegian	https://en.wikipedia.org/wiki/A_Doll%27s_House		A Dolls House
+James Joyce		Irish Free State	images/ulysses.jpg	English	https://en.wikipedia.org/wiki/Ulysses_(novel)		Ulysses
+Franz Kafka		Czechoslovakia	images/stories-of-franz-kafka.jpg	German	https://en.wikipedia.org/wiki/Franz_Kafka_bibliography#Short_stories		Stories
+Franz Kafka		Czechoslovakia	images/the-trial.jpg	German	https://en.wikipedia.org/wiki/The_Trial		The Trial
+Franz Kafka		Czechoslovakia	images/the-castle.jpg	German	https://en.wikipedia.org/wiki/The_Castle_(novel)		The Castle
+Kālidāsa		India	images/the-recognition-of-shakuntala.jpg	Sanskrit	https://en.wikipedia.org/wiki/Abhij%C3%B1%C4%81na%C5%9B%C4%81kuntalam		The recognition of Shakuntala
+Yasunari Kawabata		Japan	images/the-sound-of-the-mountain.jpg	Japanese	https://en.wikipedia.org/wiki/The_Sound_of_the_Mountain		The Sound of the Mountain
+Nikos Kazantzakis		Greece	images/zorba-the-greek.jpg	Greek	https://en.wikipedia.org/wiki/Zorba_the_Greek		Zorba the Greek
+D. H. Lawrence		United Kingdom	images/sons-and-lovers.jpg	English	https://en.wikipedia.org/wiki/Sons_and_Lovers		Sons and Lovers
+Halldór Laxness		Iceland	images/independent-people.jpg	Icelandic	https://en.wikipedia.org/wiki/Independent_People		Independent People
+Giacomo Leopardi		Italy	images/poems-giacomo-leopardi.jpg	Italian			Poems
+Doris Lessing		United Kingdom	images/the-golden-notebook.jpg	English	https://en.wikipedia.org/wiki/The_Golden_Notebook		The Golden Notebook
+Astrid Lindgren		Sweden	images/pippi-longstocking.jpg	Swedish	https://en.wikipedia.org/wiki/Pippi_Longstocking		Pippi Longstocking
+Lu Xun		China	images/diary-of-a-madman.jpg	Chinese	https://en.wikipedia.org/wiki/A_Madman%27s_Diary		Diary of a Madman
+Naguib Mahfouz		Egypt	images/children-of-gebelawi.jpg	Arabic	https://en.wikipedia.org/wiki/Children_of_Gebelawi		Children of Gebelawi
+Thomas Mann		Germany	images/buddenbrooks.jpg	German	https://en.wikipedia.org/wiki/Buddenbrooks		Buddenbrooks
+Thomas Mann		Germany	images/the-magic-mountain.jpg	German	https://en.wikipedia.org/wiki/The_Magic_Mountain		The Magic Mountain
+Herman Melville		United States	images/moby-dick.jpg	English	https://en.wikipedia.org/wiki/Moby-Dick		Moby Dick
+Michel de Montaigne		France	images/essais.jpg	French	https://en.wikipedia.org/wiki/Essays_(Montaigne)		Essays
+Elsa Morante		Italy	images/history.jpg	Italian	https://en.wikipedia.org/wiki/History_(novel)		History
+Toni Morrison		United States	images/beloved.jpg	English	https://en.wikipedia.org/wiki/Beloved_(novel)		Beloved
+Murasaki Shikibu		Japan	images/the-tale-of-genji.jpg	Japanese	https://en.wikipedia.org/wiki/The_Tale_of_Genji		The Tale of Genji
+Robert Musil		Austria	images/the-man-without-qualities.jpg	German	https://en.wikipedia.org/wiki/The_Man_Without_Qualities		The Man Without Qualities
+Vladimir Nabokov		Russia/United States	images/lolita.jpg	English	https://en.wikipedia.org/wiki/Lolita		Lolita
+George Orwell		United Kingdom	images/nineteen-eighty-four.jpg	English	https://en.wikipedia.org/wiki/Nineteen_Eighty-Four		Nineteen Eighty-Four
+Ovid		Roman Empire	images/the-metamorphoses-of-ovid.jpg	Classical Latin	https://en.wikipedia.org/wiki/Metamorphoses		Metamorphoses
+Fernando Pessoa		Portugal	images/the-book-of-disquiet.jpg	Portuguese	https://en.wikipedia.org/wiki/The_Book_of_Disquiet		The Book of Disquiet
+Edgar Allan Poe		United States	images/tales-and-poems-of-edgar-allan-poe.jpg	English	https://en.wikipedia.org/wiki/Edgar_Allan_Poe_bibliography#Tales		Tales
+Marcel Proust		France	images/a-la-recherche-du-temps-perdu.jpg	French	https://en.wikipedia.org/wiki/In_Search_of_Lost_Time		In Search of Lost Time
+François Rabelais		France	images/gargantua-and-pantagruel.jpg	French	https://en.wikipedia.org/wiki/Gargantua_and_Pantagruel		Gargantua and Pantagruel
+Juan Rulfo		Mexico	images/pedro-paramo.jpg	Spanish	https://en.wikipedia.org/wiki/Pedro_P%C3%A1ramo		Pedro Páramo
+Rumi		Sultanate of Rum	images/the-masnavi.jpg	Persian	https://en.wikipedia.org/wiki/Masnavi		The Masnavi
+Salman Rushdie		"United Kingdom, India"	images/midnights-children.jpg	English	https://en.wikipedia.org/wiki/Midnight%27s_Children		Midnights Children
+Saadi		"Persia, Persian Empire"	images/bostan.jpg	Persian	https://en.wikipedia.org/wiki/Bustan_(book)		Bostan
+Tayeb Salih		Sudan	images/season-of-migration-to-the-north.jpg	Arabic	https://en.wikipedia.org/wiki/Season_of_Migration_to_the_North		Season of Migration to the North
+José Saramago		Portugal	images/blindness.jpg	Portuguese	https://en.wikipedia.org/wiki/Blindness_(novel)		Blindness
+William Shakespeare		England	images/hamlet.jpg	English	https://en.wikipedia.org/wiki/Hamlet		Hamlet
+William Shakespeare		England	images/king-lear.jpg	English	https://en.wikipedia.org/wiki/King_Lear		King Lear
+William Shakespeare		England	images/othello.jpg	English	https://en.wikipedia.org/wiki/Othello		Othello
+Sophocles		Greece	images/oedipus-the-king.jpg	Greek	https://en.wikipedia.org/wiki/Oedipus_the_King		Oedipus the King
+Stendhal		France	images/le-rouge-et-le-noir.jpg	French	https://en.wikipedia.org/wiki/The_Red_and_the_Black		The Red and the Black
+Laurence Sterne		England	images/the-life-and-opinions-of-tristram-shandy.jpg	English	"https://en.wikipedia.org/wiki/The_Life_and_Opinions_of_Tristram_Shandy,_Gentleman"		The Life And Opinions of Tristram Shandy
+Italo Svevo		Italy	images/confessions-of-zeno.jpg	Italian	https://en.wikipedia.org/wiki/Zeno%27s_Conscience		Confessions of Zeno
+Jonathan Swift		Ireland	images/gullivers-travels.jpg	English	https://en.wikipedia.org/wiki/Gulliver%27s_Travels		Gullivers Travels
+Leo Tolstoy		Russia	images/war-and-peace.jpg	Russian	https://en.wikipedia.org/wiki/War_and_Peace		War and Peace
+Leo Tolstoy		Russia	images/anna-karenina.jpg	Russian	https://en.wikipedia.org/wiki/Anna_Karenina		Anna Karenina
+Leo Tolstoy		Russia	images/the-death-of-ivan-ilyich.jpg	Russian	https://en.wikipedia.org/wiki/The_Death_of_Ivan_Ilyich		The Death of Ivan Ilyich
+Mark Twain		United States	images/the-adventures-of-huckleberry-finn.jpg	English	https://en.wikipedia.org/wiki/Adventures_of_Huckleberry_Finn		The Adventures of Huckleberry Finn
+Valmiki		India	images/ramayana.jpg	Sanskrit	https://en.wikipedia.org/wiki/Ramayana		Ramayana
+Virgil		Roman Empire	images/the-aeneid.jpg	Classical Latin	https://en.wikipedia.org/wiki/Aeneid		The Aeneid
+Vyasa		India	images/the-mahab-harata.jpg	Sanskrit	https://en.wikipedia.org/wiki/Mahabharata		Mahabharata
+Walt Whitman		United States	images/leaves-of-grass.jpg	English	https://en.wikipedia.org/wiki/Leaves_of_Grass		Leaves of Grass
+Virginia Woolf		United Kingdom	images/mrs-dalloway.jpg	English	https://en.wikipedia.org/wiki/Mrs_Dalloway		Mrs Dalloway
+Virginia Woolf		United Kingdom	images/to-the-lighthouse.jpg	English	https://en.wikipedia.org/wiki/To_the_Lighthouse		To the Lighthouse
+Marguerite Yourcenar		France/Belgium	images/memoirs-of-hadrian.jpg	French	https://en.wikipedia.org/wiki/Memoirs_of_Hadrian		Memoirs of Hadrian
