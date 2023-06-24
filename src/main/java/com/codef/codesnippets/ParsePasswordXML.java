@@ -7,9 +7,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -44,16 +47,14 @@ import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 public class ParsePasswordXML {
 
 	public static final String DATA_OUT_FOLDER = "E:\\SECURE_PASSWORDS\\";
-
-//	public static final String DATA_FOLDER_OUT = "E:\\ENC_DATA_FOLDER\\";
-
 	private static final String ALGORITHM = "AES";
 	private static final int KEY_LENGTH = 128;
 
 	public static Map<String, TreeMap<String, String>> passwordMap = new TreeMap<>();
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
-		copyXMLDocumentForExport("E:\\Site Passwords.xml", DATA_OUT_FOLDER + "Site Passwords SECURE.xml");
+		copyXMLDocumentForExport("E:\\Documents\\Personal\\Site Passwords.xml",
+				DATA_OUT_FOLDER + "Site Passwords SECURE.xml");
 		fixXMLDocumentForExport(DATA_OUT_FOLDER + "Site Passwords SECURE.xml");
 	}
 
@@ -197,9 +198,28 @@ public class ParsePasswordXML {
 			saveXMLDocument(document, fileName);
 			XSaLTFileSystemUtils.writeStringToFile(secretKey, DATA_OUT_FOLDER + "secret.key");
 
+			cleanUpLinesInXMLDoc(fileName);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+	}
+
+	public static void cleanUpLinesInXMLDoc(String fileName) throws IOException {
+
+		StringBuilder sb = new StringBuilder();
+		List<String> fileLines = Files.readAllLines(Paths.get(fileName), StandardCharsets.UTF_8);
+
+		for (String line : fileLines) {
+			if (line.trim().length() > 0) {
+				if (line.indexOf("ENCRYPTED") == -1 && line.indexOf("Export_For_Phone") == -1) {
+					sb.append(line).append("\n");
+				}
+			}
+		}
+
+		XSaLTFileSystemUtils.writeStringToFile(sb.toString(), fileName);
 
 	}
 
