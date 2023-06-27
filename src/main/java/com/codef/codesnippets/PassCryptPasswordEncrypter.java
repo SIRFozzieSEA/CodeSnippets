@@ -145,17 +145,17 @@ public class PassCryptPasswordEncrypter {
 					Element element = (Element) child;
 
 					String nodeName = element.getNodeName();
-					String url = "";
+//					String url = "";
 					String userName = "";
 					String password = "";
 					String email = "";
 
-					NodeList testList = element.getElementsByTagName("URL");
-					if (testList.getLength() > 0) {
-						url = element.getElementsByTagName("URL").item(0).getTextContent();
-					}
+//					NodeList testList = element.getElementsByTagName("URL");
+//					if (testList.getLength() > 0) {
+//						url = element.getElementsByTagName("URL").item(0).getTextContent();
+//					}
 
-					testList = element.getElementsByTagName("Username");
+					NodeList testList = element.getElementsByTagName("Username");
 					if (testList.getLength() > 0) {
 						userName = element.getElementsByTagName("Username").item(0).getTextContent();
 						element.getElementsByTagName("Username").item(0).setTextContent("ENCRYPTED");
@@ -176,7 +176,7 @@ public class PassCryptPasswordEncrypter {
 					StringBuilder sb = new StringBuilder();
 
 					sb.append(nodeName + ":" + "\n");
-					sb.append("\t" + "      URL: " + url + "\n");
+//					sb.append("\t" + "      URL: " + url + "\n");
 					sb.append("\t" + "   E-Mail: " + email + "\n");
 					sb.append("\t" + "User Name: " + userName + "\n");
 					sb.append("\t" + " Password: " + password + "\n");
