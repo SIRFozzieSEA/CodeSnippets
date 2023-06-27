@@ -44,18 +44,19 @@ import org.w3c.dom.Text;
 
 import com.codef.xsalt.utils.XSaLTFileSystemUtils;
 
-public class ParsePasswordXML {
+public class PassCryptPasswordEncrypter {
 
-	public static final String DATA_OUT_FOLDER = "E:\\SECURE_PASSWORDS\\";
+	private static final String DATA_OUT_FOLDER = "E:\\SECURE_PASSWORDS\\";
 	private static final String ALGORITHM = "AES";
 	private static final int KEY_LENGTH = 128;
+	private static final String passwordForApp = "bobolala6969!";
 
 	public static Map<String, TreeMap<String, String>> passwordMap = new TreeMap<>();
 
 	public static void main(String[] args) throws NoSuchAlgorithmException {
 		copyXMLDocumentForExport("E:\\Documents\\Personal\\Site Passwords.xml",
-				DATA_OUT_FOLDER + "Site Passwords SECURE.xml");
-		fixXMLDocumentForExport(DATA_OUT_FOLDER + "Site Passwords SECURE.xml");
+				DATA_OUT_FOLDER + "site_passwords_secure.xml");
+		fixXMLDocumentForExport(DATA_OUT_FOLDER + "site_passwords_secure.xml");
 	}
 
 	public static void copyXMLDocumentForExport(String sourceDoc, String targetDoc) {
@@ -130,9 +131,6 @@ public class ParsePasswordXML {
 
 	public static void fixXMLDocumentForExport(String fileName) throws NoSuchAlgorithmException {
 
-		String encFolder = DATA_OUT_FOLDER + "\\CRYPTS\\";
-		XSaLTFileSystemUtils.makeDirectory(encFolder);
-
 		String secretKey = generateAESKeyAsString();
 
 		try {
@@ -183,20 +181,23 @@ public class ParsePasswordXML {
 					sb.append("\t" + "User Name: " + userName + "\n");
 					sb.append("\t" + " Password: " + password + "\n");
 
-					XSaLTFileSystemUtils.writeStringToFile(sb.toString(), encFolder + nodeName + ".txt");
-					encryptFile(encFolder + nodeName + ".txt", encFolder + nodeName + ".enc", secretKey);
-//					decryptFile(encFolder + nodeName + ".enc", encFolder + nodeName + ".dec", secretKey);
-//					String decodedStuff = decryptFileToString(encFolder + nodeName + ".enc", secretKey);
+					XSaLTFileSystemUtils.writeStringToFile(sb.toString(),
+							DATA_OUT_FOLDER + nodeName.toLowerCase() + ".txt");
+					encryptFile(DATA_OUT_FOLDER + nodeName.toLowerCase() + ".txt",
+							DATA_OUT_FOLDER + nodeName.toLowerCase() + ".enc", secretKey);
+//					decryptFile(DATA_OUT_FOLDER + nodeName.toLowerCase() + ".enc", DATA_OUT_FOLDER + nodeName.toLowerCase() + ".dec", secretKey);
+//					String decodedStuff = decryptFileToString(DATA_OUT_FOLDER + nodeName.toLowerCase() + ".enc", secretKey);
 //					System.out.println(decodedStuff);
 //					System.out.println("");
 
-					XSaLTFileSystemUtils.deleteFileNew(encFolder + nodeName + ".txt");
+					XSaLTFileSystemUtils.deleteFileNew(DATA_OUT_FOLDER + nodeName.toLowerCase() + ".txt");
 
 				}
 			}
 
 			saveXMLDocument(document, fileName);
 			XSaLTFileSystemUtils.writeStringToFile(secretKey, DATA_OUT_FOLDER + "secret.key");
+			XSaLTFileSystemUtils.writeStringToFile(passwordForApp, DATA_OUT_FOLDER + "passcrypt.key");
 
 			cleanUpLinesInXMLDoc(fileName);
 
