@@ -1,17 +1,22 @@
-package com.codef.codesnippets;
+package com.codef.uis;
 
-import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-public class FourChanTemplateUI {
+import java.awt.Color;
+
+public class RandomizeLettersUI {
 
 	private JFrame frame;
 
@@ -21,7 +26,7 @@ public class FourChanTemplateUI {
 	public static void main(String[] args) {
 	    EventQueue.invokeLater(() -> {
 	        try {
-	        	FourChanTemplateUI window = new FourChanTemplateUI();
+	        	RandomizeLettersUI window = new RandomizeLettersUI();
 	            window.frame.setVisible(true);
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -33,7 +38,7 @@ public class FourChanTemplateUI {
 	/**
 	 * Create the application.
 	 */
-	public FourChanTemplateUI() {
+	public RandomizeLettersUI() {
 		initialize();
 	}
 
@@ -42,7 +47,7 @@ public class FourChanTemplateUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("Chan it!");
+		frame.setTitle("Randomize Letters!");
 		frame.setBounds(100, 100, 951, 600);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -53,18 +58,19 @@ public class FourChanTemplateUI {
 		inputBox.setLineWrap(true);
 		frame.getContentPane().add(inputBox);
 
-		JTextArea outputBox = new JTextArea();
+		JEditorPane outputBox = new JEditorPane();
+		outputBox.setEditorKit(JEditorPane.createEditorKitForContentType("text/html"));
 		outputBox.setEditable(false);
 		outputBox.setBounds(10, 172, 915, 378);
 		outputBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		frame.getContentPane().add(outputBox);
 
-		JButton doItButton = new JButton("Chan It!");
+		JButton doItButton = new JButton("Randomize Letters!");
 		doItButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		doItButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				outputBox.setText(doBoldHalfWords(inputBox.getText()));
+				outputBox.setText(randomizeLetters(inputBox.getText()));
 			}
 		});
 		doItButton.setBounds(10, 138, 915, 23);
@@ -72,30 +78,32 @@ public class FourChanTemplateUI {
 
 	}
 
-	private String doBoldHalfWords(String inputString) {
+	private String randomizeLetters(String inputString) {
 		String[] words = inputString.split(" ");
-		StringBuilder returnSentence = new StringBuilder();
+		String[] newWords = new String[words.length];
 
-		if (words[0].equalsIgnoreCase("haha")) {
-			int numOfHas = Integer.parseInt(words[1]);
-			returnSentence.append("Ah");
-			for (int i = 0; i < numOfHas; i++) {
-				returnSentence.append(" ha");
+		for (int i = 0; i < words.length; i++) {
+			String word = words[i];
+			if (word.length() > 2) {
+				char[] letters = word.substring(1, word.length() - 1).toCharArray();
+				List<Character> lettersList = new ArrayList<>();
+				for (char c : letters) {
+					lettersList.add(c);
+				}
+				Collections.shuffle(lettersList);
+				StringBuilder sb = new StringBuilder();
+				sb.append(word.charAt(0));
+				for (char c : lettersList) {
+					sb.append(c);
+				}
+				sb.append(word.charAt(word.length() - 1));
+				newWords[i] = sb.toString();
+			} else {
+				newWords[i] = word;
 			}
-			returnSentence.append(" ... \n\n");
-			returnSentence.append("[breathes in] \n\n");
-			returnSentence.append("... ");
-			for (int i = 0; i < numOfHas; i++) {
-				returnSentence.append(" ha");
-			}
-			returnSentence.append("!\n\n");
-			returnSentence.append("No.");
-			
-		} else {
-			returnSentence.append(inputString);
 		}
 
-		return returnSentence.toString();
+		return "<HTML><font face='Arial' size='4'>" + String.join(" ", newWords) + "</font></HTML>";
 	}
 
 }

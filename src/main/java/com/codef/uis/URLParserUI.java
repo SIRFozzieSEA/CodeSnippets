@@ -1,4 +1,4 @@
-package com.codef.codesnippets;
+package com.codef.uis;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -19,9 +19,9 @@ import javax.swing.WindowConstants;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class URLParserGUI {
+public class URLParserUI {
 
-	private static final Logger LOGGER = LogManager.getLogger(URLParserGUI.class.getName());
+	private static final Logger LOGGER = LogManager.getLogger(URLParserUI.class.getName());
 
 	private JFrame frame;
 
@@ -31,7 +31,7 @@ public class URLParserGUI {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(() -> {
 			try {
-				URLParserGUI window = new URLParserGUI();
+				URLParserUI window = new URLParserUI();
 				window.frame.setVisible(true);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -42,7 +42,7 @@ public class URLParserGUI {
 	/**
 	 * Create the application.
 	 */
-	public URLParserGUI() {
+	public URLParserUI() {
 		initialize();
 	}
 

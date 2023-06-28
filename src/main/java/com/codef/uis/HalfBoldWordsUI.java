@@ -1,11 +1,8 @@
-package com.codef.codesnippets;
+package com.codef.uis;
 
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -16,7 +13,7 @@ import javax.swing.WindowConstants;
 
 import java.awt.Color;
 
-public class RandomizeLettersUI {
+public class HalfBoldWordsUI {
 
 	private JFrame frame;
 
@@ -26,19 +23,18 @@ public class RandomizeLettersUI {
 	public static void main(String[] args) {
 	    EventQueue.invokeLater(() -> {
 	        try {
-	        	RandomizeLettersUI window = new RandomizeLettersUI();
+	        	HalfBoldWordsUI window = new HalfBoldWordsUI();
 	            window.frame.setVisible(true);
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
 	    });
 	}
-	
 
 	/**
 	 * Create the application.
 	 */
-	public RandomizeLettersUI() {
+	public HalfBoldWordsUI() {
 		initialize();
 	}
 
@@ -47,7 +43,7 @@ public class RandomizeLettersUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("Randomize Letters!");
+		frame.setTitle("Bold It!");
 		frame.setBounds(100, 100, 951, 600);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -65,12 +61,12 @@ public class RandomizeLettersUI {
 		outputBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		frame.getContentPane().add(outputBox);
 
-		JButton doItButton = new JButton("Randomize Letters!");
+		JButton doItButton = new JButton("Bold It!");
 		doItButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		doItButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				outputBox.setText(randomizeLetters(inputBox.getText()));
+				outputBox.setText(doBoldHalfWords(inputBox.getText()));
 			}
 		});
 		doItButton.setBounds(10, 138, 915, 23);
@@ -78,32 +74,25 @@ public class RandomizeLettersUI {
 
 	}
 
-	private String randomizeLetters(String inputString) {
+	private String doBoldHalfWords(String inputString) {
 		String[] words = inputString.split(" ");
-		String[] newWords = new String[words.length];
+		StringBuilder returnSentence = new StringBuilder();
+		returnSentence.append("<HTML><font face='Arial' size='4'>");
 
 		for (int i = 0; i < words.length; i++) {
 			String word = words[i];
+
 			if (word.length() > 2) {
-				char[] letters = word.substring(1, word.length() - 1).toCharArray();
-				List<Character> lettersList = new ArrayList<>();
-				for (char c : letters) {
-					lettersList.add(c);
-				}
-				Collections.shuffle(lettersList);
-				StringBuilder sb = new StringBuilder();
-				sb.append(word.charAt(0));
-				for (char c : lettersList) {
-					sb.append(c);
-				}
-				sb.append(word.charAt(word.length() - 1));
-				newWords[i] = sb.toString();
+				int cutoffChar = (int) Math.ceil(Double.valueOf(i) / 2);
+				returnSentence.append("<B>" + word.substring(0, cutoffChar + 1) + "</B>"
+						+ word.substring(cutoffChar + 1, word.length()) + " ");
 			} else {
-				newWords[i] = word;
+				returnSentence.append("<B>" + word + "</B> ");
 			}
 		}
 
-		return "<HTML><font face='Arial' size='4'>" + String.join(" ", newWords) + "</font></HTML>";
+		returnSentence.append("</font></HTML>");
+		return returnSentence.toString();
 	}
 
 }

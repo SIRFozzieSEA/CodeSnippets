@@ -1,4 +1,4 @@
-package com.codef.codesnippets;
+package com.codef.uis;
 
 import java.awt.EventQueue;
 import java.awt.Font;

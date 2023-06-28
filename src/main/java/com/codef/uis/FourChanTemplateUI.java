@@ -1,19 +1,17 @@
-package com.codef.codesnippets;
+package com.codef.uis;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-import java.awt.Color;
-
-public class HalfBoldWordsUI {
+public class FourChanTemplateUI {
 
 	private JFrame frame;
 
@@ -23,18 +21,19 @@ public class HalfBoldWordsUI {
 	public static void main(String[] args) {
 	    EventQueue.invokeLater(() -> {
 	        try {
-	        	HalfBoldWordsUI window = new HalfBoldWordsUI();
+	        	FourChanTemplateUI window = new FourChanTemplateUI();
 	            window.frame.setVisible(true);
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
 	    });
 	}
+	
 
 	/**
 	 * Create the application.
 	 */
-	public HalfBoldWordsUI() {
+	public FourChanTemplateUI() {
 		initialize();
 	}
 
@@ -43,7 +42,7 @@ public class HalfBoldWordsUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("Bold It!");
+		frame.setTitle("Chan it!");
 		frame.setBounds(100, 100, 951, 600);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
@@ -54,14 +53,13 @@ public class HalfBoldWordsUI {
 		inputBox.setLineWrap(true);
 		frame.getContentPane().add(inputBox);
 
-		JEditorPane outputBox = new JEditorPane();
-		outputBox.setEditorKit(JEditorPane.createEditorKitForContentType("text/html"));
+		JTextArea outputBox = new JTextArea();
 		outputBox.setEditable(false);
 		outputBox.setBounds(10, 172, 915, 378);
 		outputBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		frame.getContentPane().add(outputBox);
 
-		JButton doItButton = new JButton("Bold It!");
+		JButton doItButton = new JButton("Chan It!");
 		doItButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		doItButton.addMouseListener(new MouseAdapter() {
 			@Override
@@ -77,21 +75,26 @@ public class HalfBoldWordsUI {
 	private String doBoldHalfWords(String inputString) {
 		String[] words = inputString.split(" ");
 		StringBuilder returnSentence = new StringBuilder();
-		returnSentence.append("<HTML><font face='Arial' size='4'>");
 
-		for (int i = 0; i < words.length; i++) {
-			String word = words[i];
-
-			if (word.length() > 2) {
-				int cutoffChar = (int) Math.ceil(Double.valueOf(i) / 2);
-				returnSentence.append("<B>" + word.substring(0, cutoffChar + 1) + "</B>"
-						+ word.substring(cutoffChar + 1, word.length()) + " ");
-			} else {
-				returnSentence.append("<B>" + word + "</B> ");
+		if (words[0].equalsIgnoreCase("haha")) {
+			int numOfHas = Integer.parseInt(words[1]);
+			returnSentence.append("Ah");
+			for (int i = 0; i < numOfHas; i++) {
+				returnSentence.append(" ha");
 			}
+			returnSentence.append(" ... \n\n");
+			returnSentence.append("[breathes in] \n\n");
+			returnSentence.append("... ");
+			for (int i = 0; i < numOfHas; i++) {
+				returnSentence.append(" ha");
+			}
+			returnSentence.append("!\n\n");
+			returnSentence.append("No.");
+			
+		} else {
+			returnSentence.append(inputString);
 		}
 
-		returnSentence.append("</font></HTML>");
 		return returnSentence.toString();
 	}
 

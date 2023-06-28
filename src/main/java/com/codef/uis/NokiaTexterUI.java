@@ -1,26 +1,93 @@
-package com.codef.codesnippets;
+package com.codef.uis;
 
+import java.awt.Color;
+import java.awt.EventQueue;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 
-public class NokiaTexter {
-
-	private static final Logger LOGGER = LogManager.getLogger(NokiaTexter.class.getName());
+public class NokiaTexterUI {
 
 	protected static HashMap<String, String> letterToKeys = new HashMap<>();
 	protected static HashMap<String, String> keysToLetter = new HashMap<>();
 
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
 	public static void main(String[] args) {
+		EventQueue.invokeLater(() -> {
+			try {
+				NokiaTexterUI window = new NokiaTexterUI();
+				window.frame.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public NokiaTexterUI() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
 
 		initializeMaps();
-		String returnValue = translateLetterToKeys("Thats a pretty big word for a retard");
-		LOGGER.info(returnValue);
 
-		returnValue = translateKeysToLetter(
-				"66 666 55 444 2 0 7 44 666 66 33 0 88 7777 33 777 7777 0 9 444 555 555 0 4 33 8 0 8 44 444 7777");
-		LOGGER.info(returnValue);
+		frame = new JFrame();
+		frame.setTitle("Nokia It!");
+		frame.setBounds(100, 100, 951, 600);
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+
+		JTextArea inputBox = new JTextArea();
+		inputBox.setBounds(10, 11, 915, 116);
+		inputBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		inputBox.setLineWrap(true);
+		frame.getContentPane().add(inputBox);
+
+		JEditorPane outputBox = new JEditorPane();
+		outputBox.setEditorKit(JEditorPane.createEditorKitForContentType("text/html"));
+		outputBox.setEditable(false);
+		outputBox.setBounds(10, 202, 915, 348);
+		outputBox.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		frame.getContentPane().add(outputBox);
+
+		JButton encodeItButton = new JButton("Encode It!");
+		encodeItButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		encodeItButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				outputBox.setText(translateLetterToKeys(inputBox.getText()));
+			}
+		});
+		encodeItButton.setBounds(10, 138, 915, 23);
+		frame.getContentPane().add(encodeItButton);
+
+		JButton decodeItButton = new JButton("Decode It!");
+		decodeItButton.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		decodeItButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				outputBox.setText(translateKeysToLetter(inputBox.getText()));
+			}
+		});
+		decodeItButton.setBounds(10, 168, 915, 23);
+		frame.getContentPane().add(decodeItButton);
 
 	}
 
