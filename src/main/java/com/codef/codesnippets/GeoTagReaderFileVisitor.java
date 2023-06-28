@@ -1,4 +1,4 @@
-package com.codef.helpers;
+package com.codef.codesnippets;
 
 import java.io.File;
 import java.util.HashMap;

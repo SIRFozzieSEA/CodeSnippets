@@ -1,4 +1,4 @@
-package com.codef.helpers;
+package com.codef.codesnippets;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;

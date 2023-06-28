@@ -1,4 +1,4 @@
-package com.codef.helpers;
+package com.codef.codesnippets;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
