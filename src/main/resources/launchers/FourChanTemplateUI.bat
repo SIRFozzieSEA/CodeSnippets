@@ -1,1 +1,1 @@
-start javaw -cp "C:\GitRepos\CodeSnippets\target\classes" com.codef.helpers.FourChanTemplateUI
+start javaw -cp "C:\GitRepos\CodeSnippets\target\classes" com.codef.uis.FourChanTemplateUI

@@ -1,4 +1,4 @@
-package com.codef.codesnippets;
+package com.codef.applets;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;

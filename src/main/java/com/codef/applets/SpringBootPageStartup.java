@@ -1,4 +1,4 @@
-package com.codef.codesnippets;
+package com.codef.applets;
 
 import java.awt.Desktop;
 import java.net.URI;
