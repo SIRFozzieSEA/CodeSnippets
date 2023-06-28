@@ -16,6 +16,8 @@ import java.util.Scanner;
 import javax.imageio.ImageIO;
 
 public class SAPHourMailHelper {
+	
+	// java -cp codesnippets-0.0.1-SNAPSHOT.jar com.codef.applets.SAPHourMailHelper
 
 	public static boolean flagExecutingAtHome = true;
 
