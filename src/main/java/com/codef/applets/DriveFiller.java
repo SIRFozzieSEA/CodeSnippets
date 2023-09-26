@@ -16,10 +16,10 @@ public class DriveFiller {
 	private static final boolean ENABLE_MAIN_METHOD = true;
 
 	private static final Logger LOGGER = LogManager.getLogger(DriveFiller.class.getName());
-	private static final int FILE_CHUNK_SIZE_IN_MB = 100;
+	private static final int FILE_CHUNK_SIZE_IN_MB = 1000;
 
-	private static String driveLetterToFill = "K";
-	private static double spaceToFillInGB = 0.0;
+	private static String driveLetterToFill = "D";
+	private static double spaceToFillInGB = 100.0;
 
 	public static void main(String[] args) {
 
@@ -51,7 +51,7 @@ public class DriveFiller {
 			spaceToFillInGB = getUseableSpace(spaceToFillInGB, driveLetterToFill);
 			Double iterationsDbl = (spaceToFillInGB * 1000) / FILE_CHUNK_SIZE_IN_MB;
 			
-			String message = String.format("Writing: %x files, on drive %s with chunks of %x MB to fill %d GB (+Extra)", 
+			String message = String.format("Writing: %s files, on drive %s with chunks of %s MB to fill %s GB (+Extra)", 
 					iterationsDbl.longValue(), driveLetterToFill, FILE_CHUNK_SIZE_IN_MB, spaceToFillInGB);
 			LOGGER.info(message);
 
