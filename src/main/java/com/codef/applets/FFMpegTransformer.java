@@ -1,5 +1,6 @@
 package com.codef.applets;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -15,16 +16,25 @@ public class FFMpegTransformer {
 	private static final Logger LOGGER = LogManager.getLogger(FFMpegTransformer.class.getName());
 
 	private static final String FFMPEG_BIN_FOLDER = ".\\";
-	private static final String SOURCE_FOLDER = "D:\\Videos\\Smut\\Smut_Clips\\steve\\";
+	private static final String SOURCE_FOLDER = "D:\\Videos\\Converted Files\\hornyjohny66\\";
 	private static final String TARGET_FOLDER = SOURCE_FOLDER + "final\\";
 
 	public static void main(String[] args) {
 
 		if (ENABLE_MAIN_METHOD) {
+			createFileFolder(TARGET_FOLDER);
 			startVisit(SOURCE_FOLDER);
 		}
 
 	}
+	
+	public static void createFileFolder(String filePath) {
+		File oDirectory = new File(filePath);
+		if (!oDirectory.exists()) {
+			oDirectory.mkdirs();
+		}
+	}
+
 
 	public static void startVisit(String filePath) {
 		visitFiles(Paths.get(filePath));
@@ -44,7 +54,7 @@ public class FFMpegTransformer {
 
 	public static void visitFileCode(String fileName) {
 
-		String mode = "ROTATE";
+		String mode = "RESAMPLE";
 		String output = "";
 		switch (mode) {
 		case "ROTATE":
@@ -65,7 +75,8 @@ public class FFMpegTransformer {
 			break;
 		}
 
-		LOGGER.info(output);
+		System.out.println(output);
+		// LOGGER.info(output);
 
 	}
 
