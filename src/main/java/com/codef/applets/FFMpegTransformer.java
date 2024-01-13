@@ -16,7 +16,7 @@ public class FFMpegTransformer {
 	private static final boolean ENABLE_MAIN_METHOD = true;
 	private static final Logger LOGGER = LogManager.getLogger(FFMpegTransformer.class.getName());
 	
-	private static final String SOURCE_FOLDER = "D:\\Captured\\standalone\\1280x720";
+	private static final String SOURCE_FOLDER = "C:\\Users\\sir_f\\Desktop\\Duran";
 	private static final String TARGET_FOLDER = SOURCE_FOLDER + "\\final\\";
 	private static final String FFMPEG_BIN_FOLDER = ".\\";
 	
@@ -36,7 +36,7 @@ public class FFMpegTransformer {
 
 	public static void visitFileCode(String fileName) {
 
-		if (fileName.toLowerCase().endsWith(".mp4")) {
+		if (fileName.toLowerCase().endsWith(".mp4") || fileName.toLowerCase().endsWith(".mov")) {
 
 			String output = "";
 
@@ -46,13 +46,19 @@ public class FFMpegTransformer {
 			commandList.add(String.format("%sffmpeg.exe -i \"%s%s\"", FFMPEG_BIN_FOLDER, SOURCE_FOLDER + "\\", fileName));
 
 			// Strip off so many seconds of the start of the file
-			// commandList.add("-ss 00:00:08");
+			// commandList.add("-ss 00:00:06");
 
 			// Filtergraph with scale... the file (width:height), if -1 is used for one if
 			// the values, it will constrain with the original specified values
-			String width = "1280";
-			String height = "720";
-			commandList.add(String.format("-vf scale=%s:%s", width, height));
+			String width = "720";
+			String height = "1280";
+			
+//			if (fileName.contains("p_")) {
+//				commandList.add(String.format("-vf scale=%s:%s", height, width));
+//			} else {
+//				// default is W:H
+//				commandList.add(String.format("-vf scale=%s:%s", width, height));
+//			}
 
 			// Transpose
 			// “1” = 90 degrees Clockwise
