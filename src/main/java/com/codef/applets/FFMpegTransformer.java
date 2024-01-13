@@ -53,12 +53,12 @@ public class FFMpegTransformer {
 			String width = "720";
 			String height = "1280";
 			
-//			if (fileName.contains("p_")) {
-//				commandList.add(String.format("-vf scale=%s:%s", height, width));
-//			} else {
-//				// default is W:H
-//				commandList.add(String.format("-vf scale=%s:%s", width, height));
-//			}
+			if (fileName.contains("p_")) {
+				commandList.add(String.format("-vf scale=%s:%s", height, width));
+			} else {
+				// default is W:H
+				commandList.add(String.format("-vf scale=%s:%s", width, height));
+			}
 
 			// Transpose
 			// “1” = 90 degrees Clockwise
