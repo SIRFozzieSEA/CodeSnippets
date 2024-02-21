@@ -50,8 +50,8 @@ public class DriveFiller {
 
 			spaceToFillInGB = getUseableSpace(spaceToFillInGB, driveLetterToFill);
 			Double iterationsDbl = (spaceToFillInGB * 1000) / FILE_CHUNK_SIZE_IN_MB;
-			
-			String message = String.format("Writing: %s files, on drive %s with chunks of %s MB to fill %s GB (+Extra)", 
+
+			String message = String.format("Writing: %s files, on drive %s with chunks of %s MB to fill %s GB (+Extra)",
 					iterationsDbl.longValue(), driveLetterToFill, FILE_CHUNK_SIZE_IN_MB, spaceToFillInGB);
 			LOGGER.info(message);
 

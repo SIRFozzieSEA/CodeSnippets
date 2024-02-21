@@ -15,11 +15,11 @@ public class FFMpegTransformer {
 
 	private static final boolean ENABLE_MAIN_METHOD = true;
 	private static final Logger LOGGER = LogManager.getLogger(FFMpegTransformer.class.getName());
-	
+
 	private static final String SOURCE_FOLDER = "C:\\Users\\sir_f\\Desktop\\Duran";
 	private static final String TARGET_FOLDER = SOURCE_FOLDER + "\\final\\";
 	private static final String FFMPEG_BIN_FOLDER = ".\\";
-	
+
 	private static int totalFiles = 0;
 
 	public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class FFMpegTransformer {
 			createFileFolder(TARGET_FOLDER);
 			startVisit(SOURCE_FOLDER);
 		}
-		
+
 		System.out.println("");
 		System.out.println("total files: " + totalFiles);
 
@@ -43,7 +43,8 @@ public class FFMpegTransformer {
 			ArrayList<String> commandList = new ArrayList<String>();
 
 			// Calling the FFMPEG with the source file
-			commandList.add(String.format("%sffmpeg.exe -i \"%s%s\"", FFMPEG_BIN_FOLDER, SOURCE_FOLDER + "\\", fileName));
+			commandList
+					.add(String.format("%sffmpeg.exe -i \"%s%s\"", FFMPEG_BIN_FOLDER, SOURCE_FOLDER + "\\", fileName));
 
 			// Strip off so many seconds of the start of the file
 			// commandList.add("-ss 00:00:06");
@@ -52,7 +53,7 @@ public class FFMpegTransformer {
 			// the values, it will constrain with the original specified values
 			String width = "720";
 			String height = "1280";
-			
+
 			if (fileName.contains("p_")) {
 				commandList.add(String.format("-vf scale=%s:%s", height, width));
 			} else {
@@ -73,7 +74,7 @@ public class FFMpegTransformer {
 			output = String.join(" ", commandList);
 			System.out.println(output);
 			// LOGGER.info(output);
-			
+
 			totalFiles++;
 
 		}

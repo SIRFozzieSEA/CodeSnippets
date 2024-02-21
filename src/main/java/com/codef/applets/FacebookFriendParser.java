@@ -35,14 +35,14 @@ public class FacebookFriendParser {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-	    EventQueue.invokeLater(() -> {
-	        try {
-	        	FacebookFriendParser window = new FacebookFriendParser();
-	            window.frmFacebookFriendParser.setVisible(true);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-	    });
+		EventQueue.invokeLater(() -> {
+			try {
+				FacebookFriendParser window = new FacebookFriendParser();
+				window.frmFacebookFriendParser.setVisible(true);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class FacebookFriendParser {
 
 		Set<String> facebookNamesFinal = new TreeSet<>();
 		String[] facebookNames = copyPasteArea.getText().split("\\n");
-		
+
 		for (String singleName : facebookNames) {
 			if (singleName.indexOf("mutual") == -1 && singleName.indexOf("Works at") == -1
 					&& singleName.indexOf("University of") == -1 && singleName.indexOf("Manager") == -1

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SpringBootPageStartup {
-	
+
 	@Value("${launch-page-url}")
 	private String launchPageUrl;
 
