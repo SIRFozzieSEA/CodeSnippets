@@ -16,7 +16,7 @@ public class FFMpegTransformer {
 	private static final boolean ENABLE_MAIN_METHOD = true;
 	private static final Logger LOGGER = LogManager.getLogger(FFMpegTransformer.class.getName());
 
-	private static final String SOURCE_FOLDER = "D:\\Videos\\Captures\\BoyButtXXL - RECODE";
+	private static final String SOURCE_FOLDER = "D:\\Videos\\Captures\\FaceDownAssUp_BATCH2";
 	private static final String TARGET_FOLDER = SOURCE_FOLDER + "\\final\\";
 	private static final String FFMPEG_BIN_FOLDER = ".\\";
 
@@ -56,6 +56,8 @@ public class FFMpegTransformer {
 
 			if (fileName.startsWith("p_")) {
 				commandList.add(String.format("-vf scale=%s:%s", width, height));
+			} else if (fileName.startsWith("l_")) {
+				commandList.add(String.format("-vf scale=%s:%s", height, width));
 			} else {
 				commandList.add(String.format("-vf scale=%s:%s", height, width));
 			}
