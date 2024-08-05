@@ -16,7 +16,7 @@ public class FFMpegTransformer {
 	private static final boolean ENABLE_MAIN_METHOD = true;
 	private static final Logger LOGGER = LogManager.getLogger(FFMpegTransformer.class.getName());
 
-	private static final String SOURCE_FOLDER = "D:\\Videos\\Captures\\FaceDownAssUp_BATCH2";
+	private static final String SOURCE_FOLDER = "C:\\Users\\sir_f\\Desktop\\CRAP\\ddd";
 	private static final String TARGET_FOLDER = SOURCE_FOLDER + "\\final\\";
 	private static final String FFMPEG_BIN_FOLDER = ".\\";
 
@@ -70,7 +70,7 @@ public class FFMpegTransformer {
 			// commandList.add("\"transpose=1,transpose=1\"");
 
 			// Specifying the output
-			commandList.add(String.format("\"%s%s\"", TARGET_FOLDER, fileName));
+			commandList.add(String.format("\"%s%s\"", TARGET_FOLDER, fileName.toLowerCase().replaceAll(".mov", ".mp4")));
 
 			output = String.join(" ", commandList);
 			System.out.println(output);
