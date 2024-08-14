@@ -5,6 +5,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -17,10 +18,13 @@ public class FileVisitorToFile {
 
 	private static final Logger LOGGER = LogManager.getLogger(FileVisitorToFile.class.getName());
 
-	private static final String SCAN_FOLDER = "K:\\Backup_09052022\\E\\Pictures";
-	private static final String SAVE_FILE_NAME = "d:\\kdrive.txt";
+	private static final String OPERATION = "countfileextensions"; // listfiles, countfileextensions
 
 	private static StringBuilder saveBuffer = new StringBuilder();
+	private static final HashMap<String, Integer> FILE_EXTENSION_COUNT_MAP = new HashMap<String, Integer>();
+
+	private static final String SCAN_FOLDER = "E:\\Zemez";
+	private static final String SAVE_FILE_NAME = "E:\\FileVisitorToFile_Results.txt";
 
 	public static void main(String[] args) throws IOException {
 
@@ -28,7 +32,17 @@ public class FileVisitorToFile {
 
 			String startFolder = SCAN_FOLDER;
 			startVisit(startFolder);
-			XSaLTFileSystemUtils.writeStringBuilderToFile(saveBuffer, SAVE_FILE_NAME);
+
+			if (OPERATION.equals("countfileextensions")) {
+				for (String key : FILE_EXTENSION_COUNT_MAP.keySet()) {
+					saveBuffer.append(key + " : " + FILE_EXTENSION_COUNT_MAP.get(key) + "\n");
+				}
+			}
+
+			if (saveBuffer.length() > 0) {
+				XSaLTFileSystemUtils.writeStringBuilderToFile(saveBuffer, SAVE_FILE_NAME);
+			}
+
 		}
 
 	}
@@ -52,7 +66,36 @@ public class FileVisitorToFile {
 	}
 
 	public static void visitFileCode(String filePath) {
-		saveBuffer.append(filePath + "\n");
+
+		if (OPERATION.equals("listfiles")) {
+			saveBuffer.append(filePath + "\n");
+		} else if (OPERATION.equals("countfileextensions")) {
+			String fileExtension = getFileExtension(filePath);
+			putInMap(fileExtension, FILE_EXTENSION_COUNT_MAP);
+		}
+
+	}
+
+	public static String getFileExtension(String filePath) {
+
+		String fileExtension = "";
+
+		if (filePath.contains(".")) {
+			fileExtension = filePath.substring(filePath.lastIndexOf("."));
+		}
+
+		return fileExtension;
+
+	}
+
+	public static void putInMap(String key, HashMap<String, Integer> map) {
+
+		if (map.containsKey(key)) {
+			map.put(key, map.get(key) + 1);
+		} else {
+			map.put(key, 1);
+		}
+
 	}
 
 }

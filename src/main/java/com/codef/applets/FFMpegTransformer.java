@@ -16,7 +16,7 @@ public class FFMpegTransformer {
 	private static final boolean ENABLE_MAIN_METHOD = true;
 	private static final Logger LOGGER = LogManager.getLogger(FFMpegTransformer.class.getName());
 
-	private static final String SOURCE_FOLDER = "C:\\Users\\sir_f\\Desktop\\CRAP\\ddd";
+	private static final String SOURCE_FOLDER = "C:\\lala";
 	private static final String TARGET_FOLDER = SOURCE_FOLDER + "\\final\\";
 	private static final String FFMPEG_BIN_FOLDER = ".\\";
 
