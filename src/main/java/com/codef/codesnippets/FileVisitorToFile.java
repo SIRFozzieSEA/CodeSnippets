@@ -18,12 +18,12 @@ public class FileVisitorToFile {
 
 	private static final Logger LOGGER = LogManager.getLogger(FileVisitorToFile.class.getName());
 
-	private static final String OPERATION = "countfileextensions"; // listfiles, countfileextensions
+	private static final String OPERATION = "cmdrecodetomp4"; // listfiles, countfileextensions, cmdrecodetomp4
 
 	private static StringBuilder saveBuffer = new StringBuilder();
 	private static final HashMap<String, Integer> FILE_EXTENSION_COUNT_MAP = new HashMap<String, Integer>();
 
-	private static final String SCAN_FOLDER = "E:\\Zemez";
+	private static final String SCAN_FOLDER = "C:\\_PRIMARY_SORT";
 	private static final String SAVE_FILE_NAME = "E:\\FileVisitorToFile_Results.txt";
 
 	public static void main(String[] args) throws IOException {
@@ -72,6 +72,12 @@ public class FileVisitorToFile {
 		} else if (OPERATION.equals("countfileextensions")) {
 			String fileExtension = getFileExtension(filePath);
 			putInMap(fileExtension, FILE_EXTENSION_COUNT_MAP);
+		} else if (OPERATION.equals("cmdrecodetomp4")) {
+			String fileExtension = getFileExtension(filePath);
+			if (fileExtension.equals(".webm") || fileExtension.equals(".mov")) {
+				String newFilePath = filePath.replace(fileExtension, ".mp4");
+				saveBuffer.append(".\\ffmpeg.exe -i \"" + filePath + "\" \"" + newFilePath + "\"\n");
+			}
 		}
 
 	}

@@ -36,7 +36,8 @@ public class FFMpegTransformer {
 
 	public static void visitFileCode(String fileName) {
 
-		if (fileName.toLowerCase().endsWith(".mp4") || fileName.toLowerCase().endsWith(".mov")) {
+		if (fileName.toLowerCase().endsWith(".webm") || fileName.toLowerCase().endsWith(".mp4")
+				|| fileName.toLowerCase().endsWith(".mov")) {
 
 			String output = "";
 
@@ -70,7 +71,8 @@ public class FFMpegTransformer {
 			// commandList.add("\"transpose=1,transpose=1\"");
 
 			// Specifying the output
-			commandList.add(String.format("\"%s%s\"", TARGET_FOLDER, fileName.toLowerCase().replaceAll(".mov", ".mp4")));
+			commandList
+					.add(String.format("\"%s%s\"", TARGET_FOLDER, fileName.toLowerCase().replaceAll(".mov", ".mp4")));
 
 			output = String.join(" ", commandList);
 			System.out.println(output);
