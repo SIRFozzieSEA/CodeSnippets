@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextArea;
 import javax.swing.WindowConstants;
 
-public class FourChanTemplateUI {
+public class ReplyWizard {
 
 	private JFrame frame;
 
@@ -21,7 +21,7 @@ public class FourChanTemplateUI {
 	public static void main(String[] args) {
 	    EventQueue.invokeLater(() -> {
 	        try {
-	        	FourChanTemplateUI window = new FourChanTemplateUI();
+	        	ReplyWizard window = new ReplyWizard();
 	            window.frame.setVisible(true);
 	        } catch (Exception e) {
 	            e.printStackTrace();
@@ -33,7 +33,7 @@ public class FourChanTemplateUI {
 	/**
 	 * Create the application.
 	 */
-	public FourChanTemplateUI() {
+	public ReplyWizard() {
 		initialize();
 	}
 
@@ -42,7 +42,7 @@ public class FourChanTemplateUI {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setTitle("Chan it!");
+		frame.setTitle("Reply to it!");
 		frame.setBounds(100, 100, 951, 600);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
