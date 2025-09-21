@@ -19,12 +19,17 @@ public class IPhoneFileVisitor {
 
 	private static StringBuilder saveBuffer = new StringBuilder();
 
-	private static final String SCAN_FOLDER = "D:\\sort";
+	private static final String SCAN_FOLDER = "E:\\TENZIN-SORT-SHIP\\jpg";
 	private static final String SAVE_FILE_NAME = "D:\\IPhoneFileVisitor_Results.txt";
 
 	public static void main(String[] args) throws IOException {
 
 		if (ENABLE_MAIN_METHOD) {
+
+			if (SCAN_FOLDER.contains("_")) {
+				System.out.println("SCAN_FOLDER cannot contain underscores");
+				return;
+			}
 
 			String startFolder = SCAN_FOLDER;
 			startVisit(startFolder);
@@ -58,14 +63,15 @@ public class IPhoneFileVisitor {
 	public static void visitFileCode(String filePath) throws IOException {
 
 		String fileExtension = getFileExtension(filePath);
-		if (fileExtension.equals(".jpg") || fileExtension.equals(".jpeg") || fileExtension.equals(".mov")) {
+		if (fileExtension.equals(".jpg") || fileExtension.equals(".jpeg") || fileExtension.equals(".mp4")
+				|| fileExtension.equals(".mov")) {
 
 			if (!filePath.contains("_E")) {
 
 				String deleteFilePath = filePath.replaceAll("_", "_E");
 
 				System.out.println("Looking at file: " + filePath);
-				
+
 				try {
 					XSaLTFileSystemUtils.deleteFileNew(deleteFilePath);
 				} catch (IOException e) {
