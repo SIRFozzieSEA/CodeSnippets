@@ -16,8 +16,8 @@ public class FFMpegTransformer {
 	private static final boolean ENABLE_MAIN_METHOD = true;
 	private static final Logger LOGGER = LogManager.getLogger(FFMpegTransformer.class.getName());
 
-	private static final String SOURCE_FOLDER = "C:\\lala";
-	private static final String TARGET_FOLDER = SOURCE_FOLDER + "\\final\\";
+	private static final String SOURCE_FOLDER = "D:\\Videos\\Smut\\New or Fix";
+	private static final String TARGET_FOLDER = SOURCE_FOLDER + "\\";
 	private static final String FFMPEG_BIN_FOLDER = ".\\";
 
 	private static int totalFiles = 0;
@@ -29,6 +29,12 @@ public class FFMpegTransformer {
 			startVisit(SOURCE_FOLDER);
 		}
 
+		System.out.println("[console]::beep()");
+		System.out.println("[console]::beep()");
+		System.out.println("[console]::beep()");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
 		System.out.println("");
 		System.out.println("total files: " + totalFiles);
 
@@ -36,8 +42,8 @@ public class FFMpegTransformer {
 
 	public static void visitFileCode(String fileName) {
 
-		if (fileName.toLowerCase().endsWith(".webm") || fileName.toLowerCase().endsWith(".mp4")
-				|| fileName.toLowerCase().endsWith(".mov")) {
+		if ((fileName.toLowerCase().endsWith(".webm") || fileName.toLowerCase().endsWith(".mp4")
+				|| fileName.toLowerCase().endsWith(".mov")) && fileName.startsWith("r_")) {
 
 			String output = "";
 
@@ -47,36 +53,46 @@ public class FFMpegTransformer {
 			commandList
 					.add(String.format("%sffmpeg.exe -i \"%s%s\"", FFMPEG_BIN_FOLDER, SOURCE_FOLDER + "\\", fileName));
 
-			// Strip off so many seconds of the start of the file
-			// commandList.add("-ss 00:00:06");
+			// EXAMPLE: r_720x1280_Raaeee4200 - Black 3.mp4
+			// r_ = recode
+			// 720 width
+			// 1280 height
+			// filename after dimensions
 
-			// Filtergraph with scale... the file (width:height), if -1 is used for one if
-			// the values, it will constrain with the original specified values
-			String width = "720";
-			String height = "1280";
+			String[] fileNameParts = fileName.split("_");
 
-			if (fileName.startsWith("p_")) {
-				commandList.add(String.format("-vf scale=%s:%s", width, height));
-			} else if (fileName.startsWith("l_")) {
-				commandList.add(String.format("-vf scale=%s:%s", height, width));
-			} else {
-				commandList.add(String.format("-vf scale=%s:%s", height, width));
-			}
+			String dimensionPart = fileNameParts[1];
+			String width = dimensionPart.split("x")[0];
+			String height = dimensionPart.split("x")[1];
+			String newFileName = fileNameParts[2];
 
+			// use "20" or below (18 is visually lossless) for higher quality, "23" for lower quality
+			String crfValue = "18";
+
+			// use "ultrafast", "superfast", "veryfast", "faster", "fast", "medium" (default), "slow", "slower", "veryslow"
+			String presetValue = "veryslow";
+			
 			// Transpose
 			// “1” = 90 degrees Clockwise
 			// “2” = 90 degrees Counterclockwise,
 			// “3” = 90 Clockwise and Vertical Flip
-			// Values van be chained together (e.g. "transpose=2,transpose=2")
-			// commandList.add("\"transpose=1,transpose=1\"");
+			// Values van be chained together (e.g. "transpose=2,transpose=2"), needs to be after the -vf part
+
+			commandList.add(String.format("-vf scale=%s:%s:force_original_aspect_ratio=increase,crop=%s:%s", width,
+					height, width, height));
+
+			commandList.add(String.format("-c:v libx264 -crf %s -preset %s -c:a copy", crfValue, presetValue));
+
+			// Strip off so many seconds of the start of the file
+			// commandList.add("-ss 00:00:06");
+
+
 
 			// Specifying the output
-			commandList
-					.add(String.format("\"%s%s\"", TARGET_FOLDER, fileName.toLowerCase().replaceAll(".mov", ".mp4")));
+			commandList.add(String.format("\"%s%s\"", TARGET_FOLDER, newFileName.replaceAll(".mov", ".mp4")));
 
 			output = String.join(" ", commandList);
 			System.out.println(output);
-			// LOGGER.info(output);
 
 			totalFiles++;
 
