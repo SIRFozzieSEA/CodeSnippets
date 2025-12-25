@@ -16,7 +16,7 @@ public class FFMpegTransformer {
 	private static final boolean ENABLE_MAIN_METHOD = true;
 	private static final Logger LOGGER = LogManager.getLogger(FFMpegTransformer.class.getName());
 
-	private static final String SOURCE_FOLDER = "D:\\Videos\\Smut\\New or Fix";
+	private static final String SOURCE_FOLDER = "D:\\Videos\\Smut\\- Steve";
 	private static final String TARGET_FOLDER = SOURCE_FOLDER + "\\";
 	private static final String FFMPEG_BIN_FOLDER = ".\\";
 
@@ -78,7 +78,7 @@ public class FFMpegTransformer {
 			// “3” = 90 Clockwise and Vertical Flip
 			// Values van be chained together (e.g. "transpose=2,transpose=2"), needs to be after the -vf part
 
-			commandList.add(String.format("-vf scale=%s:%s:force_original_aspect_ratio=increase,crop=%s:%s", width,
+			commandList.add(String.format("-vf transpose=1,scale=%s:%s:force_original_aspect_ratio=increase,crop=%s:%s", width,
 					height, width, height));
 
 			commandList.add(String.format("-c:v libx264 -crf %s -preset %s -c:a copy", crfValue, presetValue));
