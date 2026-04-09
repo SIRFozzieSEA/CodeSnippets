@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hours since 2026-04-07 14:00 (local)</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; display:flex; align-items:center; justify-content:center; min-height:100vh; margin:0; background:#f7fafc; color:#0f172a }
+    .card { background:#fff; padding:24px; border-radius:12px; box-shadow:0 6px 24px rgba(12,18,26,0.08); max-width:520px; width:90% }
+    h1 { margin:0 0 8px 0; font-size:18px }
+    .big { font-weight:700; font-size:34px; margin:8px 0 }
+    .muted { color:#475569 }
+    .breakdown { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap }
+    .pill { background:#f1f5f9; padding:6px 10px; border-radius:999px; font-weight:600 }
+    button { margin-left:8px }
+    footer { margin-top:12px; font-size:12px; color:#64748b }
+  </style>
+</head>
+<body>
+  <div class="card" role="application" aria-labelledby="title">
+    <h1 id="title">Fasting Hours since <font color="red">Tuesday 2PM:</font></h1>
+    <div>
+      <span class="big" id="hoursDecimal">--</span>
+      <button id="copyBtn" title="Copy decimal hours to clipboard">Copy</button>
+    </div>
+
+    <div class="breakdown" aria-live="polite" id="breakdown">
+      <div class="pill" id="days">-- days</div>
+      <div class="pill" id="hours">-- hours</div>
+      <div class="pill" id="minutes">-- minutes</div>
+      <div class="pill" id="seconds">-- seconds</div>
+    </div>
+
+  </div>
+
+  <script>
+    // Reference time: 2026-04-07 14:00 interpreted in the user's local timezone
+    const refLocal = new Date(2026, 3, 7, 14, 0, 0, 0); // months are 0-indexed: 3 => April
+
+    const hoursDecimalEl = document.getElementById('hoursDecimal');
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function update() {
+      const now = new Date();
+      let deltaMs = now - refLocal;
+      const negative = deltaMs < 0;
+      if (negative) deltaMs = -deltaMs;
+
+      const totalSeconds = Math.floor(deltaMs / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      const totalHoursDecimal = (deltaMs / (1000 * 60 * 60));
+      const formattedDecimal = (negative ? '-' : '') + totalHoursDecimal.toFixed(2) + ' hours';
+
+      hoursDecimalEl.textContent = formattedDecimal;
+      daysEl.textContent = (negative ? '-' : '') + days + ' days';
+      hoursEl.textContent = hours + ' hours';
+      minutesEl.textContent = minutes + ' minutes';
+      secondsEl.textContent = seconds + ' seconds';
+    }
+
+    copyBtn.addEventListener('click', async () => {
+      const text = hoursDecimalEl.textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        copyBtn.textContent = 'Copied';
+        setTimeout(() => (copyBtn.textContent = 'Copy'), 1500);
+      } catch (e) {
+        // fallback
+        const ta = document.createElement('textarea');
+        ta.value = text; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); copyBtn.textContent = 'Copied'; } catch (e) { alert('Copy failed. Selected: ' + text); }
+        document.body.removeChild(ta);
+        setTimeout(() => (copyBtn.textContent = 'Copy'), 1500);
+      }
+    });
+
+    // Start immediately and update every second; also update at next exact second boundary for accuracy.
+    update();
+    // Align first interval to next full second to avoid drift
+    const msToNextSecond = 1000 - (Date.now() % 1000);
+    setTimeout(() => {
+      update();
+      setInterval(update, 1000);
+    }, msToNextSecond);
+  </script>
+</body>
+</html>
