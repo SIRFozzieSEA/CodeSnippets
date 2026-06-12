@@ -19,7 +19,7 @@ public class IPhoneFileVisitor {
 
 	private static StringBuilder saveBuffer = new StringBuilder();
 
-	private static final String SCAN_FOLDER = "E:\\TENZIN-SORT-SHIP\\jpg";
+	private static final String SCAN_FOLDER = "E:\\SORT\\jpg";
 	private static final String SAVE_FILE_NAME = "D:\\IPhoneFileVisitor_Results.txt";
 
 	public static void main(String[] args) throws IOException {
@@ -70,12 +70,12 @@ public class IPhoneFileVisitor {
 
 				String deleteFilePath = filePath.replaceAll("_", "_E");
 
-				System.out.println("Looking at file: " + filePath);
+				System.out.println("Looking at file: " + filePath + " to delete " + deleteFilePath);
 
 				try {
 					XSaLTFileSystemUtils.deleteFileNew(deleteFilePath);
 				} catch (IOException e) {
-					System.out.println("\tNo file " + deleteFilePath + " to delete");
+//					System.out.println("\tNo file " + deleteFilePath + " to delete");
 				}
 
 			}
