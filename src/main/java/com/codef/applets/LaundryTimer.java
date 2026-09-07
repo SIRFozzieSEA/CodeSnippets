@@ -51,15 +51,9 @@ public class LaundryTimer extends JFrame {
 
 		@SuppressWarnings("unused")
 		MachinePanel(String label) {
-
+			
 			GridBagConstraints gbc = new GridBagConstraints();
-
-			if (label.equals("Dryer")) {
-				gbc.insets = new Insets(3, 10, 8, 10);
-			} else {
-				gbc.insets = new Insets(3, 10, 0, 10);
-			}
-
+			gbc.insets = new Insets(3, 10, 0, 10);
 			gbc.fill = GridBagConstraints.HORIZONTAL;
 			gbc.weightx = 1;
 
@@ -80,6 +74,7 @@ public class LaundryTimer extends JFrame {
 			gbc.anchor = GridBagConstraints.CENTER;
 			add(display, gbc);
 
+			
 			int initialMinutes = 45;
 			if (label.equals("Dryer")) {
 				initialMinutes = 55;
@@ -100,6 +95,15 @@ public class LaundryTimer extends JFrame {
 			gbc.gridy = 2;
 			gbc.anchor = GridBagConstraints.CENTER;
 			add(btnRow, gbc);
+			
+			if (label.equals("Dryer")) {
+				// add empty row to make the dryer panel taller than the washer panel
+				gbc.gridy = 3;
+				JLabel lbl2 = new JLabel(" ", SwingConstants.LEFT);
+				lbl2.setFont(lbl2.getFont().deriveFont(6f));
+				add(lbl2, gbc);
+			}
+			
 
 			startStopBtn.addActionListener(e -> toggleStartStop());
 			setBtn.addActionListener(e -> applySet());
