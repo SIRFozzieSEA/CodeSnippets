@@ -89,8 +89,8 @@ public class LaundryTimer extends JFrame {
 
 			btnRow.add(minutesSpin);
 			btnRow.add(setBtn);
-			btnRow.add(clearBtn);
 			btnRow.add(startStopBtn);
+			btnRow.add(clearBtn);
 
 			gbc.gridy = 2;
 			gbc.anchor = GridBagConstraints.CENTER;
